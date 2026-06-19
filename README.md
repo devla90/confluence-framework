@@ -1,5 +1,7 @@
 # Confluence Documentation Framework
 
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+
 A universal, reusable framework for organizing, standardizing, and maintaining project documentation in Confluence Cloud. Designed for teams of 5-15 people working on multi-domain projects, this framework provides battle-tested conventions, templates, governance, and an AI integration strategy that any team can adopt and customize for their specific needs.
 
 ---
@@ -167,3 +169,9 @@ This repository **is not uploaded to Confluence**. It is the source of truth for
 | `docs/governance.md` | Governance pages in the Governance Hub section |
 | `docs/team-guide.md` | Onboarding page in the Governance Hub section |
 | `output/*.md` | Individual pages in the corresponding section |
+
+---
+
+## License
+
+This project is licensed under the [Apache License 2.0](LICENSE).
