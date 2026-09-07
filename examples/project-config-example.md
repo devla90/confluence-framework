@@ -16,6 +16,16 @@
 | Documentation language | english |
 | Team size | 8-12 |
 
+## Paths
+
+| Field | Value |
+|-------|-------|
+| Framework path | ../confluence-framework |
+| Output path | ./output |
+
+Documents are filed under `output/{source-repo-name}/`, or `output/generic/` when the
+source was a link.
+
 ## Frentes (Sections)
 
 | Front | Suffix | Technologies | Section Owner | Team Label |
@@ -25,6 +35,19 @@
 | Design | DESIGN | Figma, Storybook | Design Lead | team:design |
 | Architecture | ARCH | AWS (ECS, RDS, CloudFront, S3) | Solution Architect | team:architecture |
 | QA & Testing | QA | Playwright, Jest | QA Lead | team:qa |
+
+## Code Repositories
+
+| Front | Suffix | Local path | Description |
+|-------|--------|-----------|-------------|
+| Frontend | FRONT | /Users/jdoe/work/acme-web-portal | Next.js storefront |
+| Backend | BACK | /Users/jdoe/work/acme-api | Express REST API |
+| Design | DESIGN | | No code — Figma only |
+| Architecture | ARCH | /Users/jdoe/work/acme-infra | Terraform for AWS |
+| QA & Testing | QA | /Users/jdoe/work/acme-e2e | Playwright suite |
+
+> A path passed as the third argument to `/doc-confluence <type> <subject> [target-path]`
+> overrides whatever is in this table.
 
 ## Technology Labels
 

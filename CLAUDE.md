@@ -19,10 +19,12 @@ Universal documentation framework for Confluence Cloud. Contains guides, templat
 
 ### To create/edit Confluence documentation
 
-1. Read the project's `project-config.md` -- prefix, space key, frentes, language, tech labels
+1. Read the project's `project-config.md` -- prefix, space key, frentes, `Paths`, `Code Repositories`, language, tech labels
 2. Read `docs/documentation-guide.md` -- naming, labels, lifecycle, Page Properties
 3. Select the matching template from `templates/` for the document type
-4. Consult `docs/decision-guide.md` ONLY if there is doubt about where to document something
+4. Resolve the code repo to document: an explicit path in the request wins, otherwise the `Code Repositories` row matching the chosen frente. Analyze that codebase for technical details; use `{placeholder}` for anything it does not yield
+5. Write the result to `{Output path}/{source}/` -- `{source}` is the basename of the repo the information came from, or `generic` if it came from a link or from the user only. Default base: the config repo's `output/`
+6. Consult `docs/decision-guide.md` ONLY if there is doubt about where to document something
 
 ### To create Confluence Cloud templates
 
@@ -62,19 +64,37 @@ Universal documentation framework for Confluence Cloud. Contains guides, templat
 - **Diagrams**: draw.io macro (editable), not static images
 - **Guiding principle**: Link, don't duplicate. Confluence = durable knowledge
 
-## Usage from code repos (Strategy B -- local reference)
+## Two ways to use this framework
 
-This framework is the single source of standards. Code repos do NOT duplicate files -- they reference this directory.
+This framework is the single source of standards. Nothing is duplicated -- both modes reference this directory.
 
-### How to connect a new code repo
+### Mode A -- run from inside the code repo (Strategy B, local reference)
+
+The code repo carries a `CLAUDE.md` that points outward at the framework. Use it when the team owns the repo and wants documentation generated where they already work.
 
 1. Copy `examples/repo-claude-md-example.md` to the repo root as `CLAUDE.md`
 2. Replace the 6 variables: `{DESCRIPTION}`, `{FRONT}`, `{PREFIX}`, `{FRAMEWORK_PATH}`, `{CONFIG_PATH}`, `{SPACE_KEY}`
-3. The AI in that repo will read standards and templates directly from `confluence-framework/`
+3. The AI in that repo reads standards and templates directly from `confluence-framework/`
+
+### Mode B -- run from the config repo, aim at an external path
+
+Nothing is added to the code repo. The config repo holds the paths and the AI reads the external codebase. Use it for repos you cannot or do not want to modify, or to document several repos from one place.
+
+1. Fill the `Paths` and `Code Repositories` sections of your `project-config.md` (see `project-config-template.md`)
+2. Install the skill and agent at user level so they are available outside this directory:
+   ```bash
+   cp -r .claude/skills/doc-confluence ~/.claude/skills/
+   cp -r .claude/agents/confluence-doc ~/.claude/agents/
+   ```
+3. From the config repo, run `/doc-confluence <type> <subject> [target-path]`
+
+The optional third argument overrides the `Code Repositories` table for a one-off run.
+
+Reading a path outside the working directory requires granting access: `/add-dir /path/to/project` in the session, or `permissions.additionalDirectories` in `settings.json`.
 
 ### For Copilot and Devin
 
-The content is the same, only the destination file changes:
+Mode A applies. The content is the same, only the destination file changes:
 - Copilot: `.github/copilot-instructions.md`
 - Devin: `.devin/guidelines.md`
 
