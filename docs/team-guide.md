@@ -227,20 +227,25 @@ AI does not replace the author — **it accelerates creation and improves mainte
 
 ---
 
-## 2.2 Using the documentation agent (Claude Code)
+## 2.2 Using the documentation agent
 
 ### Prerequisites
 
-Have Claude Code installed and be in the project directory:
+An AI coding assistant that reads `AGENTS.md` -- Claude Code, OpenAI Codex, GitHub
+Copilot, opencode, Devin, Cursor and others all qualify. Install the adapter for yours
+once (see `customization-guide.md` Step 6, or `adapters/README.md`), then work from the
+project directory:
 
 ```bash
 cd /path/to/your/confluence-project
-claude
 ```
+
+What each assistant can and cannot do -- in particular whether it can read a repo
+outside the current one -- is in `compatibility.md`.
 
 ### Generate a document with the `/doc-confluence` command
 
-Within a Claude Code session:
+Within your assistant's session:
 
 ```
 /doc-confluence func-spec Contact Form
@@ -248,6 +253,7 @@ Within a Claude Code session:
 
 The agent:
 1. Resolves where the framework, the config repo, and the target code repo live
+   (Step 0 of `generation-procedure.md`, the shared procedure every assistant follows)
 2. Loads the corresponding template (`templates/func-spec.md`)
 3. Loads the documentation standards (`documentation-guide.md`)
 4. Analyzes the target codebase to extract technical details

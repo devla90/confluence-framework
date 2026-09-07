@@ -38,13 +38,15 @@ source was a link.
 
 ## Code Repositories
 
+Relative to this config repo, so the table survives a change of machine.
+
 | Front | Suffix | Local path | Description |
 |-------|--------|-----------|-------------|
-| Frontend | FRONT | /Users/jdoe/work/acme-web-portal | Next.js storefront |
-| Backend | BACK | /Users/jdoe/work/acme-api | Express REST API |
+| Frontend | FRONT | ../acme-web-portal | Next.js storefront |
+| Backend | BACK | ../acme-api | Express REST API |
 | Design | DESIGN | | No code — Figma only |
-| Architecture | ARCH | /Users/jdoe/work/acme-infra | Terraform for AWS |
-| QA & Testing | QA | /Users/jdoe/work/acme-e2e | Playwright suite |
+| Architecture | ARCH | ../acme-infra | Terraform for AWS |
+| QA & Testing | QA | ../acme-e2e | Playwright suite |
 
 > A path passed as the third argument to `/doc-confluence <type> <subject> [target-path]`
 > overrides whatever is in this table.
