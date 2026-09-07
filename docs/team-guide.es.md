@@ -228,20 +228,25 @@ La IA no reemplaza al autor — **acelera la creación y mejora el mantenimiento
 
 ---
 
-## 2.2 Usar el agente de documentación (Claude Code)
+## 2.2 Usar el agente de documentación
 
 ### Requisitos previos
 
-Tener Claude Code instalado y estar en el directorio del proyecto:
+Un asistente de IA que lea `AGENTS.md` — Claude Code, OpenAI Codex, GitHub Copilot,
+opencode, Devin, Cursor y otros valen. Instala una vez el adaptador del tuyo (ver
+`customization-guide.md` Step 6, o `adapters/README.md`) y sitúate en el directorio
+del proyecto:
 
 ```bash
 cd /path/to/your/confluence-project
-claude
 ```
+
+Qué puede y qué no puede cada asistente — en particular si puede leer un repo fuera
+del actual — está en `compatibility.md`.
 
 ### Generar un documento con el comando `/doc-confluence`
 
-Dentro de una sesión de Claude Code:
+Dentro de la sesión de tu asistente:
 
 ```
 /doc-confluence func-spec Contact Form
@@ -249,6 +254,7 @@ Dentro de una sesión de Claude Code:
 
 El agente:
 1. Resuelve dónde están el framework, el repo de configuración y el repo de código destino
+   (Step 0 de `generation-procedure.md`, el procedimiento común que siguen todos los asistentes)
 2. Carga la plantilla correspondiente (`templates/func-spec.md`)
 3. Carga los estándares de documentación (`documentation-guide.md`)
 4. Analiza el código del repo destino para extraer detalles técnicos

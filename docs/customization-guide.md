@@ -8,8 +8,60 @@ How to adapt this framework for a new project.
 
 - Access to a Confluence Cloud space for your project
 - This framework repository cloned locally
-- An AI coding assistant (Claude Code, Copilot, Devin, or similar)
+- An AI coding assistant. Claude Code, OpenAI Codex, GitHub Copilot, opencode, Devin, Cursor and others are supported -- see `compatibility.md` for what each one can do
 - On Windows: Git Bash (ships with Git for Windows) or WSL — see [Windows notes](#windows-notes)
+
+---
+
+## Starting on a new machine
+
+If the project is already set up and you just need it running somewhere new — a new
+laptop, a new teammate — this is the whole sequence. Nothing is installed beyond your
+assistant's adapter; the framework is plain markdown.
+
+**1. Clone both repos as siblings.** The sibling layout is what makes path resolution
+work:
+
+```bash
+mkdir my-workspace && cd my-workspace
+git clone <framework-repo-url> confluence-framework
+git clone <your-config-repo-url> confluence-config-{your-project}
+```
+
+**2. Check the `Framework path` row** in your config repo's `project-config.md` points
+at the sibling — normally `../confluence-framework`. Root resolution reads this row
+first.
+
+**3. Install the adapter for your assistant.** One command, once per machine — see
+`../adapters/README.md` for the full matrix. For example:
+
+```bash
+# OpenAI Codex
+mkdir -p ~/.codex/prompts && cp confluence-framework/adapters/codex/doc-confluence.md ~/.codex/prompts/
+```
+
+**4. Start the session from the workspace directory** — the one containing both repos.
+An assistant sandboxed to its startup directory can then reach both. There is an
+`AGENTS.md` at that level orienting whichever assistant you use.
+
+**5. Smoke test.** Run the shell block from Step 0 of `generation-procedure.md`. It must
+print two **absolute** roots and no `NOT_FOUND`:
+
+```
+CONFIG_ROOT=/Users/you/my-workspace/confluence-config-your-project
+FRAMEWORK_ROOT=/Users/you/my-workspace/confluence-framework
+```
+
+If either says `NOT_FOUND`, the sibling layout or the `Framework path` row is wrong —
+fix that before generating anything.
+
+**6. Check the `Code Repositories` paths.** Relative paths (`../my-api`) resolve from the
+config repo and carry over to a new machine unchanged. Any absolute path in that table
+came from someone else's machine and needs updating — or pass the path as the third
+argument for a one-off run.
+
+On Windows, read the [Windows notes](#windows-notes) first: use Git Bash or WSL, and
+forward slashes in config paths.
 
 ---
 
@@ -36,6 +88,19 @@ Copy the config template from the framework:
 cp ../confluence-framework/project-config-template.md ./project-config.md
 ```
 
+Then add an `AGENTS.md` one level up, in the directory holding both repos. This is what
+an assistant started from the workspace level reads, and starting there is what lets a
+sandboxed assistant reach both repos. Keep it short — name the two directories and point
+at `confluence-framework/docs/generation-procedure.md`. The `AGENTS.md` at the root of
+this workspace is a working example.
+
+```
+my-workspace/
+├── AGENTS.md                          <- orients any assistant started here
+├── confluence-framework/
+└── confluence-config-{your-project}/
+```
+
 ## Step 3: Fill In Your Configuration
 
 Edit `project-config.md` and replace all `{placeholder}` values:
@@ -50,33 +115,23 @@ Edit `project-config.md` and replace all `{placeholder}` values:
 
 See `examples/project-config-example.md` in the framework repo for a filled example.
 
-## Step 4: Create Your Config Repo CLAUDE.md
+## Step 4: Create Your Config Repo AGENTS.md
 
-Create a `CLAUDE.md` in your config repo:
+`AGENTS.md` is the cross-tool standard -- read automatically by Codex, Copilot, Devin,
+opencode, Cursor and others. Create one in your config repo covering:
 
-```markdown
-# Project: {Your Project Name}
+- **Directory structure requirement** -- this config repo must be a sibling of `confluence-framework/`
+- **How to generate documentation** -- one line: read `../confluence-framework/docs/generation-procedure.md` and follow it. That file is the single source of truth for root resolution, source resolution, per-type analysis, template filling and output location
+- **Where things live** -- `./project-config.md`, `./page-structure.md`, `../confluence-framework/docs/documentation-guide.md`, `../confluence-framework/templates/{type}.md`, `../confluence-framework/docs/compatibility.md`
+- **Available document types** -- the eleven type keys
+- **Output layout** -- `output/{source-repo-name}/{type}_{subject}_{YYYY-MM-DD}.md`, or `output/generic/` for links. Never write straight into `output/`
+- **Key rules** -- naming pattern, mandatory labels, secrets policy, placeholder policy
 
-## Confluence Documentation
+`confluence-config-acme-web/AGENTS.md` is a filled example you can copy and adapt.
 
-- **Framework**: ../confluence-framework/
-- **Config**: ./project-config.md
-- **Page structure**: ./page-structure.md
-
-### To generate documentation
-
-1. Read config: `./project-config.md` -- prefix, space key, frentes, `Paths`, `Code Repositories`
-2. Read standards: `../confluence-framework/docs/documentation-guide.md`
-3. Read template: `../confluence-framework/templates/{type}.md`
-4. Resolve the source: the path or URL given in the request, else the `Code Repositories`
-   row matching the frente. Analyze that codebase (or fetch that link) for technical details
-5. Generate in `{Output path}/{source}/` (default base `./output/`), where `{source}` is the
-   repo name or `generic` for links, following the template
-
-### Available document types
-
-func-spec | adr | api-spec | env-config | runbook | security-doc | migration | test-plan | test-strategy | infra-request | role-request
-```
+**For Claude Code**, add a `CLAUDE.md` next to it whose first line is `@AGENTS.md`,
+then put only Claude-specific notes below. That keeps one source of truth and works
+with both conventions.
 
 ## Step 5: Create Your Page Structure
 
@@ -86,15 +141,19 @@ Create `page-structure.md` in your config repo with the actual Confluence page t
 
 There are two modes. They are not exclusive -- pick per repo.
 
-### Mode A: put a CLAUDE.md inside the code repo
+### Mode A: put an instruction file inside the code repo
 
 Use this when the team owns the repo and wants to generate documentation from where they already work.
 
 ```bash
+# Any assistant reading AGENTS.md (Codex, Copilot, Devin, opencode, Cursor, ...)
+cp ../confluence-framework/examples/agents-md-example.md ./AGENTS.md
+
+# Claude Code
 cp ../confluence-framework/examples/repo-claude-md-example.md ./CLAUDE.md
 ```
 
-Fill in the 6 variables:
+Both templates take the same 6 variables:
 - `{DESCRIPTION}`: Short repo description
 - `{FRONT}`: Your frente name (e.g., `frontend`)
 - `{PREFIX}`: Your naming prefix + suffix (e.g., `PROJ-FRONT`)
@@ -124,28 +183,45 @@ Also fill the `Paths` section so the framework and the output destination are ex
 | Output path | ./output |
 ```
 
-**2. Install the skill and agent at user level.** The skill ships inside `confluence-framework/.claude/skills/`, which scopes it to that directory -- it will not activate from your config repo until you install it globally:
+**2. Install the adapter for your assistant.** Each one is a thin invocable command that points at `docs/generation-procedure.md`; none of them duplicates the logic. Pick yours:
 
 ```bash
+# Claude Code -- ships in .claude/, scoped to the framework repo, so install globally
 cp -r ../confluence-framework/.claude/skills/doc-confluence ~/.claude/skills/
 cp -r ../confluence-framework/.claude/agents/confluence-doc ~/.claude/agents/
+
+# OpenAI Codex
+mkdir -p ~/.codex/prompts && cp ../confluence-framework/adapters/codex/doc-confluence.md ~/.codex/prompts/
+
+# opencode
+mkdir -p .opencode/command && cp ../confluence-framework/adapters/opencode/doc-confluence.md .opencode/command/
+
+# GitHub Copilot
+mkdir -p .github/prompts && cp ../confluence-framework/adapters/copilot/doc-confluence.prompt.md .github/prompts/
+cp ../confluence-framework/adapters/copilot/copilot-instructions.md .github/copilot-instructions.md
+
+# Devin -- see ../confluence-framework/adapters/devin/README.md
 ```
 
-The skill resolves the framework and config roots itself at runtime, so it works from any directory once installed.
+All of them are then invoked as `/doc-confluence <type> <subject> [source]`. The root resolution in Step 0 of the procedure is what lets them work from any directory once installed.
 
-**3. Grant access to the target path.** Claude Code only reads inside its working directory by default. Either run this in the session:
+Full install matrix: `../confluence-framework/adapters/README.md`.
+
+**3. Grant access to the target path.** Assistants only read inside their working directory by default, and each grants access differently -- the table in `compatibility.md` lists them all. For Claude Code:
 
 ```
 /add-dir /Users/you/work/my-api
 ```
 
-or add the path permanently to `settings.json`:
+or permanently in `settings.json`:
 
 ```json
 { "permissions": { "additionalDirectories": ["/Users/you/work/my-api"] } }
 ```
 
-Without this you will get a permission prompt on every file read.
+A trick that works for every local assistant: start the session from the **parent directory** containing both `confluence-framework/` and your config repo. Step 0 searches `.`, `..` and siblings, so it finds both from there.
+
+> **Mode B is not available on every assistant.** It needs to read outside the repo it started in. Local CLI assistants can; Copilot needs the folder added to the workspace; Devin runs in a cloud VM and cannot at all. Check `compatibility.md` before relying on it.
 
 **4. Generate.** From your config repo:
 

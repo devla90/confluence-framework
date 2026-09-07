@@ -47,7 +47,19 @@ Use the guides in `docs/` to set up your Confluence space, create templates, and
 
 Works on macOS, Linux, WSL and Windows (Git Bash) -- see `docs/customization-guide.md` -> Windows notes.
 
-For AI-assisted documentation, install Claude Code and use the `/doc-confluence` skill:
+## Which AI assistants
+
+The generation logic lives in one tool-neutral file, `docs/generation-procedure.md`,
+reachable from `AGENTS.md` -- the cross-tool standard read by OpenAI Codex, GitHub
+Copilot, Devin, opencode, Cursor, Windsurf, Zed, Aider and others. Claude Code reads it
+through a `@AGENTS.md` import in `CLAUDE.md`.
+
+Ready-made invocable commands per assistant are in `adapters/`. What each one can and
+cannot do -- notably whether it can read a repo outside the current one -- is in
+`docs/compatibility.md`.
+
+For AI-assisted documentation, install the adapter for your assistant and use the
+`/doc-confluence` command:
 
 ```bash
 claude
@@ -82,6 +94,8 @@ confluence-framework/
 |   +-- governance.md                      <- Roles, reviews, enforcement
 |   +-- decision-guide.md                  <- What goes in Confluence vs other tools
 |   +-- customization-guide.md             <- How to adapt the framework to your project
+|   +-- generation-procedure.md            <- THE generation flow (tool-neutral, single source of truth)
+|   +-- compatibility.md                   <- What each AI assistant can and cannot do
 |   +-- ai-strategy.md                     <- AI integration strategy in 4 phases
 |   +-- implementation-roadmap.md          <- Week-by-week plan with checklists
 |   (each guide also has a .es.md Spanish translation)
@@ -113,10 +127,14 @@ confluence-framework/
 +-- project-config-template.md             <- Template for project-specific values
 |                                             (identity, paths, frentes, code repos)
 |
-|   AI AGENT CONFIGURATION (Claude Code)
+|   AI ASSISTANT CONFIGURATION
 |
++-- AGENTS.md                              <- Cross-tool entry point (Codex, Copilot, Devin, opencode, ...)
++-- CLAUDE.md                              <- Claude Code layer; imports AGENTS.md
++-- adapters/                              <- One thin invocable command per assistant
+|   +-- copilot/  codex/  opencode/  devin/
 +-- .claude/
-    +-- agents/confluence-doc/             <- Specialized documentation agent
+    +-- agents/confluence-doc/             <- Claude Code documentation agent
     +-- skills/doc-confluence/             <- /doc-confluence skill (reusable command)
 ```
 

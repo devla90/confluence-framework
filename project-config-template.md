@@ -65,22 +65,30 @@ Define the domain sections for your project. Each frente gets a suffix appended 
 
 ## Code Repositories
 
-Local paths of the repos that implement each frente. The AI reads code from these
-paths to extract technical information (endpoints, env vars, migrations, test setup).
-Leave the path empty for frentes with no code (Business, UI/UX). Absolute paths
-recommended — relative paths are resolved from this config repo.
+Paths of the repos that implement each frente. The AI reads code from these paths to
+extract technical information (endpoints, env vars, migrations, test setup). Leave the
+path empty for frentes with no code (Business, UI/UX).
 
-This table powers **Mode B** (see `docs/customization-guide.md` Step 6): you work
-from this config repo and the AI reads an external project, instead of you having
-to open that project and put a `CLAUDE.md` inside it.
+This table powers **Mode B** (see `docs/customization-guide.md` Step 6): you work from
+this config repo and the AI reads an external project, instead of you having to put an
+instruction file inside that project.
+
+**Prefer relative paths.** They are resolved from this config repo, so they keep working
+on a teammate's machine and on your next one. This file is committed and shared — an
+absolute path like `/Users/you/work/my-api` or `C:/Users/you/work/my-api` is specific to
+one machine and will break for everyone else.
 
 | Front | Suffix | Local path | Description |
 |-------|--------|-----------|-------------|
-| {Frontend} | {FRONT} | {/absolute/path/to/repo} | {short description} |
-| {Backend} | {BACK} | {/absolute/path/to/repo} | {short description} |
+| {Frontend} | {FRONT} | {../my-web-app} | {short description} |
+| {Backend} | {BACK} | {../../work/my-api} | {short description} |
 
-> A path passed as the third argument to `/doc-confluence <type> <subject> [target-path]`
-> overrides whatever is in this table.
+Absolute paths still work when a repo genuinely lives outside any shared layout — just
+know what you are trading away.
+
+> For a one-off run against a machine-specific path, pass it as the third argument:
+> `/doc-confluence <type> <subject> <path-or-url>`. It overrides this table and leaves
+> the shared config untouched.
 
 ## Technology Labels
 
