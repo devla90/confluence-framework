@@ -22,7 +22,9 @@ Generate a professional document for Confluence Cloud following the framework st
 
 This block resolves the framework and config repo locations no matter which directory you were invoked from, then preloads the three files needed. Use the absolute `CONFIG_ROOT` and `FRAMEWORK_ROOT` it prints for every subsequent path -- never use bare relative paths like `templates/x.md` or `docs/x.md`.
 
-!`unset CDPATH; T="$tipo"; CFG=""; for d in . .. ./confluence-config-* ../confluence-config-*; do [ -f "$d/project-config.md" ] && CFG=$(cd "$d" && pwd) && break; done; FW=""; if [ -n "$CFG" ]; then P=$(grep -m1 '^| *Framework path *|' "$CFG/project-config.md" | awk -F'|' '{gsub(/^ +| +$/,"",$3); print $3}'); case "$P" in ""|\{*) P="" ;; esac; [ -n "$P" ] && [ -f "$CFG/$P/templates/func-spec.md" ] && FW=$(cd "$CFG/$P" && pwd); fi; if [ -z "$FW" ]; then for d in . .. ./confluence-framework ../confluence-framework "$CFG/../confluence-framework"; do [ -f "$d/templates/func-spec.md" ] && FW=$(cd "$d" && pwd) && break; done; fi; echo "CONFIG_ROOT=${CFG:-NOT_FOUND}"; echo "FRAMEWORK_ROOT=${FW:-NOT_FOUND}"; echo "--- project-config.md ---"; { [ -n "$CFG" ] && cat "$CFG/project-config.md"; } || echo "NOT_FOUND: no project-config.md in . .. or a sibling confluence-config-*. Ask the user for the config repo path."; echo "--- documentation-guide.md (head) ---"; { [ -n "$FW" ] && head -60 "$FW/docs/documentation-guide.md"; } || echo "NOT_FOUND: framework root not resolved. Ask the user for the confluence-framework path."; echo "--- template: $T ---"; { [ -n "$FW" ] && cat "$FW/templates/$T.md" 2>/dev/null; } || echo "TEMPLATE NOT FOUND. Valid types: func-spec adr api-spec env-config runbook security-doc migration test-plan test-strategy infra-request role-request"`
+!`unset CDPATH; A(){ (cd "$1" 2>/dev/null && { pwd -W 2>/dev/null || pwd; }); }; T="$tipo"; CFG=""; for d in . .. ./confluence-config-* ../confluence-config-*; do [ -f "$d/project-config.md" ] && CFG=$(A "$d") && break; done; FW=""; if [ -n "$CFG" ]; then P=$(grep -m1 '^| *Framework path *|' "$CFG/project-config.md" | tr -d '\r' | awk -F'|' '{gsub(/^ +| +$/,"",$3); print $3}'); case "$P" in ""|\{*) P="" ;; esac; [ -n "$P" ] && [ -f "$CFG/$P/templates/func-spec.md" ] && FW=$(A "$CFG/$P"); fi; if [ -z "$FW" ]; then for d in . .. ./confluence-framework ../confluence-framework "$CFG/../confluence-framework"; do [ -f "$d/templates/func-spec.md" ] && FW=$(A "$d") && break; done; fi; echo "CONFIG_ROOT=${CFG:-NOT_FOUND}"; echo "FRAMEWORK_ROOT=${FW:-NOT_FOUND}"; echo "SHELL_UNAME=$(uname -s 2>/dev/null || echo unknown)"; echo "--- project-config.md ---"; { [ -n "$CFG" ] && cat "$CFG/project-config.md"; } || echo "NOT_FOUND: no project-config.md in . .. or a sibling confluence-config-*. Ask the user for the config repo path."; echo "--- documentation-guide.md (head) ---"; { [ -n "$FW" ] && head -60 "$FW/docs/documentation-guide.md"; } || echo "NOT_FOUND: framework root not resolved. Ask the user for the confluence-framework path."; echo "--- template: $T ---"; { [ -n "$FW" ] && cat "$FW/templates/$T.md" 2>/dev/null; } || echo "TEMPLATE NOT FOUND. Valid types: func-spec adr api-spec env-config runbook security-doc migration test-plan test-strategy infra-request role-request"`
+
+The block is POSIX `sh` and runs unchanged on macOS, Linux, WSL and Git Bash on Windows. On Git Bash `pwd -W` yields a native `C:/Users/...` root rather than the MSYS `/c/Users/...` form, which the file tools cannot open; `tr -d '\r'` keeps CRLF-checked-out configs from producing paths with a trailing carriage return.
 
 If either root printed `NOT_FOUND`, stop and ask the user for the missing path instead of guessing. If more than one `confluence-config-*` sibling exists the first match wins -- confirm with the user that it is the right project before continuing.
 
@@ -47,6 +49,8 @@ The target is the source the information will be extracted from -- normally a lo
 3. **Ask the user** for the path, or offer to generate the document from placeholders only, with no code analysis.
 
 If the resolved target is a local path, validate it with `test -d <path> && ls <path>`. If it does not exist or is not readable, say so and tell the user to run `/add-dir <path>` (or add it to `permissions.additionalDirectories` in `settings.json`) -- do not silently skip the analysis and do not invent content.
+
+**Windows paths**: accept `C:\Users\you\work\my-api` from the user, but convert `\` to `/` before using it in any shell command -- inside `sh` a backslash is an escape character and `test -d "C:\Users\..."` will not match. `C:/Users/you/work/my-api` works everywhere.
 
 If the resolved target is a URL, fetch it with `WebFetch` instead. Record that the source was a link -- it changes where the document is filed (Step 3.5).
 
@@ -124,13 +128,15 @@ Every document is filed inside a subfolder named after the source it was generat
 
 | Source resolved in Step 0.5 | Folder |
 |-----------------------------|--------|
-| A local repo | The basename of the target path, lowercased and slugified. `/Users/you/work/scb-web-public-react-spa` -> `scb-web-public-react-spa` |
+| A local repo | The basename of the target path, lowercased and slugified. Normalize `\` to `/` and drop trailing separators first, so Windows paths work too: `/Users/you/work/my-api`, `C:/Users/you/work/my-api` and `C:\Users\you\work\my-api` all give `my-api` |
 | A link (URL fetched with WebFetch) | `generic` |
 | No source -- information came only from the user | `generic` |
 
 **3. Final path** -- `{base}/{source-folder}/{tipo}_{subject-slug}_{YYYY-MM-DD}.md`
 
 Create the directories with `mkdir -p` before writing. **Never write straight into the base folder** -- there is always a source subfolder.
+
+Use forward slashes in the path you pass to `Write`, on every platform.
 
 ```
 output/

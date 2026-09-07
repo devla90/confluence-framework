@@ -1,0 +1,14 @@
+# Keep text files LF on every platform, including Windows checkouts.
+#
+# The /doc-confluence skill parses values (Framework path, Output path, repo
+# paths) out of markdown tables using shell tools. A CRLF checkout would leave a
+# carriage return glued to the parsed value and produce paths that do not exist.
+# The skill strips \r defensively, but normalizing here removes the problem at
+# the source.
+
+* text=auto eol=lf
+
+*.md    text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.json  text eol=lf
