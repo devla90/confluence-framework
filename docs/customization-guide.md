@@ -9,6 +9,7 @@ How to adapt this framework for a new project.
 - Access to a Confluence Cloud space for your project
 - This framework repository cloned locally
 - An AI coding assistant (Claude Code, Copilot, Devin, or similar)
+- On Windows: Git Bash (ships with Git for Windows) or WSL — see [Windows notes](#windows-notes)
 
 ---
 
@@ -201,6 +202,68 @@ The AI should:
 If it reports `NOT_FOUND` for either root, check that your config repo is a sibling of `confluence-framework/` or that the `Framework path` row is correct.
 
 ---
+
+## Windows notes
+
+The framework is plain markdown, so nothing is platform-specific by itself. Four things need attention.
+
+### 1. Shell
+
+The `/doc-confluence` skill runs a POSIX `sh` block to locate the framework and config repos. On Windows that block runs under **Git Bash** (bundled with Git for Windows, which Claude Code already requires) or under **WSL**. Both work unchanged — no PowerShell-only setup.
+
+The block takes absolute paths with `pwd -W` where available, so on Git Bash the roots come back as `C:/Users/you/...` rather than the MSYS `/c/Users/you/...` form, which the file-reading tools cannot open. On WSL, paths are `/mnt/c/...` as usual.
+
+### 2. Path format in `project-config.md`
+
+Use **forward slashes** in the `Paths` and `Code Repositories` tables:
+
+```markdown
+| Front | Suffix | Local path | Description |
+|-------|--------|-----------|-------------|
+| Frontend | FRONT | C:/Users/you/work/my-web-app | React SPA |
+```
+
+`C:/Users/you/work/my-web-app` works on every platform. `C:\Users\you\work\my-web-app` does not survive a shell command, because `sh` reads a backslash as an escape character — `test -d` will not match it and the repo name will not slugify correctly. The skill converts backslashes when it sees them, but forward slashes avoid the round trip.
+
+Under WSL, use the WSL path instead: `/mnt/c/Users/you/work/my-web-app`.
+
+### 3. Line endings
+
+The skill parses paths out of markdown tables. If the repos are checked out with `core.autocrlf=true`, every value carries a trailing carriage return and the resulting paths do not exist.
+
+Both repos ship a `.gitattributes` pinning text files to `eol=lf`, which prevents this. If you cloned before that file existed, renormalize once:
+
+```bash
+git add --renormalize .
+git status
+```
+
+The skill also strips `\r` defensively, so a stray CRLF file will not break it.
+
+### 4. Installing the skill globally
+
+The Mode B install step in Step 6 uses `cp`. In Git Bash it works as written. In PowerShell:
+
+```powershell
+Copy-Item -Recurse -Force ..\confluence-framework\.claude\skills\doc-confluence $env:USERPROFILE\.claude\skills\
+Copy-Item -Recurse -Force ..\confluence-framework\.claude\agents\confluence-doc $env:USERPROFILE\.claude\agents\
+```
+
+`~/.claude/` and `%USERPROFILE%\.claude\` are the same directory.
+
+### Granting access to an external repo
+
+Identical on all platforms:
+
+```
+/add-dir C:/Users/you/work/my-api
+```
+
+or in `settings.json`, with forward slashes or escaped backslashes:
+
+```json
+{ "permissions": { "additionalDirectories": ["C:/Users/you/work/my-api"] } }
+```
 
 ## Adapting Frentes
 
