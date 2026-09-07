@@ -45,6 +45,8 @@ Use the guides in `docs/` to set up your Confluence space, create templates, and
 2. Follow `docs/confluence-templates-guide.md` to set up Space Templates
 3. Follow `docs/team-guide.md` to onboard your team
 
+Works on macOS, Linux, WSL and Windows (Git Bash) -- see `docs/customization-guide.md` -> Windows notes.
+
 For AI-assisted documentation, install Claude Code and use the `/doc-confluence` skill:
 
 ```bash

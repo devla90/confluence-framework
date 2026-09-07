@@ -86,11 +86,15 @@ Nothing is added to the code repo. The config repo holds the paths and the AI re
    cp -r .claude/skills/doc-confluence ~/.claude/skills/
    cp -r .claude/agents/confluence-doc ~/.claude/agents/
    ```
+
+   On Windows these run in Git Bash. For PowerShell equivalents and path-format rules see `docs/customization-guide.md` -> Windows notes.
 3. From the config repo, run `/doc-confluence <type> <subject> [target-path]`
 
 The optional third argument overrides the `Code Repositories` table for a one-off run.
 
 Reading a path outside the working directory requires granting access: `/add-dir /path/to/project` in the session, or `permissions.additionalDirectories` in `settings.json`.
+
+The skill's path resolution is POSIX `sh` and runs unchanged on macOS, Linux, WSL and Git Bash on Windows. Use forward slashes in config paths (`C:/Users/you/work/my-api`) -- see `docs/customization-guide.md` -> Windows notes.
 
 ### For Copilot and Devin
 

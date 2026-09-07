@@ -17,7 +17,9 @@ Never use bare relative paths like `templates/x.md` or `project-config.md` -- th
 - **`FRAMEWORK_ROOT`**: from the `Framework path` row in the config's `Paths` section (resolved relative to `CONFIG_ROOT`); if absent, the first of `.`, `..`, `./confluence-framework`, `../confluence-framework`, `$CONFIG_ROOT/../confluence-framework` that contains `templates/func-spec.md`.
 - **`TARGET`**: the source to document. In order: an explicit path **or URL** given in the request; the matching row in the config's `## Code Repositories` table for the chosen frente (that heading only -- `## Frentes (Sections)` shares the same `Front`/`Suffix` columns but holds technologies, not paths; an empty path means that frente has no code); otherwise ask the user, or proceed with placeholders and no code analysis.
 
-You can resolve all of this with one Bash call. If `TARGET` is a local path, validate it with `test -d`; if it is not readable, tell the user to run `/add-dir <path>` -- do not silently skip the analysis. If `TARGET` is a URL, fetch it with `WebFetch` and remember that the source was a link -- it decides the output folder (step 12).
+You can resolve all of this with one Bash call. Write it as POSIX `sh` so it runs unchanged on macOS, Linux, WSL and Git Bash on Windows: take absolute paths with `(cd "$d" && { pwd -W 2>/dev/null || pwd; })` so Git Bash yields a native `C:/Users/...` root instead of the MSYS `/c/Users/...` form the file tools cannot open, and pipe any value parsed out of a markdown table through `tr -d '\r'` so a CRLF checkout does not leave a carriage return glued to the path.
+
+If `TARGET` is a local path, validate it with `test -d`; if it is not readable, tell the user to run `/add-dir <path>` -- do not silently skip the analysis. Convert `\` to `/` in any Windows path before using it in a shell command, since `sh` treats a backslash as an escape. If `TARGET` is a URL, fetch it with `WebFetch` and remember that the source was a link -- it decides the output folder (step 12).
 
 If a root cannot be resolved, ask the user rather than guessing.
 
@@ -52,7 +54,7 @@ Available types: `func-spec`, `adr`, `api-spec`, `env-config`, `runbook`, `secur
 11. **Include Page Properties table** with all mandatory fields filled
 12. **Write the file** under `{base}/{source-folder}/{type}_{subject-slug}_{YYYY-MM-DD}.md`:
     - **base** = the `Output path` from the config's `Paths` section (resolved relative to `CONFIG_ROOT`), falling back to `$CONFIG_ROOT/output/`
-    - **source-folder** = the basename of `TARGET` slugified when the source is a local repo (`/Users/you/work/my-api` -> `my-api`); `generic` when the source is a link or when there was no source at all
+    - **source-folder** = the basename of `TARGET` slugified when the source is a local repo, after normalizing `\` to `/` and dropping trailing separators (`/Users/you/work/my-api`, `C:/Users/you/work/my-api` and `C:\Users\you\work\my-api` all give `my-api`); `generic` when the source is a link or when there was no source at all
     - Create the directories with `mkdir -p` first. Never write straight into the base folder
 13. **Report** the resolved roots, the source analyzed (path or URL), and the source folder the document was filed under
 
