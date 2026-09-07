@@ -12,9 +12,9 @@
 > - `{CONFIG_PATH}`: Relative path to the config repo's `project-config.md` (e.g. `../../confluence-config-myproject/project-config.md`)
 > - `{SPACE_KEY}`: Confluence space key from project-config.md (e.g. `PROJSPACE`)
 >
-> **For other AI assistants**, copy the content (without this header) to:
-> - GitHub Copilot: `.github/copilot-instructions.md`
-> - Devin: `.devin/guidelines.md`
+> **For other AI assistants**, use `agents-md-example.md` instead -- `AGENTS.md` is the
+> cross-tool standard, read by Codex, Copilot, Devin, opencode, Cursor and others.
+> Ready-made invocable commands per assistant are in `../adapters/`.
 >
 > **Don't want to add files to the code repo?** This file is Mode A. There is also
 > Mode B: register the repo's local path in the `Code Repositories` table of your
