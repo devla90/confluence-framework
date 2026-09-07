@@ -247,11 +247,45 @@ Within a Claude Code session:
 ```
 
 The agent:
-1. Loads the corresponding template (`templates/func-spec.md`)
-2. Loads the documentation standards (`documentation-guide.md`)
-3. Asks you for the minimum necessary information (domain, phase, issue tracker epic)
-4. Generates the complete document with title, labels, Page Properties, and content
-5. Saves the file in `output/` ready to copy to Confluence
+1. Resolves where the framework, the config repo, and the target code repo live
+2. Loads the corresponding template (`templates/func-spec.md`)
+3. Loads the documentation standards (`documentation-guide.md`)
+4. Analyzes the target codebase to extract technical details
+5. Asks you for the minimum necessary information (domain, phase, issue tracker epic)
+6. Generates the complete document with title, labels, Page Properties, and content
+7. Saves the file under `{Output path}/{source}/` — one folder per repo documented, `generic/` for links — ready to copy to Confluence
+
+### Documenting a project at another local path
+
+By default the agent documents the repo you are working in. To document a project
+that lives elsewhere on your machine, either register its path in the
+`Code Repositories` table of your `project-config.md`, or pass the path as a third
+argument:
+
+```
+/doc-confluence api-spec Payments Service /Users/you/work/payments-api
+```
+
+The third argument always wins over the table. If Claude Code does not have access
+to that directory yet, run `/add-dir /Users/you/work/payments-api` first. See
+`customization-guide.md` Step 6 Mode B for the full setup.
+
+You can also pass a **link** instead of a path — an OpenAPI URL, a public doc page:
+
+```
+/doc-confluence api-spec Stripe Payments https://docs.stripe.com/api
+```
+
+### Where your documents are saved
+
+Each document is filed under a folder named after where its information came from:
+
+```
+output/
++-- my-web-app/     <- documents generated from that repo
++-- my-api/         <- documents generated from that repo
++-- generic/        <- source was a link, or you supplied everything by hand
+```
 
 ### Document types it can generate
 

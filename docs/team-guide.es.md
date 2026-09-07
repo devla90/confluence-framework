@@ -248,11 +248,46 @@ Dentro de una sesión de Claude Code:
 ```
 
 El agente:
-1. Carga la plantilla correspondiente (`templates/func-spec.md`)
-2. Carga los estándares de documentación (`documentation-guide.md`)
-3. Te pide la información mínima necesaria (dominio, fase, epic del issue tracker)
-4. Genera el documento completo con título, etiquetas, Page Properties y contenido
-5. Guarda el archivo en `output/` listo para copiar a Confluence
+1. Resuelve dónde están el framework, el repo de configuración y el repo de código destino
+2. Carga la plantilla correspondiente (`templates/func-spec.md`)
+3. Carga los estándares de documentación (`documentation-guide.md`)
+4. Analiza el código del repo destino para extraer detalles técnicos
+5. Te pide la información mínima necesaria (dominio, fase, epic del issue tracker)
+6. Genera el documento completo con título, etiquetas, Page Properties y contenido
+7. Guarda el archivo en `{Output path}/{origen}/` — una carpeta por repo documentado, `generic/` para enlaces — listo para copiar a Confluence
+
+### Documentar un proyecto en otra ruta local
+
+Por defecto el agente documenta el repo en el que estás trabajando. Para documentar
+un proyecto que vive en otra ruta de tu máquina, registra su ruta en la tabla
+`Code Repositories` de tu `project-config.md`, o pásala como tercer argumento:
+
+```
+/doc-confluence api-spec Payments Service /Users/tu-usuario/work/payments-api
+```
+
+El tercer argumento siempre gana sobre la tabla. Si Claude Code todavía no tiene
+acceso a ese directorio, ejecuta antes `/add-dir /Users/tu-usuario/work/payments-api`.
+Ver `customization-guide.md` Step 6 Mode B para la configuración completa.
+
+También puedes pasar un **enlace** en vez de una ruta — una URL de OpenAPI, una página
+de documentación pública:
+
+```
+/doc-confluence api-spec Stripe Payments https://docs.stripe.com/api
+```
+
+### Dónde se guardan tus documentos
+
+Cada documento se archiva en una carpeta con el nombre del origen del que se sacó
+la información:
+
+```
+output/
++-- mi-web-app/     <- documentos generados desde ese repo
++-- mi-api/         <- documentos generados desde ese repo
++-- generic/        <- el origen fue un enlace, o lo aportaste todo tú a mano
+```
 
 ### Tipos de documentos que puede generar
 

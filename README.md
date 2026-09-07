@@ -52,6 +52,15 @@ claude
 > /doc-confluence func-spec Contact Form
 ```
 
+To document a project living at another local path, register it in the
+`Code Repositories` table of your `project-config.md` or pass the path directly:
+
+```bash
+> /doc-confluence api-spec Payments Service /Users/you/work/payments-api
+```
+
+See `docs/customization-guide.md` Step 6 for both working modes.
+
 ---
 
 ## Folder Structure
@@ -71,6 +80,9 @@ confluence-framework/
 |   +-- governance.md                      <- Roles, reviews, enforcement
 |   +-- decision-guide.md                  <- What goes in Confluence vs other tools
 |   +-- customization-guide.md             <- How to adapt the framework to your project
+|   +-- ai-strategy.md                     <- AI integration strategy in 4 phases
+|   +-- implementation-roadmap.md          <- Week-by-week plan with checklists
+|   (each guide also has a .es.md Spanish translation)
 |
 |   PAGE TEMPLATES
 |   (copy to Confluence as Space Templates -- see confluence-templates-guide.md)
@@ -90,16 +102,14 @@ confluence-framework/
 |
 |   EXAMPLES
 |
-+-- examples/                              <- Filled-in examples of each template
-|
-|   STRATEGY AND PLANNING
-|
-+-- ai-strategy.md                         <- AI integration strategy in 4 phases
-+-- implementation-roadmap.md              <- Week-by-week plan with checklists
++-- examples/
+|   +-- project-config-example.md          <- Filled project configuration
+|   +-- repo-claude-md-example.md          <- CLAUDE.md to drop into a code repo (Mode A)
 |
 |   PROJECT CONFIGURATION
 |
 +-- project-config-template.md             <- Template for project-specific values
+|                                             (identity, paths, frentes, code repos)
 |
 |   AI AGENT CONFIGURATION (Claude Code)
 |

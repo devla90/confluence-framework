@@ -15,6 +15,11 @@
 > **For other AI assistants**, copy the content (without this header) to:
 > - GitHub Copilot: `.github/copilot-instructions.md`
 > - Devin: `.devin/guidelines.md`
+>
+> **Don't want to add files to the code repo?** This file is Mode A. There is also
+> Mode B: register the repo's local path in the `Code Repositories` table of your
+> `project-config.md` and generate from the config repo instead, leaving the code
+> repo untouched. See `docs/customization-guide.md` Step 6.
 
 ---
 
@@ -47,7 +52,10 @@ When asked to generate Confluence documentation:
 2. Read the standards: `{FRAMEWORK_PATH}/docs/documentation-guide.md` (sections on naming, labels, Page Properties)
 3. Read the matching template from `{FRAMEWORK_PATH}/templates/`
 4. Analyze the source code in this repo to extract technical information
-5. Generate the document in `output/` following the template
+5. Generate the document in `output/{this-repo-name}/` following the template
+
+Never copy secret values found in this repo into the document -- record variable
+names only and reference the secrets manager defined in project-config.md.
 
 ### Generation rules
 
@@ -77,11 +85,25 @@ When asked to generate Confluence documentation:
 
 ### Output
 
-Generated documents are saved in `output/` with the format:
+Generated documents are saved under a folder named after the source they were
+generated from, so it is always obvious where a page came from:
 
 ```
-output/{type}_{subject}_{YYYY-MM-DD}.md
+output/{source}/{type}_{subject}_{YYYY-MM-DD}.md
 ```
+
+- `{source}` is the name of this repo when the information was read from the code here
+- `{source}` is `generic` when the information came from a link, or from you by hand
+
+```
+output/
++-- {this-repo-name}/
+|   +-- func-spec_contact-form_2026-09-06.md
++-- generic/
+    +-- api-spec_stripe-payments_2026-09-06.md
+```
+
+Never write straight into `output/` -- there is always a source subfolder.
 
 This folder is in `.gitignore` -- generated docs are not committed to the code repo.
 
@@ -117,7 +139,10 @@ This repo generates documentation for Confluence Cloud following the project's s
 2. Read the standards: `../../confluence-framework/docs/documentation-guide.md`
 3. Read the matching template from `../../confluence-framework/templates/`
 4. Analyze the source code in this repo to extract technical information
-5. Generate the document in `output/` following the template
+5. Generate the document in `output/{this-repo-name}/` following the template
+
+Never copy secret values found in this repo into the document -- record variable
+names only and reference the secrets manager defined in project-config.md.
 
 ### Generation rules
 
