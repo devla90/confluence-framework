@@ -18,6 +18,30 @@
 | Documentation language | {english / spanish / portuguese / etc.} |
 | Team size | {number range, e.g. 5-15} |
 
+## Paths
+
+Where the framework lives and where generated documents are written. Both are
+resolved relative to this config repo unless you give an absolute path.
+
+| Field | Value |
+|-------|-------|
+| Framework path | {relative path to confluence-framework, e.g. ../confluence-framework} |
+| Output path | {./output — base folder for generated docs; relative to this config repo, or absolute} |
+
+Generated documents are filed under `{Output path}/{source}/`, where `{source}` is the
+name of the repo the information was read from, or `generic/` when it came from a link
+or from the user only:
+
+```
+output/
++-- my-web-app/
+|   +-- func-spec_contact-form_2026-09-06.md
++-- my-api/
+|   +-- api-spec_authentication_2026-09-06.md
++-- generic/
+    +-- api-spec_stripe-payments_2026-09-06.md
+```
+
 ## Frentes (Sections)
 
 Define the domain sections for your project. Each frente gets a suffix appended to your naming prefix: `[{PREFIX}-{SUFFIX}]`.
@@ -38,6 +62,25 @@ Define the domain sections for your project. Each frente gets a suffix appended 
 | Architecture | ARCH | team:architecture |
 | Security | SEC | team:security |
 | QA & Testing | QA | team:qa |
+
+## Code Repositories
+
+Local paths of the repos that implement each frente. The AI reads code from these
+paths to extract technical information (endpoints, env vars, migrations, test setup).
+Leave the path empty for frentes with no code (Business, UI/UX). Absolute paths
+recommended — relative paths are resolved from this config repo.
+
+This table powers **Mode B** (see `docs/customization-guide.md` Step 6): you work
+from this config repo and the AI reads an external project, instead of you having
+to open that project and put a `CLAUDE.md` inside it.
+
+| Front | Suffix | Local path | Description |
+|-------|--------|-----------|-------------|
+| {Frontend} | {FRONT} | {/absolute/path/to/repo} | {short description} |
+| {Backend} | {BACK} | {/absolute/path/to/repo} | {short description} |
+
+> A path passed as the third argument to `/doc-confluence <type> <subject> [target-path]`
+> overrides whatever is in this table.
 
 ## Technology Labels
 
