@@ -46,6 +46,7 @@ Do NOT read every file. Pick only what the task needs.
 
 | Task | Read |
 |------|------|
+| Understand how the whole thing fits together | `docs/how-it-works.md` |
 | Generate or edit a document | `docs/generation-procedure.md` |
 | Which assistants support what | `docs/compatibility.md` |
 | Standards: naming, labels, lifecycle | `docs/documentation-guide.md` |

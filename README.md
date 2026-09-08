@@ -58,6 +58,10 @@ Ready-made invocable commands per assistant are in `adapters/`. What each one ca
 cannot do -- notably whether it can read a repo outside the current one -- is in
 `docs/compatibility.md`.
 
+New here? `docs/how-it-works.md` walks through the whole design in one read: why there
+is a neutral engine with thin adapters, how an assistant gets from startup to a
+generated file, and what actually differs between tools.
+
 For AI-assisted documentation, install the adapter for your assistant and use the
 `/doc-confluence` command:
 
