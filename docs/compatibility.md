@@ -2,6 +2,10 @@
 
 What each AI assistant can actually do with this framework, and how to set it up.
 
+This is a reference matrix. For the narrative -- why the design is shaped this way and
+what happens end to end when someone generates a document -- read
+[`how-it-works.md`](how-it-works.md).
+
 The generation logic itself (`docs/generation-procedure.md`) is tool-neutral and
 identical everywhere. What differs is three things: how the assistant discovers the
 instructions, whether it offers an invocable command, and — the one that really
