@@ -430,16 +430,33 @@ git status
 
 The skill also strips `\r` defensively, so a stray CRLF file will not break it.
 
-### 4. Installing the skill globally
+### 4. Installing a `/doc-confluence` shortcut
 
-The Mode B install step in Step 6 uses `cp`. In Git Bash it works as written. In PowerShell:
+Optional for every assistant — see Step 6. The install commands use `cp`, which works as
+written in Git Bash and WSL. In PowerShell, use `Copy-Item` instead. Run these from your
+config repo:
 
 ```powershell
-Copy-Item -Recurse -Force ..\confluence-framework\.claude\skills\doc-confluence $env:USERPROFILE\.claude\skills\
-Copy-Item -Recurse -Force ..\confluence-framework\.claude\agents\confluence-doc $env:USERPROFILE\.claude\agents\
+# Claude Code
+Copy-Item -Recurse -Force ..\confluence-framework\adapters\claude-code\skills\doc-confluence $env:USERPROFILE\.claude\skills\
+Copy-Item -Recurse -Force ..\confluence-framework\adapters\claude-code\agents\confluence-doc $env:USERPROFILE\.claude\agents\
+
+# OpenAI Codex
+New-Item -ItemType Directory -Force $env:USERPROFILE\.codex\prompts
+Copy-Item -Force ..\confluence-framework\adapters\codex\doc-confluence.md $env:USERPROFILE\.codex\prompts\
+
+# GitHub Copilot
+New-Item -ItemType Directory -Force .github\prompts
+Copy-Item -Force ..\confluence-framework\adapters\copilot\doc-confluence.prompt.md .github\prompts\
+Copy-Item -Force ..\confluence-framework\adapters\copilot\copilot-instructions.md .github\copilot-instructions.md
+
+# opencode
+New-Item -ItemType Directory -Force .opencode\commands
+Copy-Item -Force ..\confluence-framework\adapters\opencode\doc-confluence.md .opencode\commands\
 ```
 
-`~/.claude/` and `%USERPROFILE%\.claude\` are the same directory.
+`~/.claude/` and `%USERPROFILE%\.claude\` are the same directory; the same holds for
+`~/.codex/`.
 
 ### Granting access to an external repo
 
