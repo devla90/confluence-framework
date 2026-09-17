@@ -32,7 +32,7 @@ frentes, `Paths`, `Code Repositories`, technology labels, documentation language
 
 ## Available document types
 
-`func-spec` · `adr` · `api-spec` · `env-config` · `runbook` · `security-doc` ·
+`func-spec` · `architecture` · `adr` · `api-spec` · `env-config` · `runbook` · `security-doc` ·
 `migration` · `test-plan` · `test-strategy` · `infra-request` · `role-request`
 
 ## Output layout

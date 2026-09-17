@@ -85,7 +85,7 @@ Labels in Confluence Cloud are flat (no hierarchy). We use **namespaced prefixes
 | Prefix | Purpose | Values |
 |--------|---------|--------|
 | `team:` | Responsible team | Define project-specific `team:` labels in your `project-config.md`. Pattern: `team:{team-label}` (e.g., `team:frontend`, `team:backend`, `team:design`, `team:business`, `team:architecture`, `team:security`, `team:qa`) |
-| `type:` | Document type | `type:func-spec`, `type:adr`, `type:runbook`, `type:api-spec`, `type:env-config`, `type:release-note`, `type:deployment-request`, `type:guide`, `type:policy`, `type:migration`, `type:test-plan`, `type:test-strategy`, `type:infra-request`, `type:role-request` |
+| `type:` | Document type | `type:func-spec`, `type:architecture`, `type:adr`, `type:runbook`, `type:api-spec`, `type:env-config`, `type:release-note`, `type:deployment-request`, `type:guide`, `type:policy`, `type:migration`, `type:test-plan`, `type:test-strategy`, `type:infra-request`, `type:role-request` |
 | `status:` | Lifecycle state | `status:draft`, `status:in-review`, `status:approved`, `status:archived`, `status:obsolete` |
 | `phase:` | System phase | `phase:as-is`, `phase:to-be`, `phase:transition` |
 | `env:` | Environment | `env:dev`, `env:qa`, `env:stg`, `env:prod`, `env:all` |
@@ -297,6 +297,7 @@ Single source of truth for document types, templates, and default labels. Used b
 | Type Key | Document Type | Template | Default Labels |
 |----------|--------------|----------|---------------|
 | `func-spec` | Functional Specification | `templates/func-spec.md` | `type:func-spec`, `status:draft`, `team:{team}`, `phase:{phase}` |
+| `architecture` | Architecture Overview — the map of a component: stack, structure, entry points, key decisions | `templates/architecture.md` | `type:architecture`, `status:draft`, `team:{team}` |
 | `adr` | Architecture Decision Record | `templates/adr.md` | `type:adr`, `status:draft`, `team:{team}` |
 | `api-spec` | Service contract — REST, GraphQL, gRPC, events, queues or scheduled jobs | `templates/api-spec.md` | `type:api-spec`, `status:draft`, `team:backend` |
 | `env-config` | Environment Configuration | `templates/env-config.md` | `type:env-config`, `status:draft`, `team:{team}`, `env:{environment}` |
