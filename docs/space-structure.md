@@ -254,7 +254,6 @@ Home ({SPACE_KEY} — Welcome page with links to all sections)
 |   |   +-- [{PREFIX}-FRONT] Common Troubleshooting
 |   |
 |   +-- [{PREFIX}-FRONT] Knowledge Base
-|       +-- [{PREFIX}-FRONT] Decision Log
 |       +-- [{PREFIX}-FRONT] Lessons Learned
 |
 |
@@ -300,7 +299,6 @@ Home ({SPACE_KEY} — Welcome page with links to all sections)
 |   |   +-- [{PREFIX}-BACK] Common Troubleshooting
 |   |
 |   +-- [{PREFIX}-BACK] Knowledge Base
-|       +-- [{PREFIX}-BACK] Decision Log
 |       +-- [{PREFIX}-BACK] Lessons Learned
 |
 |
@@ -329,7 +327,7 @@ Home ({SPACE_KEY} — Welcome page with links to all sections)
 |   |   +-- [{PREFIX}-DESIGN] User Journey Maps
 |   |
 |   +-- [{PREFIX}-DESIGN] Knowledge Base
-|       +-- [{PREFIX}-DESIGN] Design Decision Log
+|       +-- [{PREFIX}-DESIGN] Design Decisions (ADRs)
 |       +-- [{PREFIX}-DESIGN] Lessons Learned
 |
 |
@@ -360,7 +358,7 @@ Home ({SPACE_KEY} — Welcome page with links to all sections)
 |   |   +-- [{PREFIX}-BIZ] KPI Dashboard Links
 |   |
 |   +-- [{PREFIX}-BIZ] Knowledge Base
-|       +-- [{PREFIX}-BIZ] Business Decision Log
+|       +-- [{PREFIX}-BIZ] Business Decisions (ADRs)
 |       +-- [{PREFIX}-BIZ] Lessons Learned
 |
 |
@@ -405,7 +403,6 @@ Home ({SPACE_KEY} — Welcome page with links to all sections)
 |   |   +-- [{PREFIX}-ARCH] Dashboard Links
 |   |
 |   +-- [{PREFIX}-ARCH] Knowledge Base
-|       +-- [{PREFIX}-ARCH] Architecture Decision Log
 |       +-- [{PREFIX}-ARCH] Lessons Learned
 |
 |
@@ -480,7 +477,7 @@ Home ({SPACE_KEY} — Welcome page with links to all sections)
     |   +-- Accessibility Testing Guide
     |
     +-- Knowledge Base
-        +-- QA Decision Log
+        +-- QA Decisions (ADRs)
         +-- Lessons Learned
 ```
 

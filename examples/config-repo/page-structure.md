@@ -102,7 +102,6 @@ Home (ACMEWEB — Welcome page with links to all sections)
 │   │   ├── [ACME-FRONT] Incident Response — Frontend
 │   │   └── [ACME-FRONT] Common Troubleshooting
 │   └── [ACME-FRONT] Knowledge Base
-│       ├── [ACME-FRONT] Decision Log
 │       └── [ACME-FRONT] Lessons Learned
 │
 ├── [ACME-BACK] Backend & Services
@@ -140,7 +139,6 @@ Home (ACMEWEB — Welcome page with links to all sections)
 │   │   ├── [ACME-BACK] Incident Response — Backend
 │   │   └── [ACME-BACK] Common Troubleshooting
 │   └── [ACME-BACK] Knowledge Base
-│       ├── [ACME-BACK] Decision Log
 │       └── [ACME-BACK] Lessons Learned
 │
 ├── [ACME-DESIGN] UI/UX Design
@@ -164,7 +162,7 @@ Home (ACMEWEB — Welcome page with links to all sections)
 │   │   ├── [ACME-DESIGN] Usability Test Results
 │   │   └── [ACME-DESIGN] User Journey Maps
 │   └── [ACME-DESIGN] Knowledge Base
-│       ├── [ACME-DESIGN] Design Decision Log
+│       ├── [ACME-DESIGN] Design Decisions (ADRs)
 │       └── [ACME-DESIGN] Lessons Learned
 │
 ├── [ACME-BIZ] Business & Product
@@ -189,7 +187,7 @@ Home (ACMEWEB — Welcome page with links to all sections)
 │   │   ├── [ACME-BIZ] Analytics Implementation Guide (GTM, GA4)
 │   │   └── [ACME-BIZ] KPI Dashboard Links
 │   └── [ACME-BIZ] Knowledge Base
-│       ├── [ACME-BIZ] Business Decision Log
+│       ├── [ACME-BIZ] Business Decisions (ADRs)
 │       └── [ACME-BIZ] Lessons Learned
 │
 ├── [ACME-ARCH] Architecture & Cloud
@@ -231,7 +229,6 @@ Home (ACMEWEB — Welcome page with links to all sections)
 │   │   ├── [ACME-ARCH] Logging Architecture
 │   │   └── [ACME-ARCH] Dashboard Links
 │   └── [ACME-ARCH] Knowledge Base
-│       ├── [ACME-ARCH] Architecture Decision Log
 │       └── [ACME-ARCH] Lessons Learned
 │
 ├── [ACME-SEC] Security & Compliance
@@ -293,7 +290,7 @@ Home (ACMEWEB — Welcome page with links to all sections)
     │   ├── [ACME-QA] Pre-Deploy Test Checklist
     │   └── [ACME-QA] Accessibility Testing Guide
     └── [ACME-QA] Knowledge Base
-        ├── [ACME-QA] QA Decision Log
+        ├── [ACME-QA] QA Decisions (ADRs)
         └── [ACME-QA] Lessons Learned
 ```
 
