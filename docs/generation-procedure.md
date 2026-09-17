@@ -47,9 +47,13 @@ T=func-spec
 unset CDPATH
 A() { (cd "$1" 2>/dev/null && { pwd -W 2>/dev/null || pwd; }); }
 
-CFG=""
+CFG=""; SKIPPED=""
 for d in . .. ./confluence-config-* ../confluence-config-*; do
-  [ -f "$d/project-config.md" ] && CFG=$(A "$d") && break
+  [ -f "$d/project-config.md" ] || continue
+  N=$(grep -m1 '^| *Project name *|' "$d/project-config.md" | tr -d '\r' \
+      | awk -F'|' '{gsub(/^ +| +$/,"",$3); print $3}')
+  case "$N" in \{*) SKIPPED="$SKIPPED $d"; continue ;; esac
+  CFG=$(A "$d"); break
 done
 
 FW=""
@@ -67,9 +71,17 @@ fi
 
 echo "CONFIG_ROOT=${CFG:-NOT_FOUND}"
 echo "FRAMEWORK_ROOT=${FW:-NOT_FOUND}"
+[ -n "$SKIPPED" ] && echo "SKIPPED_UNFILLED:$SKIPPED"
 echo "--- project-config.md ---"
-{ [ -n "$CFG" ] && cat "$CFG/project-config.md"; } \
-  || echo "NOT_FOUND: no project-config.md in . .. or a sibling confluence-config-*."
+if [ -n "$CFG" ]; then
+  cat "$CFG/project-config.md"
+elif [ -n "$SKIPPED" ]; then
+  echo "NOT_FOUND: the only candidate(s) --$SKIPPED-- still hold {placeholder} values,"
+  echo "so they are unfilled templates, not a project. Fill in project-config.md there,"
+  echo "or start the session from the real config repo."
+else
+  echo "NOT_FOUND: no project-config.md in . .. or a sibling confluence-config-*."
+fi
 echo "--- documentation-guide.md (head) ---"
 { [ -n "$FW" ] && head -60 "$FW/docs/documentation-guide.md"; } \
   || echo "NOT_FOUND: framework root not resolved."
@@ -86,13 +98,38 @@ echo "--- template: $T ---"
 - `tr -d '\r'` stops a CRLF checkout from gluing a carriage return onto the parsed
   path, producing a directory that does not exist.
 - The `case "$P" in \{*)` guard rejects an unfilled `{placeholder}` in the config.
+- The same guard on `Project name` skips a config repo that is still an **unfilled
+  template**. Without it, an untouched `confluence-config-template/` sitting beside your
+  real project can win the `confluence-config-*` glob — it expands alphabetically, first
+  match wins — and the assistant would silently load `{placeholder}` values instead of
+  your project's. Anything whose `Project name` does not start with `{` is treated as a
+  real config, so a config missing that row entirely still resolves as before.
 
 Use the two absolute roots it prints for **every** path from here on. Never use bare
 relative paths like `templates/x.md` or `docs/x.md` — they only resolve from one
 specific directory.
 
 If either root printed `NOT_FOUND`, stop and ask the user for the missing path
-instead of guessing. If more than one `confluence-config-*` sibling exists the first
+instead of guessing. Before asking, check one common cause:
+
+**`CONFIG_ROOT=NOT_FOUND` with a `SKIPPED_UNFILLED:` line.** Every candidate found was
+an unfilled template. Either the user has not filled in `project-config.md` yet, or the
+session was started somewhere that only sees the template. Say which directories were
+skipped — do not fall back to reading them.
+
+**`FRAMEWORK_ROOT=NOT_FOUND` with a `.gitmodules` present.** If the config repo has a
+`.gitmodules` declaring `confluence-framework`, and that directory exists but is empty,
+the submodule was never initialized — someone cloned without `--recurse-submodules`.
+Tell the user to run:
+
+```sh
+git submodule update --init --recursive
+```
+
+That fixes it without re-cloning. Do not hunt for a wrong `Framework path` row in this
+case; the row is fine, the files are simply not there yet.
+
+If more than one `confluence-config-*` sibling exists the first
 match wins — confirm with the user that it is the right project.
 
 ## Step 1: Read the project configuration
