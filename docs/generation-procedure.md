@@ -32,105 +32,22 @@ assistant the two absolute paths before starting.
 
 ## Step 0: Resolve the roots
 
-Two locations must be known before anything else, and neither can be assumed from
-the current directory:
+Two locations must be known before anything else, and neither can be assumed from the
+current directory:
 
 - **`CONFIG_ROOT`** — the directory holding `project-config.md`
 - **`FRAMEWORK_ROOT`** — the framework directory holding `templates/` and `docs/`
 
-Run this. It is POSIX `sh` and works unchanged on macOS, Linux, WSL and Git Bash on
-Windows. Replace `func-spec` with the document type being generated.
+**If they were already resolved for you** — you will see `CONFIG_ROOT=` and
+`FRAMEWORK_ROOT=` lines above, together with the project config, the standards and the
+template — Step 0 is done. Go to Step 1.
 
-```sh
-T=func-spec
+**Otherwise**, run the block in [`resolve-roots.md`](resolve-roots.md), then come back.
+It is POSIX `sh`, works on macOS, Linux, WSL and Git Bash, and prints the two absolute
+roots plus the three files the rest of this procedure needs.
 
-unset CDPATH
-A() { (cd "$1" 2>/dev/null && { pwd -W 2>/dev/null || pwd; }); }
-
-CFG=""; SKIPPED=""
-for d in . .. ./confluence-config-* ../confluence-config-*; do
-  [ -f "$d/project-config.md" ] || continue
-  N=$(grep -m1 '^| *Project name *|' "$d/project-config.md" | tr -d '\r' \
-      | awk -F'|' '{gsub(/^ +| +$/,"",$3); print $3}')
-  case "$N" in \{*) SKIPPED="$SKIPPED $d"; continue ;; esac
-  CFG=$(A "$d"); break
-done
-
-FW=""
-if [ -n "$CFG" ]; then
-  P=$(grep -m1 '^| *Framework path *|' "$CFG/project-config.md" | tr -d '\r' \
-      | awk -F'|' '{gsub(/^ +| +$/,"",$3); print $3}')
-  case "$P" in ""|\{*) P="" ;; esac
-  [ -n "$P" ] && [ -f "$CFG/$P/templates/func-spec.md" ] && FW=$(A "$CFG/$P")
-fi
-if [ -z "$FW" ]; then
-  for d in . .. ./confluence-framework ../confluence-framework "$CFG/../confluence-framework"; do
-    [ -f "$d/templates/func-spec.md" ] && FW=$(A "$d") && break
-  done
-fi
-
-echo "CONFIG_ROOT=${CFG:-NOT_FOUND}"
-echo "FRAMEWORK_ROOT=${FW:-NOT_FOUND}"
-[ -n "$SKIPPED" ] && echo "SKIPPED_UNFILLED:$SKIPPED"
-echo "--- project-config.md ---"
-if [ -n "$CFG" ]; then
-  cat "$CFG/project-config.md"
-elif [ -n "$SKIPPED" ]; then
-  echo "NOT_FOUND: the only candidate(s) --$SKIPPED-- still hold {placeholder} values,"
-  echo "so they are unfilled templates, not a project. Fill in project-config.md there,"
-  echo "or start the session from the real config repo."
-else
-  echo "NOT_FOUND: no project-config.md in . .. or a sibling confluence-config-*."
-fi
-echo "--- documentation-guide.md (head) ---"
-{ [ -n "$FW" ] && head -60 "$FW/docs/documentation-guide.md"; } \
-  || echo "NOT_FOUND: framework root not resolved."
-echo "--- template: $T ---"
-{ [ -n "$FW" ] && cat "$FW/templates/$T.md" 2>/dev/null; } \
-  || echo "TEMPLATE NOT FOUND. Valid types: func-spec adr api-spec env-config runbook security-doc migration test-plan test-strategy infra-request role-request"
-```
-
-**Why each guard is there** — do not simplify them away:
-
-- `pwd -W` yields a native `C:/Users/...` root on Git Bash instead of the MSYS
-  `/c/Users/...` form, which file-reading tools cannot open. It fails harmlessly on
-  POSIX and falls back to `pwd`.
-- `tr -d '\r'` stops a CRLF checkout from gluing a carriage return onto the parsed
-  path, producing a directory that does not exist.
-- The `case "$P" in \{*)` guard rejects an unfilled `{placeholder}` in the config.
-- The same guard on `Project name` skips a config repo that is still an **unfilled
-  template**. Without it, an untouched `confluence-config-template/` sitting beside your
-  real project can win the `confluence-config-*` glob — it expands alphabetically, first
-  match wins — and the assistant would silently load `{placeholder}` values instead of
-  your project's. Anything whose `Project name` does not start with `{` is treated as a
-  real config, so a config missing that row entirely still resolves as before.
-
-Use the two absolute roots it prints for **every** path from here on. Never use bare
-relative paths like `templates/x.md` or `docs/x.md` — they only resolve from one
-specific directory.
-
-If either root printed `NOT_FOUND`, stop and ask the user for the missing path
-instead of guessing. Before asking, check one common cause:
-
-**`CONFIG_ROOT=NOT_FOUND` with a `SKIPPED_UNFILLED:` line.** Every candidate found was
-an unfilled template. Either the user has not filled in `project-config.md` yet, or the
-session was started somewhere that only sees the template. Say which directories were
-skipped — do not fall back to reading them.
-
-**`FRAMEWORK_ROOT=NOT_FOUND` with a `.gitmodules` present.** If the config repo has a
-`.gitmodules` declaring `confluence-framework`, and that directory exists but is empty,
-the submodule was never initialized — someone cloned without `--recurse-submodules`.
-Tell the user to run:
-
-```sh
-git submodule update --init --recursive
-```
-
-That fixes it without re-cloning. Do not hunt for a wrong `Framework path` row in this
-case; the row is fine, the files are simply not there yet.
-
-If more than one `confluence-config-*` sibling exists the first
-match wins — confirm with the user that it is the right project.
+Use those two absolute roots for **every** path from here on. Never use bare relative
+paths like `templates/x.md` — they only resolve from one specific directory.
 
 ## Step 1: Read the project configuration
 
@@ -188,9 +105,8 @@ Two working modes both end here:
 
 It must be one of: `func-spec`, `adr`, `api-spec`, `env-config`, `runbook`,
 `security-doc`, `migration`, `test-plan`, `test-strategy`, `infra-request`,
-`role-request`. If invalid, show the list and ask the user to choose. Full
-descriptions and default labels are in `$FRAMEWORK_ROOT/docs/documentation-guide.md`
-Section 8.
+`role-request`. If invalid, show the list and ask the user to choose. Full descriptions
+and default labels are in Section 8 of the standards, already loaded in Step 0.
 
 ## Step 4: Gather information
 
@@ -245,9 +161,10 @@ user stays a `{placeholder}`. Do not fill gaps with plausible-looking content.
 
 ## Step 6: Generate the document
 
-1. Read the full template from `$FRAMEWORK_ROOT/templates/{type}.md`
-2. Read the naming conventions from `$FRAMEWORK_ROOT/docs/documentation-guide.md`
-3. Use the prefix, space and language from `$CONFIG_ROOT/project-config.md`
+1. Use the template and the naming conventions you already have — Step 0 loaded the
+   template plus sections 1, 8 and 9 of the standards. Do not open that file again
+   unless you need a section outside those three
+2. Use the prefix, space and language from the project config, also already loaded
 4. Apply:
    - **Title**: `[{PREFIX}-{SUFFIX}] {Type} -- {Subject}` (prefix and suffix from
      project-config.md). This applies to **every** title without exception, including
@@ -308,8 +225,8 @@ When finished, report:
 
 ## Quality rules
 
-Full standards are in `$FRAMEWORK_ROOT/docs/documentation-guide.md` Section 9. The
-ones that matter most:
+Section 9 of the standards, loaded in Step 0, has the full list. The ones that matter
+most:
 
 - Write in the language configured in `project-config.md`
 - Never invent data — extract it from the source or ask the user
