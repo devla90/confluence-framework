@@ -36,6 +36,13 @@ This document defines the progressive AI integration strategy for the project's 
 | `ai:auto-generated` | Page content was generated or drafted by AI | AI system (automatically applied) |
 | `ai:reviewed` | AI-generated content has been reviewed and validated by a human | Human reviewer (after review) |
 
+> **When a page is published through an MCP server**, labels cannot be set — the server
+> does not expose them. `ai:auto-generated` is represented instead by a block in the page
+> body carrying the token `MCP-DRAFT-PENDING-COMPLETION`, listing the labels somebody must
+> apply by hand. Deleting that block, having applied them, is what corresponds to adding
+> `ai:reviewed`. A stand-in, not a second vocabulary — it retires when the server supports
+> labels. See `confluence-mcp.md`.
+
 ### Phase 1 Deliverables
 
 - [ ] All templates created as Confluence Cloud Space Templates
