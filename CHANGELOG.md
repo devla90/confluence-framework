@@ -14,6 +14,11 @@ plain semver, because this project ships conventions rather than code.
   top-level structure, entry points, key decisions, dependencies and constraints. The
   page tree already offered "Architecture and Stack" under several frentes with no
   template to fill it.
+- `reference` document type — for pages that are consulted rather than read: glossaries,
+  data dictionaries, service catalogs, inventories and matrices. Twenty-seven pages of the
+  tree are that genre, more than any other gap found. The template forces the page to
+  declare where the authoritative version lives and how it is refreshed, because a
+  reference copied from elsewhere goes stale quietly and a reader trusts it anyway.
 - `guide`, `release-note` and `deployment-request` document types. The label taxonomy
   declared `type:guide`, `type:release-note` and `type:deployment-request` but no template
   existed for any of them, and `guide` alone covers nineteen pages of the tree. Release
