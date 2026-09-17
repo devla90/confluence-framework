@@ -1,8 +1,6 @@
 # Project Configuration — Acme Corp Web Portal
 
-> Part of the example config repo in `examples/config-repo/`. Fictional values, filled in
-> to show what a real one looks like. To start your own, use the template repository —
-> see `../../docs/customization-guide.md`.
+> Filled example. What each section means: `../../docs/customization-guide.md`.
 
 ---
 
@@ -25,9 +23,6 @@
 | Framework path | ../confluence-framework |
 | Output path | ./output |
 
-Documents are filed under `output/{source-repo-name}/`, or `output/generic/` when the
-source was a link.
-
 ## Frentes (Sections)
 
 | Front | Suffix | Technologies | Section Owner | Team Label |
@@ -40,8 +35,6 @@ source was a link.
 
 ## Code Repositories
 
-Relative to this config repo, so the table survives a change of machine.
-
 | Front | Suffix | Local path | Description |
 |-------|--------|-----------|-------------|
 | Frontend | FRONT | ../acme-web-portal | Next.js storefront |
@@ -49,9 +42,6 @@ Relative to this config repo, so the table survives a change of machine.
 | Design | DESIGN | | No code — Figma only |
 | Architecture | ARCH | ../acme-infra | Terraform for AWS |
 | QA & Testing | QA | ../acme-e2e | Playwright suite |
-
-> A path passed as the third argument to `/doc-confluence <type> <subject> [target-path]`
-> overrides whatever is in this table.
 
 ## Technology Labels
 

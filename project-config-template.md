@@ -1,8 +1,7 @@
 # Project Configuration
 
-> Copy this file and fill in your project's values.
-> See `examples/config-repo/` for a complete filled example.
-> See `docs/customization-guide.md` for step-by-step instructions.
+> Tables only — this file is reloaded on every generation. What each section means:
+> `docs/customization-guide.md` -> What each section means.
 
 ---
 
@@ -10,108 +9,58 @@
 
 | Field | Value |
 |-------|-------|
-| Project name | {your project name} |
-| Organization | {your organization} |
+| Project name | {Your Project Name} |
+| Organization | {Your Organization} |
 | Naming prefix | {PREFIX} |
 | Confluence space key | {SPACEKEY} |
 | Space shared with other projects | {yes / no} |
 | Confluence URL | {https://your-org.atlassian.net/wiki} |
-| Documentation language | {english / spanish / portuguese / etc.} |
-| Team size | {number range, e.g. 5-15} |
-
-> **Sharing a space?** The free Confluence plan gives you one space. If other projects
-> live in it too, set the row above to `yes` and make sure your `Naming prefix` is
-> different from theirs — it is what keeps page titles unique. Confluence requires titles
-> to be unique per space, and nesting under a project page does not change that.
-> See `docs/space-structure.md` -> More than one project in the same space.
-
+| Documentation language | {english / spanish / portuguese} |
+| Team size | {e.g. 5-15} |
 
 ## Paths
 
-Where the framework lives and where generated documents are written. Both are
-resolved relative to this config repo unless you give an absolute path.
-
 | Field | Value |
 |-------|-------|
-| Framework path | {relative path to confluence-framework, e.g. ../confluence-framework} |
-| Output path | {./output — base folder for generated docs; relative to this config repo, or absolute} |
-
-Generated documents are filed under `{Output path}/{source}/`, where `{source}` is the
-name of the repo the information was read from, or `generic/` when it came from a link
-or from the user only:
-
-```
-output/
-+-- my-web-app/
-|   +-- func-spec_contact-form_2026-09-06.md
-+-- my-api/
-|   +-- api-spec_authentication_2026-09-06.md
-+-- generic/
-    +-- api-spec_stripe-payments_2026-09-06.md
-```
+| Framework path | ../confluence-framework |
+| Output path | ./output |
 
 ## Frentes (Sections)
 
-Define the domain sections for your project. Each frente gets a suffix appended to your naming prefix: `[{PREFIX}-{SUFFIX}]`.
-
 | Front | Suffix | Technologies | Section Owner | Team Label |
 |-------|--------|-------------|---------------|------------|
-| {name} | {SUFFIX} | {tech1, tech2} | {role} | team:{label} |
-| {name} | {SUFFIX} | {tech1, tech2} | {role} | team:{label} |
-
-**Default frentes** (common for web projects — adapt as needed):
-
-| Front | Suffix | Team Label |
-|-------|--------|------------|
-| Frontend | FRONT | team:frontend |
-| Backend | BACK | team:backend |
-| UI/UX | DESIGN | team:design |
-| Business | BIZ | team:business |
-| Architecture | ARCH | team:architecture |
-| Security | SEC | team:security |
-| QA & Testing | QA | team:qa |
+| Frontend | FRONT | {tech, tech} | {role} | team:frontend |
+| Backend | BACK | {tech, tech} | {role} | team:backend |
+| UI/UX | DESIGN | {tech, tech} | {role} | team:design |
+| Business | BIZ | {tech, tech} | {role} | team:business |
+| Architecture | ARCH | {tech, tech} | {role} | team:architecture |
+| Security | SEC | {tech, tech} | {role} | team:security |
+| QA & Testing | QA | {tech, tech} | {role} | team:qa |
 
 ## Code Repositories
 
-Paths of the repos that implement each frente. The AI reads code from these paths to
-extract technical information (endpoints, env vars, migrations, test setup). Leave the
-path empty for frentes with no code (Business, UI/UX).
-
-This table powers **Mode B** (see `docs/customization-guide.md` Step 6): you work from
-this config repo and the AI reads an external project, instead of you having to put an
-instruction file inside that project.
-
-**Prefer relative paths.** They are resolved from this config repo, so they keep working
-on a teammate's machine and on your next one. This file is committed and shared — an
-absolute path like `/Users/you/work/my-api` or `C:/Users/you/work/my-api` is specific to
-one machine and will break for everyone else.
-
 | Front | Suffix | Local path | Description |
 |-------|--------|-----------|-------------|
-| {Frontend} | {FRONT} | {../my-web-app} | {short description} |
-| {Backend} | {BACK} | {../../work/my-api} | {short description} |
-
-Absolute paths still work when a repo genuinely lives outside any shared layout — just
-know what you are trading away.
-
-> For a one-off run against a machine-specific path, pass it as the third argument:
-> `/doc-confluence <type> <subject> <path-or-url>`. It overrides this table and leaves
-> the shared config untouched.
+| Frontend | FRONT | {../my-frontend-repo} | {short description} |
+| Backend | BACK | {../my-backend-repo} | {short description} |
+| UI/UX | DESIGN | | No code — Figma only |
+| Business | BIZ | | No code — Jira only |
+| Architecture | ARCH | {../my-infra-repo} | {short description} |
+| Security | SEC | | |
+| QA & Testing | QA | {../my-e2e-repo} | {short description} |
 
 ## Technology Labels
 
-Define `tech:` labels specific to your project's stack.
-
 | Label | Description |
 |-------|-------------|
-| tech:{name} | {description} |
-| tech:{name} | {description} |
+| tech:{name} | {what it is} |
+| tech:{name} | {what it is} |
 
 ## Secrets Platform
 
 | Field | Value |
 |-------|-------|
-| Tool | {AWS Secrets Manager / Azure Key Vault / HashiCorp Vault / GCP Secret Manager / other} |
+| Tool | {AWS Secrets Manager / Azure Key Vault / HashiCorp Vault / GCP Secret Manager} |
 | Reference format in docs | {e.g. "See AWS Secrets Manager: {path}"} |
 
 ## Tools
@@ -119,30 +68,10 @@ Define `tech:` labels specific to your project's stack.
 | Tool | Purpose |
 |------|---------|
 | {Jira / Azure DevOps / Linear} | Task management and backlog |
-| {Figma / Sketch / Adobe XD} | UI/UX design |
+| {Figma / Sketch} | UI/UX design |
 | {GitHub / GitLab / Bitbucket} | Source code |
-| {tool} | {purpose} |
+| {draw.io} | Architecture and flow diagrams |
 
 ## Overrides
 
-Deviations from the framework defaults. The AI reads this section and respects them.
-
-**Take a subset of the standard; do not fork it.** Leaving out a part needs no entry
-here — a project with only QA and PROD simply has no DEV or STG pages, and that is fine.
-An entry is for when something genuinely has to work differently, and writing it down
-keeps the deviation visible and reversible instead of silently diverging.
-
-| Guide | Override | Reason |
-|-------|----------|--------|
-| {none by default} | | |
-
-Examples of what belongs here:
-
-| Guide | Override | Reason |
-|-------|----------|--------|
-| `governance.md` | Review on demand, no quarterly audit | Team of 3, weekly release cycle |
-| `documentation-guide.md` | No `phase:` labels | Greenfield project, there is no AS-IS |
-
-What does **not** belong here: a different naming pattern, renamed lifecycle states, or a
-private label taxonomy. Those make two projects in the same space read differently and
-turn the framework into a starter kit rather than a standard.
+None.

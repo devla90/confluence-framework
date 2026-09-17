@@ -227,7 +227,24 @@ Edit `project-config.md` and replace all `{placeholder}` values:
 6. **Secrets platform**: Where your team stores secrets (AWS Secrets Manager, Azure Key Vault, etc.)
 7. **Tools**: Your team's toolchain
 
-See `examples/config-repo/` in the framework repo for a complete filled example — config, page structure and entry files together.
+See `examples/config-repo/` in the framework repo for a complete filled example — config,
+page structure and entry files together.
+
+### What each section means
+
+`project-config.md` is deliberately tables only: it is reloaded on every document
+generation, so prose there is paid for again and again. The explanations live here
+instead, where they are read once.
+
+| Section | What to put in it |
+|---------|-------------------|
+| **Identity** | Project name, organization, naming prefix, space key, URL, documentation language. The prefix is what appears in every page title as `[{PREFIX}-{SUFFIX}]`, so it must differ from any other project sharing the space |
+| **Paths** | `Framework path` — where the framework is, per the layout you chose. `Output path` — the base folder for generated documents |
+| **Frentes** | Your team structure. The seven defaults are a common starting point for web projects: delete the ones you do not have and rename the rest. The suffix is the second half of every page title |
+| **Code Repositories** | One row per repo you want documented. An empty path means that frente has no code, and the AI generates placeholders instead of reading any. **Prefer relative paths** (`../my-api`): this file is committed and shared, so an absolute path breaks for every teammate and on your next machine. A path passed as the third argument to `/doc-confluence` overrides the table for one run |
+| **Technology Labels** | One row per technology your team will want to filter pages by in Confluence |
+| **Secrets Platform** | Never a credential — only *where* credentials live, so generated documents point at the right place instead of inlining a value |
+| **Overrides** | Genuine deviations from the framework defaults. Leaving part of the standard out needs no entry; doing something differently does |
 
 ## Step 4: Create Your Config Repo AGENTS.md
 
