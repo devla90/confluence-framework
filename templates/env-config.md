@@ -1,6 +1,9 @@
 # [{PREFIX}-{FRONT}] ENV-{ENVIRONMENT} — {Technology/Component}
 
 > **Default labels**: `type:env-config`, `status:draft`, `team:{team}`, `env:{dev|qa|stg|prod}`
+>
+> **Ask the user for**: Environment (DEV/QA/STG/PROD), technology/component, main parameters
+> **Look for in the source**: `.env.example`, config files, IaC (Terraform/CDK/docker-compose), deployment manifests
 
 ---
 

@@ -1,6 +1,9 @@
 # [{PREFIX}-{FRONT}] Test Plan — {Feature/Sprint}
 
 > **Default labels**: `type:test-plan`, `status:draft`, `team:qa`
+>
+> **Ask the user for**: Feature/sprint under test, test types, environment, entry/exit criteria
+> **Look for in the source**: Test setup, runners, coverage config, existing test directories
 
 ---
 

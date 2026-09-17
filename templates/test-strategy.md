@@ -1,6 +1,9 @@
 # [{PREFIX}-{FRONT}] Testing Strategy — {Project/Component}
 
 > **Default labels**: `type:test-strategy`, `status:draft`, `team:qa`
+>
+> **Ask the user for**: Scope (project/component), test types, automation tools, target metrics
+> **Look for in the source**: Test setup, runners, coverage config, existing test directories
 
 ---
 

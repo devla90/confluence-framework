@@ -1,6 +1,9 @@
 # [{PREFIX}-{FRONT}] RB — {System} — {Scenario}
 
 > **Default labels**: `type:runbook`, `status:draft`, `team:{team}`, `priority:{critical|high|normal}`
+>
+> **Ask the user for**: Affected system, scenario, severity
+> **Look for in the source**: Deploy scripts, health checks, logging and monitoring config, CI pipelines
 
 ---
 
