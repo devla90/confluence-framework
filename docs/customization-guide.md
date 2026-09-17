@@ -306,7 +306,7 @@ cp -r ../confluence-framework/.claude/agents/confluence-doc ~/.claude/agents/
 mkdir -p ~/.codex/prompts && cp ../confluence-framework/adapters/codex/doc-confluence.md ~/.codex/prompts/
 
 # opencode
-mkdir -p .opencode/command && cp ../confluence-framework/adapters/opencode/doc-confluence.md .opencode/command/
+mkdir -p .opencode/commands && cp ../confluence-framework/adapters/opencode/doc-confluence.md .opencode/commands/
 
 # GitHub Copilot
 mkdir -p .github/prompts && cp ../confluence-framework/adapters/copilot/doc-confluence.prompt.md .github/prompts/
