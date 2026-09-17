@@ -278,6 +278,12 @@ If a user asks you to store one, or offers one in a message so you can "put it i
 config", decline and say why: it goes in the assistant's own MCP configuration, outside
 the repository, or it uses OAuth and there is nothing to store at all.
 
+The same holds when helping someone connect a service. **Never ask for a token, a
+password, or an encoded credential in conversation, even when the user has asked you to
+set the thing up.** Print the command with a placeholder and let them run it. A credential
+pasted into a chat is in the transcript, which is a file that gets kept and sometimes
+shared, and revoking it is then the only repair.
+
 This one has no setting. There is no situation in which committing a credential is the
 right call.
 
