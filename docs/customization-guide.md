@@ -84,12 +84,14 @@ To pin the framework to a release instead of tracking the latest:
 **2. Check the `Framework path` row** in your config repo's `project-config.md`. For the
 sibling layout it is `../confluence-framework`. Root resolution reads this row first.
 
-**3. Install the adapter for your assistant.** One command, once per machine — see
-[`../adapters/README.md`](../adapters/README.md) for the full matrix. For example:
+**3. Optionally, install a `/doc-confluence` shortcut.** Skip this and everything still
+works — your assistant reads `AGENTS.md` and follows the procedure from a plain-language
+request. The shortcut only saves typing. One command per machine, from your config repo;
+see [`../adapters/README.md`](../adapters/README.md) for all of them. For example:
 
 ```bash
 # OpenAI Codex
-mkdir -p ~/.codex/prompts && cp confluence-framework/adapters/codex/doc-confluence.md ~/.codex/prompts/
+mkdir -p ~/.codex/prompts && cp ../confluence-framework/adapters/codex/doc-confluence.md ~/.codex/prompts/
 ```
 
 **4. Start the session from your config repo.** Its `AGENTS.md` is versioned, so it
@@ -295,7 +297,7 @@ Also fill the `Paths` section so the framework and the output destination are ex
 | Output path | ./output |
 ```
 
-**2. Install the adapter for your assistant.** Each one is a thin invocable command that points at `docs/generation-procedure.md`; none of them duplicates the logic. Pick yours:
+**2. Optionally, install a `/doc-confluence` shortcut.** Mode B works without it — your assistant reads `AGENTS.md` and follows the procedure from a plain-language request. Each shortcut is a thin command pointing at `docs/generation-procedure.md`; none duplicates the logic. Pick yours, running from your config repo:
 
 ```bash
 # Claude Code -- ships in .claude/, scoped to the framework repo, so install globally

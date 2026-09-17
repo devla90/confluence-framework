@@ -63,6 +63,9 @@ Most guides also have a `.es.md` Spanish translation.
 
 ## Per-assistant setup
 
-`adapters/` holds a ready-made invocable command for each assistant, plus install
-instructions. Each adapter is thin — it points back at
-`docs/generation-procedure.md` rather than restating it.
+Nothing needs installing: you are reading `AGENTS.md`, which is all an assistant needs
+to follow the procedure from a plain-language request.
+
+`adapters/` holds an optional `/doc-confluence` shortcut for each assistant, plus install
+instructions. Each adapter is thin — it points back at `docs/generation-procedure.md`
+rather than restating it.
