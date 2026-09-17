@@ -12,6 +12,8 @@
 | Organization | Acme Corp |
 | Naming prefix | ACME |
 | Confluence space key | ACMEWEB |
+| Check Confluence before generating | no |
+| Confirm before publishing | yes |
 | Confluence URL | https://acme-corp.atlassian.net/wiki |
 | Documentation language | english |
 | Team size | 8-12 |

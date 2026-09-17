@@ -29,6 +29,36 @@ matters — **whether it can read a folder outside the current repo**.
 
 ---
 
+## Reading Confluence (optional)
+
+An assistant that can reach your Confluence space can verify a title is free before
+writing, read the real page tree, and notice a page that already exists. Setup, what it
+buys and what it deliberately excludes: [`confluence-mcp.md`](confluence-mcp.md).
+
+It runs over MCP, which is a protocol rather than any one vendor's feature — several
+assistants speak it. Configuration is per assistant:
+
+| Assistant | How to connect Atlassian's remote MCP server |
+|-----------|---------------------------------------------|
+| **Claude Code** | `claude mcp add --transport http atlassian https://mcp.atlassian.com/v1/sse`, or an entry in `.mcp.json` |
+| **OpenAI Codex** | An `[mcp_servers.atlassian]` entry in `~/.codex/config.toml` |
+| **GitHub Copilot** | `.vscode/mcp.json` in the workspace, or the MCP section of VS Code settings |
+| **opencode** | An `mcp` entry in `opencode.json` |
+| **Devin** | Not applicable — no local MCP configuration |
+
+Authentication is OAuth 2.1 by default — a browser opens and you authorise — or an API
+token, if your Atlassian admin has enabled that. The trade-off between them is in
+[`confluence-mcp.md`](confluence-mcp.md).
+
+**Grant read and search scopes only.** Withholding write does not merely reduce risk, it
+removes the possibility of an assistant publishing to a shared space by accident.
+
+The exact commands change as these tools evolve; if one does not work, check that
+assistant's current MCP documentation. The smoke test is the same everywhere — ask it to
+list your Confluence spaces, and see whether it answers with real ones.
+
+---
+
 ## The Mode B limitation, stated plainly
 
 Mode B needs the assistant to read files outside the repository it was started in.
