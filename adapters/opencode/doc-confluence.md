@@ -7,7 +7,7 @@ Generate a Confluence Cloud document following this project's documentation fram
 
 Arguments: $ARGUMENTS — expected as `<type> <subject> [source-path-or-url]`.
 
-Valid types: func-spec, architecture, adr, api-spec, env-config, runbook, guide,
+Valid types: func-spec, architecture, adr, api-spec, env-config, runbook, guide, reference,
 security-doc, migration, release-note, deployment-request, test-plan, test-strategy,
 infra-request, role-request.
 
