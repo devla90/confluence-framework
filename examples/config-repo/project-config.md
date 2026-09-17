@@ -1,6 +1,8 @@
-# Project Configuration — Example
+# Project Configuration — Acme Corp Web Portal
 
-> Fictional example for reference. Copy `project-config-template.md` and adapt to your project.
+> Part of the example config repo in `examples/config-repo/`. Fictional values, filled in
+> to show what a real one looks like. To start your own, use the template repository —
+> see `../../docs/customization-guide.md`.
 
 ---
 
