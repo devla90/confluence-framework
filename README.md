@@ -156,7 +156,6 @@ confluence-framework/
 +-- examples/
 |   +-- config-repo/                       <- A complete filled config repo, for reading
 |   +-- agents-md-example.md               <- AGENTS.md to drop into a code repo (Mode A)
-|   +-- repo-claude-md-example.md          <- Claude Code variant of the same
 |
 |   PROJECT CONFIGURATION
 |
@@ -170,14 +169,14 @@ confluence-framework/
 |
 |   AI ASSISTANT CONFIGURATION
 |
-+-- AGENTS.md                              <- Cross-tool entry point (Codex, Copilot, Devin, opencode, ...)
-+-- CLAUDE.md                              <- Claude Code layer; imports AGENTS.md
-+-- adapters/                              <- One thin invocable command per assistant
-|   +-- claude-code/  copilot/  codex/  opencode/  devin/
-+-- .claude/
-    +-- agents/confluence-doc/             <- Claude Code documentation agent
-    +-- skills/doc-confluence/             <- /doc-confluence skill (reusable command)
++-- AGENTS.md                              <- Cross-tool entry point, read by every assistant
++-- CLAUDE.md                              <- One-line shim: Claude Code cannot read AGENTS.md yet
++-- adapters/                              <- Optional /doc-confluence shortcut per assistant
+    +-- claude-code/                       <- skill, agent, Mode A template
+    +-- codex/  copilot/  opencode/  devin/
 ```
+
+Nothing assistant-specific sits at the root beyond the nine-line `CLAUDE.md` shim.
 
 ---
 
