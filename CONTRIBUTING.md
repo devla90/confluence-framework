@@ -64,6 +64,11 @@ someone to publish it unchanged.
 
 Copy the shape of `adapters/codex/doc-confluence.md` — it is the smallest one.
 
+Claude Code is the one exception to that layout: its skill and agent live in `.claude/`,
+which Claude Code reads automatically, with `adapters/claude-code/README.md` explaining
+the arrangement. Follow the same pattern only if the assistant you are adding also reads
+a directory in this repo directly.
+
 ## Before opening a pull request
 
 - Markdown code fences balanced, files LF (a `.gitattributes` enforces this)

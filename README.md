@@ -173,7 +173,7 @@ confluence-framework/
 +-- AGENTS.md                              <- Cross-tool entry point (Codex, Copilot, Devin, opencode, ...)
 +-- CLAUDE.md                              <- Claude Code layer; imports AGENTS.md
 +-- adapters/                              <- One thin invocable command per assistant
-|   +-- copilot/  codex/  opencode/  devin/
+|   +-- claude-code/  copilot/  codex/  opencode/  devin/
 +-- .claude/
     +-- agents/confluence-doc/             <- Claude Code documentation agent
     +-- skills/doc-confluence/             <- /doc-confluence skill (reusable command)
