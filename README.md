@@ -20,64 +20,86 @@ A universal, reusable framework for organizing, standardizing, and maintaining p
 
 ## Quick Start
 
-### 1. Clone this framework
+Nothing to install. This framework is plain Markdown — no build, no dependencies, no
+runtime.
+
+### Just want the standards?
 
 ```bash
-git clone <framework-repo-url>
-cd confluence-framework
+git clone https://github.com/devla90/confluence-framework
 ```
 
-### 2. Create your project configuration
+Read `docs/documentation-guide.md` for the naming and label conventions, browse
+`templates/` for the 11 page templates, and copy the ones you want into Confluence by
+hand following `docs/confluence-templates-guide.md`. That is a complete, valid way to
+use this project — no AI assistant required.
 
-Copy the configuration template and fill in your project-specific values:
+### Want an AI assistant to generate the documents?
+
+Then you also need a **config repo**: a small repository holding your project's values
+(naming prefix, Confluence space key, frentes, code repository paths). Start it from the
+template:
+
+1. Open [confluence-config-template](https://github.com/devla90/confluence-config-template)
+   and press **Use this template**
+2. Clone both repos side by side:
+   ```bash
+   git clone https://github.com/devla90/confluence-framework
+   git clone <your-new-config-repo>
+   ```
+3. Fill in `project-config.md` in your config repo
+4. Install the adapter for your assistant — one command, listed in
+   [`adapters/README.md`](adapters/README.md)
+5. From your config repo, run `/doc-confluence <type> <subject>`
+
+Full walkthrough: [`docs/customization-guide.md`](docs/customization-guide.md).
+How the whole thing fits together: [`docs/how-it-works.md`](docs/how-it-works.md).
+
+### Which AI assistants
+
+The generation logic lives in one tool-neutral file,
+[`docs/generation-procedure.md`](docs/generation-procedure.md), reachable from
+`AGENTS.md` — the cross-tool standard read by OpenAI Codex, GitHub Copilot, Devin,
+opencode, Cursor, Windsurf, Zed, Aider and others. Claude Code reads it through an
+`@AGENTS.md` import in `CLAUDE.md`.
+
+Ready-made invocable commands per assistant are in [`adapters/`](adapters/). What each
+one can and cannot do — notably whether it can read a repo outside the current one — is
+in [`docs/compatibility.md`](docs/compatibility.md).
+
+Works on macOS, Linux, WSL and Windows (Git Bash) — see
+[`docs/customization-guide.md`](docs/customization-guide.md) -> Windows notes.
+
+---
+
+## Versioning
+
+Releases are tagged. To pin your team to a specific version:
 
 ```bash
-cp project-config-template.md my-project-config.md
+git clone --branch v1.0.0 https://github.com/devla90/confluence-framework
 ```
 
-Edit `my-project-config.md` to set your space key, domain prefixes, team names, and technology stack. All `{SPACE_KEY}`, `{PREFIX}`, and other placeholders in the framework docs reference values you define here.
-
-### 3. Start generating documentation
-
-Use the guides in `docs/` to set up your Confluence space, create templates, and begin documenting:
-
-1. Follow `docs/space-structure.md` to create your space and page tree
-2. Follow `docs/confluence-templates-guide.md` to set up Space Templates
-3. Follow `docs/team-guide.md` to onboard your team
-
-Works on macOS, Linux, WSL and Windows (Git Bash) -- see `docs/customization-guide.md` -> Windows notes.
-
-## Which AI assistants
-
-The generation logic lives in one tool-neutral file, `docs/generation-procedure.md`,
-reachable from `AGENTS.md` -- the cross-tool standard read by OpenAI Codex, GitHub
-Copilot, Devin, opencode, Cursor, Windsurf, Zed, Aider and others. Claude Code reads it
-through a `@AGENTS.md` import in `CLAUDE.md`.
-
-Ready-made invocable commands per assistant are in `adapters/`. What each one can and
-cannot do -- notably whether it can read a repo outside the current one -- is in
-`docs/compatibility.md`.
-
-New here? `docs/how-it-works.md` walks through the whole design in one read: why there
-is a neutral engine with thin adapters, how an assistant gets from startup to a
-generated file, and what actually differs between tools.
-
-For AI-assisted documentation, install the adapter for your assistant and use the
-`/doc-confluence` command:
+and to move deliberately when you are ready:
 
 ```bash
-claude
-> /doc-confluence func-spec Contact Form
+git fetch --tags && git checkout v1.1.0
 ```
 
-To document a project living at another local path, register it in the
-`Code Repositories` table of your `project-config.md` or pass the path directly:
+Pinning matters because this framework ships **conventions**, not code: a change to the
+naming pattern or the label taxonomy affects pages your team has already published. You
+decide when to absorb that.
 
-```bash
-> /doc-confluence api-spec Payments Service /Users/you/work/payments-api
-```
+Version numbers are not plain semver, because there is nothing to compile:
 
-See `docs/customization-guide.md` Step 6 for both working modes.
+| Bump | Means | Example |
+|------|-------|---------|
+| **Major** | A convention changed. Existing pages may need revisiting | Naming pattern or label taxonomy changes; a template's required sections change |
+| **Minor** | Something was added, nothing broke | A new page template, a new assistant adapter, a new guide |
+| **Patch** | Corrections only | Typos, clarified wording, fixed links |
+
+Every change is recorded in [`CHANGELOG.md`](CHANGELOG.md). When reporting a problem,
+say which version you were on — behaviour depends on it.
 
 ---
 
@@ -98,11 +120,12 @@ confluence-framework/
 |   +-- governance.md                      <- Roles, reviews, enforcement
 |   +-- decision-guide.md                  <- What goes in Confluence vs other tools
 |   +-- customization-guide.md             <- How to adapt the framework to your project
+|   +-- how-it-works.md                    <- The design explained end to end, for people
 |   +-- generation-procedure.md            <- THE generation flow (tool-neutral, single source of truth)
 |   +-- compatibility.md                   <- What each AI assistant can and cannot do
 |   +-- ai-strategy.md                     <- AI integration strategy in 4 phases
 |   +-- implementation-roadmap.md          <- Week-by-week plan with checklists
-|   (each guide also has a .es.md Spanish translation)
+|   (most guides also have a .es.md Spanish translation)
 |
 |   PAGE TEMPLATES
 |   (copy to Confluence as Space Templates -- see confluence-templates-guide.md)
@@ -123,13 +146,19 @@ confluence-framework/
 |   EXAMPLES
 |
 +-- examples/
-|   +-- project-config-example.md          <- Filled project configuration
-|   +-- repo-claude-md-example.md          <- CLAUDE.md to drop into a code repo (Mode A)
+|   +-- config-repo/                       <- A complete filled config repo, for reading
+|   +-- agents-md-example.md               <- AGENTS.md to drop into a code repo (Mode A)
+|   +-- repo-claude-md-example.md          <- Claude Code variant of the same
 |
 |   PROJECT CONFIGURATION
 |
 +-- project-config-template.md             <- Template for project-specific values
 |                                             (identity, paths, frentes, code repos)
+|
+|   PROJECT META
+|
++-- CHANGELOG.md                           <- What changed in each release
++-- CONTRIBUTING.md                        <- How to contribute; the single-source-of-truth rule
 |
 |   AI ASSISTANT CONFIGURATION
 |
@@ -179,14 +208,20 @@ To adapt the framework for a different language:
 
 | File | Purpose |
 |------|---------|
+| [`docs/how-it-works.md`](docs/how-it-works.md) | The design explained end to end — start here |
 | [`docs/customization-guide.md`](docs/customization-guide.md) | How to adapt the framework to your project |
 | [`project-config-template.md`](project-config-template.md) | Template for your project-specific configuration |
+| [`examples/config-repo/`](examples/config-repo/) | A complete filled config repo, for reading |
 | [`docs/documentation-guide.md`](docs/documentation-guide.md) | Naming, labels, lifecycle, and CQL query standards |
+| [`docs/generation-procedure.md`](docs/generation-procedure.md) | The generation flow every assistant follows |
+| [`docs/compatibility.md`](docs/compatibility.md) | What each AI assistant can and cannot do |
 | [`docs/space-structure.md`](docs/space-structure.md) | Full page tree and space architecture |
 | [`docs/confluence-templates-guide.md`](docs/confluence-templates-guide.md) | Step-by-step guide to creating Confluence templates |
 | [`docs/team-guide.md`](docs/team-guide.md) | Team onboarding: manual and AI-assisted workflows |
 | [`docs/governance.md`](docs/governance.md) | Roles, review cadences, enforcement |
-| [`ai-strategy.md`](ai-strategy.md) | 4-phase AI integration roadmap |
+| [`docs/ai-strategy.md`](docs/ai-strategy.md) | 4-phase AI integration roadmap |
+| [`CHANGELOG.md`](CHANGELOG.md) | What changed in each release |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | How to contribute |
 
 ---
 
