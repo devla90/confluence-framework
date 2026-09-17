@@ -444,41 +444,41 @@ Home ({SPACE_KEY} — Welcome page with links to all sections)
 |
 +-- [{PREFIX}-QA] QA & Testing
     |
-    +-- QA Strategy
-    |   +-- Overall Testing Strategy
-    |   +-- Test Types and Tools
-    |   +-- Automation Strategy
-    |   +-- Quality Criteria and Metrics
+    +-- [{PREFIX}-QA] QA Strategy
+    |   +-- [{PREFIX}-QA] Overall Testing Strategy
+    |   +-- [{PREFIX}-QA] Test Types and Tools
+    |   +-- [{PREFIX}-QA] Automation Strategy
+    |   +-- [{PREFIX}-QA] Quality Criteria and Metrics
     |
-    +-- Test Plans
-    |   +-- {Feature/Sprint} — Test Plan
+    +-- [{PREFIX}-QA] Test Plans
+    |   +-- [{PREFIX}-QA] {Feature/Sprint} — Test Plan
     |   +-- ... (repeats per test cycle)
     |
-    +-- QA Environments
-    |   +-- QA Environment Configuration
-    |   +-- Test Data and Management
-    |   +-- Compatibility Matrix (browsers, devices)
+    +-- [{PREFIX}-QA] QA Environments
+    |   +-- [{PREFIX}-QA] QA Environment Configuration
+    |   +-- [{PREFIX}-QA] Test Data and Management
+    |   +-- [{PREFIX}-QA] Compatibility Matrix (browsers, devices)
     |
-    +-- Reports and Metrics
-    |   +-- Defect Dashboard (link to issue tracker dashboard)
-    |   +-- Test Coverage Reports
-    |   +-- Quality Retrospectives
+    +-- [{PREFIX}-QA] Reports and Metrics
+    |   +-- [{PREFIX}-QA] Defect Dashboard (link to issue tracker dashboard)
+    |   +-- [{PREFIX}-QA] Test Coverage Reports
+    |   +-- [{PREFIX}-QA] Quality Retrospectives
     |
-    +-- Test Automation
-    |   +-- Framework and Tools
-    |   +-- Framework Setup Guide
-    |   +-- Automation Coverage (metrics)
-    |   +-- Automation Technical Decisions (ADRs)
+    +-- [{PREFIX}-QA] Test Automation
+    |   +-- [{PREFIX}-QA] Framework and Tools
+    |   +-- [{PREFIX}-QA] Framework Setup Guide
+    |   +-- [{PREFIX}-QA] Automation Coverage (metrics)
+    |   +-- [{PREFIX}-QA] Automation Technical Decisions (ADRs)
     |
-    +-- Guides and Processes
-    |   +-- How to Report a Defect (guide for devs)
-    |   +-- Regression Process
-    |   +-- Pre-Deploy Testing Checklist
-    |   +-- Accessibility Testing Guide
+    +-- [{PREFIX}-QA] Guides and Processes
+    |   +-- [{PREFIX}-QA] How to Report a Defect (guide for devs)
+    |   +-- [{PREFIX}-QA] Regression Process
+    |   +-- [{PREFIX}-QA] Pre-Deploy Testing Checklist
+    |   +-- [{PREFIX}-QA] Accessibility Testing Guide
     |
-    +-- Knowledge Base
-        +-- QA Decisions (ADRs)
-        +-- Lessons Learned
+    +-- [{PREFIX}-QA] Knowledge Base
+        +-- [{PREFIX}-QA] QA Decisions (ADRs)
+        +-- [{PREFIX}-QA] Lessons Learned
 ```
 
 ---
