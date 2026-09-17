@@ -1,6 +1,9 @@
 # [{PREFIX}-{FRONT}] Infrastructure Request — {Resource Description}
 
 > **Default labels**: `type:infra-request`, `status:draft`, `team:architecture`, `env:{environment}`
+>
+> **Ask the user for**: Cloud resource type, proposed name, environment, region, justification (the feature or service requiring it), technical specifications, security requirements, target team
+> **Look for in the source**: IaC, existing resource definitions, deployment manifests
 
 ---
 

@@ -1,6 +1,9 @@
 # [{PREFIX}-{FRONT}] ADR-NNNN — {Decision Title}
 
 > **Default labels**: `type:adr`, `status:draft`, `team:{team}`
+>
+> **Ask the user for**: Decision title, context, options considered
+> **Look for in the source**: Dependency manifests, architecture visible in the directory structure, existing ADRs
 
 ---
 

@@ -110,43 +110,21 @@ and default labels are in Section 8 of the standards, already loaded in Step 0.
 
 ## Step 4: Gather information
 
-Ask the user for the minimum necessary information per type:
+The template loaded in Step 0 opens with a **Ask the user for** line naming exactly what
+this document type needs. Ask for those, and nothing more — anything else you can read
+from the source or leave as a `{placeholder}`.
 
-**func-spec**: Feature name, frente (frontend/backend/etc), phase (AS-IS/TO-BE), related epic in issue tracker
-**adr**: Decision title, context, options considered
-**api-spec**: Service name, main endpoints, authentication
-**env-config**: Environment (DEV/QA/STG/PROD), technology/component, main parameters
-**runbook**: Affected system, scenario, severity
-**security-doc**: Type (policy/checklist/report), applicable regulation
-**migration**: What is being migrated, AS-IS state, target TO-BE state
-**test-plan**: Feature/sprint under test, test types, environment, entry/exit criteria
-**test-strategy**: Scope (project/component), test types, automation tools, target metrics
-**infra-request**: Cloud resource type, proposed name, environment, region, justification (feature/service requiring it), technical specifications, security requirements, target team (internal/external)
-**role-request**: Role name, type (IAM Role/Policy/RBAC), environment, which service/pipeline needs it, requested permissions (service/actions/resources), least-privilege justification, duration (permanent/temporary), target team
-
-The frente chosen here is what selects the row in the `Code Repositories` table, so
-ask for it before Step 5 when the type requires one.
+The frente chosen here selects the row in the `Code Repositories` table, so ask for it
+before Step 5 when the type requires one.
 
 ## Step 5: Analyze the source
 
 Only if a source was resolved in Step 2.
 
 **Local path** — list files by pattern and search their contents, **scoped to the
-source path**. Read what the document type needs, not the whole repo:
-
-| Type | What to look for in the source |
-|------|-------------------------------|
-| `api-spec` | The service's contract, whatever form it takes: OpenAPI/Swagger, GraphQL schema, `.proto`, or message schemas. Plus route or handler definitions, auth middleware, and — for event or queue consumers — the topics subscribed and published, retry and dead-letter configuration |
-| `env-config` | `.env.example`, config files, IaC (Terraform/CDK/docker-compose), deployment manifests |
-| `func-spec` | Components/modules for the feature, routes, data models, business rules |
-| `adr` | Dependency manifests, architecture visible in the directory structure, existing ADRs |
-| `runbook` | Deploy scripts, health checks, logging/monitoring config, CI pipelines |
-| `migration` | Migration files, current schema, legacy modules being replaced |
-| `test-plan` / `test-strategy` | Test setup, runners, coverage config, existing test directories |
-| `infra-request` / `role-request` | IaC, IAM policies, deployment manifests, required permissions |
-
-Start with the repo's README and dependency manifest to orient yourself, then narrow
-by searching contents.
+source path**. The template's **Look for in the source** line says what this document
+type needs; read that, not the whole repo. Start with the README and the dependency
+manifest to orient yourself, then narrow by searching contents.
 
 **Link** — fetch it and extract the same kind of information. Cite the URL in the
 document so every fact is traceable.
@@ -161,7 +139,9 @@ user stays a `{placeholder}`. Do not fill gaps with plausible-looking content.
 
 ## Step 6: Generate the document
 
-1. Use the template and the naming conventions you already have — Step 0 loaded the
+1. The template's leading blockquote — default labels, **Ask the user for**, **Look for
+   in the source** — is guidance for you, not content. Do not copy it into the document.
+   Use the template and the naming conventions you already have — Step 0 loaded the
    template plus sections 1, 8 and 9 of the standards. Do not open that file again
    unless you need a section outside those three
 2. Use the prefix, space and language from the project config, also already loaded
