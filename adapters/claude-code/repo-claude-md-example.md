@@ -73,6 +73,9 @@ names only and reference the secrets manager defined in project-config.md.
 |------|---------|----------|
 | Functional Specification | `func-spec` | `templates/func-spec.md` |
 | Architecture Overview | `architecture` | `templates/architecture.md` |
+| Guide or Standards | `guide` | `templates/guide.md` |
+| Release Note | `release-note` | `templates/release-note.md` |
+| Deployment Request | `deployment-request` | `templates/deployment-request.md` |
 | ADR | `adr` | `templates/adr.md` |
 | API Specification | `api-spec` | `templates/api-spec.md` |
 | Environment Configuration | `env-config` | `templates/env-config.md` |

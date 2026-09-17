@@ -25,7 +25,7 @@ Do NOT read every framework file. After Step 0, load only what the task needs:
 4. `$FRAMEWORK_ROOT/docs/decision-guide.md` -- ONLY if the user is unsure where content belongs
 5. `$FRAMEWORK_ROOT/docs/space-structure.md` -- ONLY when creating spaces or restructuring
 
-Available types: `func-spec`, `architecture`, `adr`, `api-spec`, `env-config`, `runbook`, `security-doc`, `migration`, `test-plan`, `test-strategy`, `infra-request`, `role-request`.
+Available types: `func-spec`, `architecture`, `adr`, `api-spec`, `env-config`, `runbook`, `guide`, `security-doc`, `migration`, `release-note`, `deployment-request`, `test-plan`, `test-strategy`, `infra-request`, `role-request`.
 
 ## Claude Code specifics
 

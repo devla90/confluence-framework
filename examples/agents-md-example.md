@@ -62,8 +62,8 @@ a URL, or fill the `Code Repositories` table in the project config.
 
 ### Available document types
 
-`func-spec` · `architecture` · `adr` · `api-spec` · `env-config` · `runbook` · `security-doc` ·
-`migration` · `test-plan` · `test-strategy` · `infra-request` · `role-request`
+`func-spec` · `architecture` · `adr` · `api-spec` · `env-config` · `runbook` · `guide` · `security-doc` ·
+`migration` · `release-note` · `deployment-request` · `test-plan` · `test-strategy` · `infra-request` · `role-request`
 
 Templates: `{FRAMEWORK_PATH}/templates/{type}.md`
 
