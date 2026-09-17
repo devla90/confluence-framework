@@ -9,7 +9,7 @@ shapes what a good contribution looks like.
 **All generation logic lives in `docs/generation-procedure.md`. Nowhere else.**
 
 Every assistant adapter — `adapters/codex/`, `adapters/copilot/`, `adapters/opencode/`,
-`.claude/skills/`, `.claude/agents/` — is deliberately thin. Each one declares a command
+`adapters/claude-code/` — is deliberately thin. Each one declares a command
 in its tool's own format and then points at the procedure. The four invocable adapters
 total fewer lines than the procedure itself, and that ratio is the design.
 
@@ -64,10 +64,10 @@ someone to publish it unchanged.
 
 Copy the shape of `adapters/codex/doc-confluence.md` — it is the smallest one.
 
-Claude Code is the one exception to that layout: its skill and agent live in `.claude/`,
-which Claude Code reads automatically, with `adapters/claude-code/README.md` explaining
-the arrangement. Follow the same pattern only if the assistant you are adding also reads
-a directory in this repo directly.
+Everything assistant-specific belongs under `adapters/`, including files the tool would
+normally auto-discover elsewhere. The repository root stays neutral: `AGENTS.md` for every
+assistant, plus the one-line `CLAUDE.md` shim that exists only because Claude Code cannot
+read `AGENTS.md` yet.
 
 ## Before opening a pull request
 

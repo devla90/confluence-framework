@@ -1,34 +1,10 @@
 @AGENTS.md
 
-<!-- EXAMPLE FILE — part of the example config repo. Not a live config. -->
+<!-- EXAMPLE FILE — part of the example config repo. Not a live config.
 
-# Claude Code specifics
+     Compatibility shim. Claude Code does not read AGENTS.md natively yet, so this file
+     imports it on the line above. Everything about this project lives there. -->
 
-Everything about this project is in `AGENTS.md`, imported on the first line above. This
-file holds only what is specific to Claude Code — which is why it is this short.
-
-## Generating a document
-
-```
-/doc-confluence <type> <subject> [target-path-or-url]
-```
-
-The third argument overrides the `Code Repositories` table for one run and accepts a URL
-as well as a path:
-
-```
-/doc-confluence api-spec Payments ../acme-api
-/doc-confluence api-spec Stripe https://docs.stripe.com/api
-```
-
-## Installing the skill
-
-```bash
-cp -r ../confluence-framework/.claude/skills/doc-confluence ~/.claude/skills/
-cp -r ../confluence-framework/.claude/agents/confluence-doc ~/.claude/agents/
-```
-
-## Reading an external repo
-
-Mode B needs access to a folder outside this repo: `/add-dir ../acme-api`, or
-`permissions.additionalDirectories` in `settings.json`.
+Claude Code specifics — installing the `/doc-confluence` shortcut and granting access to
+a repo outside this one — are in the framework, under `adapters/claude-code/README.md`.
+The `Framework path` row in `project-config.md` says where the framework is.

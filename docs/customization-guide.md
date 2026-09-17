@@ -264,7 +264,7 @@ Use this when the team owns the repo and wants to generate documentation from wh
 cp ../confluence-framework/examples/agents-md-example.md ./AGENTS.md
 
 # Claude Code
-cp ../confluence-framework/examples/repo-claude-md-example.md ./CLAUDE.md
+cp ../confluence-framework/adapters/claude-code/repo-claude-md-example.md ./CLAUDE.md
 ```
 
 Both templates take the same 6 variables:
@@ -301,8 +301,8 @@ Also fill the `Paths` section so the framework and the output destination are ex
 
 ```bash
 # Claude Code -- ships in .claude/, scoped to the framework repo, so install globally
-cp -r ../confluence-framework/.claude/skills/doc-confluence ~/.claude/skills/
-cp -r ../confluence-framework/.claude/agents/confluence-doc ~/.claude/agents/
+cp -r ../confluence-framework/adapters/claude-code/skills/doc-confluence ~/.claude/skills/
+cp -r ../confluence-framework/adapters/claude-code/agents/confluence-doc ~/.claude/agents/
 
 # OpenAI Codex
 mkdir -p ~/.codex/prompts && cp ../confluence-framework/adapters/codex/doc-confluence.md ~/.codex/prompts/
