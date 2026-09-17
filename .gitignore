@@ -11,3 +11,14 @@ Thumbs.db
 # project-agnostic by design. The one under examples/ is a deliberate
 # sample of what output looks like, so it stays.
 /output/
+
+# MCP client configuration. These files hold credentials when an assistant is
+# configured with an API token instead of OAuth, and a committed token stays in
+# git history after you delete it. Ignored by default; force-add a token-free one
+# only if you are certain it carries no secret.
+.mcp.json
+.vscode/mcp.json
+opencode.json
+.env
+.env.*
+!.env.example
