@@ -123,8 +123,27 @@ Only if a source was resolved in Step 2.
 
 **Local path** — list files by pattern and search their contents, **scoped to the
 source path**. The template's **Look for in the source** line says what this document
-type needs; read that, not the whole repo. Start with the README and the dependency
-manifest to orient yourself, then narrow by searching contents.
+type needs; read that, not the whole repo.
+
+**Stay inside an exploration budget.** Listing every file in a real repository costs more
+than everything else in this procedure combined — a mid-sized frontend returns well over a
+thousand paths, and that listing alone can outweigh the config, the standards, the template
+and these instructions together. It also tells you very little: what a directory is called
+says more about the architecture than the names of the files inside it.
+
+So, in order:
+
+1. **Read the README and the dependency manifest first.** They orient you at a known,
+   small cost and usually name the parts that matter.
+2. **List directories before files**, and shallowly — one or two levels. A repo's top-level
+   directories are the map; expand only the branch the document actually concerns.
+3. **Search contents rather than listing paths** once you know what you are looking for.
+   A targeted search returns matches; a broad listing returns everything.
+4. **If a pattern would return more than roughly 200 results, do not read it** — narrow it
+   by directory or extension and try again. Something that broad is a sign you have not yet
+   decided what you need.
+5. **Stop when you can fill the template.** Extra files do not improve a document whose
+   gaps are `{placeholder}` by design.
 
 **Link** — fetch it and extract the same kind of information. Cite the URL in the
 document so every fact is traceable.
