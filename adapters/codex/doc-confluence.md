@@ -2,8 +2,8 @@ Generate a Confluence Cloud document following this project's documentation fram
 
 Arguments: `$1` = document type, `$2` = subject, `$3` = optional source (local path or URL).
 
-Valid types: func-spec, adr, api-spec, env-config, runbook, security-doc, migration,
-test-plan, test-strategy, infra-request, role-request.
+Valid types: func-spec, architecture, adr, api-spec, env-config, runbook, security-doc,
+migration, test-plan, test-strategy, infra-request, role-request.
 
 ## What to do
 

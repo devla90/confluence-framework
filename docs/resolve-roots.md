@@ -61,7 +61,7 @@ echo "--- documentation-guide.md (sections 1, 8, 9) ---"
   || echo "NOT_FOUND: framework root not resolved."
 echo "--- template: $T ---"
 { [ -n "$FW" ] && cat "$FW/templates/$T.md" 2>/dev/null; } \
-  || echo "TEMPLATE NOT FOUND. Valid types: func-spec adr api-spec env-config runbook security-doc migration test-plan test-strategy infra-request role-request"
+  || echo "TEMPLATE NOT FOUND. Valid types: func-spec architecture adr api-spec env-config runbook security-doc migration test-plan test-strategy infra-request role-request"
 ```
 
 **Why each guard is there** — do not simplify them away:
