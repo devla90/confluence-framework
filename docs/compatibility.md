@@ -40,21 +40,45 @@ assistants speak it. Configuration is per assistant:
 
 | Assistant | How to connect Atlassian's remote MCP server |
 |-----------|---------------------------------------------|
-| **Claude Code** | `claude mcp add --transport http atlassian https://mcp.atlassian.com/v1/sse`, or an entry in `.mcp.json` |
+| **Claude Code** | `claude mcp add --transport http atlassian https://mcp.atlassian.com/v1/mcp/authv2`, then `/mcp` to authorise |
 | **OpenAI Codex** | An `[mcp_servers.atlassian]` entry in `~/.codex/config.toml` |
 | **GitHub Copilot** | `.vscode/mcp.json` in the workspace, or the MCP section of VS Code settings |
 | **opencode** | An `mcp` entry in `opencode.json` |
 | **Devin** | Not applicable — no local MCP configuration |
 
-Authentication is OAuth 2.1 by default — a browser opens and you authorise — or an API
-token, if your Atlassian admin has enabled that. The trade-off between them is in
-[`confluence-mcp.md`](confluence-mcp.md).
+**The two authentication methods use different endpoints.** Choosing one and keeping the
+other's URL is the mistake that produces a connection failure with no obvious cause:
+
+| | Endpoint | How it authenticates |
+|---|----------|----------------------|
+| **OAuth 2.1** (default) | `https://mcp.atlassian.com/v1/mcp/authv2` | A browser opens; you authorise once |
+| **API token** | `https://mcp.atlassian.com/v1/mcp` | An `Authorization` header you supply |
+
+Token authentication has to be enabled by your Atlassian organization admin, and on a
+company instance it may not be. Atlassian accepts
+`Basic base64(email:api_token)` for a personal token and `Bearer <key>` for a service
+account key. In Claude Code the header goes in with `-H`:
+
+```bash
+claude mcp add --transport http atlassian https://mcp.atlassian.com/v1/mcp \
+  -H "Authorization: Basic <base64 of email:token>"
+```
+
+Prefer OAuth unless something has to run without a person present. The trade-off is in
+[`confluence-mcp.md`](confluence-mcp.md); the short version is that OAuth leaves no
+long-lived secret anywhere on disk.
 
 **Grant read and search scopes only.** Withholding write does not merely reduce risk, it
 removes the possibility of an assistant publishing to a shared space by accident.
 
+Atlassian also published an SSE endpoint, `https://mcp.atlassian.com/v1/sse`, used with
+`--transport sse`. It was retired after 30 June 2026 — do not mix the two, an SSE URL with
+an HTTP transport fails.
+
 The exact commands change as these tools evolve; if one does not work, check that
-assistant's current MCP documentation. The smoke test is the same everywhere — ask it to
+assistant's current MCP documentation. The rows above other than Claude Code say where the
+configuration lives rather than quoting a command, deliberately: those are the parts most
+likely to drift. The smoke test is the same everywhere — ask it to
 list your Confluence spaces, and see whether it answers with real ones.
 
 ---
