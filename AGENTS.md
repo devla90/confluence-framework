@@ -48,6 +48,7 @@ Do NOT read every file. Pick only what the task needs.
 |------|------|
 | Understand how the whole thing fits together | `docs/how-it-works.md` |
 | Generate or edit a document | `docs/generation-procedure.md` |
+| Resolve the framework and config roots | `docs/resolve-roots.md` — only if your assistant has not preloaded them |
 | Which assistants support what | `docs/compatibility.md` |
 | Standards: naming, labels, lifecycle | `docs/documentation-guide.md` |
 | Unsure where content belongs | `docs/decision-guide.md` |
