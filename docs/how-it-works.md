@@ -72,7 +72,7 @@ live — and they are entirely about syntax:
 |-----------|--------------|----------------|
 | OpenAI Codex | `~/.codex/prompts/doc-confluence.md` | positional `$1 $2 $3` |
 | GitHub Copilot | `.github/prompts/doc-confluence.prompt.md` | `${input:type:...}`, needs `mode: agent` |
-| opencode | `.opencode/command/doc-confluence.md` | `$ARGUMENTS`, with `agent: build` |
+| opencode | `.opencode/commands/doc-confluence.md` | `$ARGUMENTS`, with `agent: build` |
 | Claude Code | `.claude/skills/doc-confluence/SKILL.md` | `$tipo $tema $target` |
 
 All four are invoked the same way: `/doc-confluence`. Install commands per assistant are
