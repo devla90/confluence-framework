@@ -1,4 +1,4 @@
-# [{PREFIX}-{FRONT}] MIG — {Topic} — AS-IS to TO-BE
+# [{PREFIX}-{SUFFIX}] MIG — {Topic} — AS-IS to TO-BE
 
 > **Default labels**: `type:migration`, `status:draft`, `team:{team}`, `phase:transition`
 >

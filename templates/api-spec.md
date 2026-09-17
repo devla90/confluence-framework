@@ -1,4 +1,4 @@
-# [{PREFIX}-{FRONT}] API Specification — {Service Name}
+# [{PREFIX}-{SUFFIX}] API Specification — {Service Name}
 
 > **Default labels**: `type:api-spec`, `status:draft`, `team:backend`
 >

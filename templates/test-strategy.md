@@ -1,4 +1,4 @@
-# [{PREFIX}-{FRONT}] Testing Strategy — {Project/Component}
+# [{PREFIX}-{SUFFIX}] Testing Strategy — {Project/Component}
 
 > **Default labels**: `type:test-strategy`, `status:draft`, `team:qa`
 >
@@ -135,7 +135,7 @@ Found → Reported in Jira → Triaged → Assigned → Fixed → Verified → C
 
 ### How to Report a Defect (Team Guide)
 
-> *Link to the detailed page in {PREFIX}-{FRONT}: "How to Report a Defect"*
+> *Link to the detailed page in {PREFIX}-{SUFFIX}: "How to Report a Defect"*
 
 Minimum required information:
 1. Descriptive title

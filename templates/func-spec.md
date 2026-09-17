@@ -1,4 +1,4 @@
-# [{PREFIX}-{FRONT}] Functional Specification — {Feature Name}
+# [{PREFIX}-{SUFFIX}] Functional Specification — {Feature Name}
 
 > **Default labels**: `type:func-spec`, `status:draft`, `team:{team}`, `phase:{as-is|to-be}`
 >

@@ -1,4 +1,4 @@
-# [{PREFIX}-{FRONT}] ENV-{ENVIRONMENT} — {Technology/Component}
+# [{PREFIX}-{SUFFIX}] ENV-{ENVIRONMENT} — {Technology/Component}
 
 > **Default labels**: `type:env-config`, `status:draft`, `team:{team}`, `env:{dev|qa|stg|prod}`
 >

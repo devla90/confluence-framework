@@ -1,4 +1,4 @@
-# [{PREFIX}-{FRONT}] ADR-NNNN — {Decision Title}
+# [{PREFIX}-{SUFFIX}] ADR-NNNN — {Decision Title}
 
 > **Default labels**: `type:adr`, `status:draft`, `team:{team}`
 >
