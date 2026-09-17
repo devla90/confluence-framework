@@ -48,9 +48,16 @@ template:
    git clone <your-new-config-repo>
    ```
 3. Fill in `project-config.md` in your config repo
-4. Install the adapter for your assistant — one command, listed in
-   [`adapters/README.md`](adapters/README.md)
-5. From your config repo, run `/doc-confluence <type> <subject>`
+4. Open your assistant **in the config repo** and ask, in plain language:
+   *"generate a func-spec for the login feature"*
+
+That is the whole setup — there is nothing to install. Your assistant reads `AGENTS.md`,
+which points it at the generation procedure, and the procedure asks you for whatever it
+cannot read from your code.
+
+**Optionally**, install a `/doc-confluence` shortcut for your assistant — one command,
+listed in [`adapters/README.md`](adapters/README.md). It saves typing; it does not
+unlock anything.
 
 Full walkthrough: [`docs/customization-guide.md`](docs/customization-guide.md).
 How the whole thing fits together: [`docs/how-it-works.md`](docs/how-it-works.md).
@@ -63,9 +70,10 @@ The generation logic lives in one tool-neutral file,
 opencode, Cursor, Windsurf, Zed, Aider and others. Claude Code reads it through an
 `@AGENTS.md` import in `CLAUDE.md`.
 
-Ready-made invocable commands per assistant are in [`adapters/`](adapters/). What each
-one can and cannot do — notably whether it can read a repo outside the current one — is
-in [`docs/compatibility.md`](docs/compatibility.md).
+No assistant is privileged and none is required. Optional `/doc-confluence` shortcuts
+per assistant are in [`adapters/`](adapters/). What each one can and cannot do — notably
+whether it can read a repo outside the current one — is in
+[`docs/compatibility.md`](docs/compatibility.md).
 
 Works on macOS, Linux, WSL and Windows (Git Bash) — see
 [`docs/customization-guide.md`](docs/customization-guide.md) -> Windows notes.

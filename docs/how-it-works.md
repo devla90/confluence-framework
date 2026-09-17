@@ -78,6 +78,12 @@ live — and they are entirely about syntax:
 All four are invoked the same way: `/doc-confluence`. Install commands per assistant are
 in [`compatibility.md`](compatibility.md) and [`../adapters/README.md`](../adapters/README.md).
 
+**None of them is required.** The first mechanism is enough on its own: an assistant that
+has read `AGENTS.md` will follow the procedure from a plain-language request, and the
+procedure asks for the type and subject anyway. The adapters exist so you can type
+`/doc-confluence api-spec Payments` instead of a sentence — they change the ergonomics,
+not what is possible.
+
 Devin has no slash commands. It follows `AGENTS.md` from a plain request — see
 [`../adapters/devin/README.md`](../adapters/devin/README.md).
 
