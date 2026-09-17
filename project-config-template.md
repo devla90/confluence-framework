@@ -1,7 +1,7 @@
 # Project Configuration
 
 > Copy this file and fill in your project's values.
-> See `examples/project-config-example.md` for a filled example.
+> See `examples/config-repo/` for a complete filled example.
 > See `docs/customization-guide.md` for step-by-step instructions.
 
 ---
