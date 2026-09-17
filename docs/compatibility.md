@@ -86,8 +86,8 @@ All adapters are thin: each declares a command in its tool's own format and poin
 ### Claude Code
 
 ```bash
-cp -r ../confluence-framework/.claude/skills/doc-confluence ~/.claude/skills/
-cp -r ../confluence-framework/.claude/agents/confluence-doc ~/.claude/agents/
+cp -r ../confluence-framework/adapters/claude-code/skills/doc-confluence ~/.claude/skills/
+cp -r ../confluence-framework/adapters/claude-code/agents/confluence-doc ~/.claude/agents/
 ```
 
 Installs into your home directory, so it works from any project. Claude Code reads

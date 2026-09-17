@@ -15,7 +15,7 @@
 > `AGENTS.md` is read automatically by OpenAI Codex, GitHub Copilot, Devin, opencode,
 > Cursor, Windsurf, Zed, Aider, Gemini CLI and others. For Claude Code, add
 > `@AGENTS.md` as the first line of a `CLAUDE.md` next to it, or use
-> `repo-claude-md-example.md` instead.
+> `../adapters/claude-code/repo-claude-md-example.md` instead.
 
 ---
 
