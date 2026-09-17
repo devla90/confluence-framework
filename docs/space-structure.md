@@ -113,6 +113,54 @@ Multi-Space" below.
 
 ---
 
+## Start small, grow on demand
+
+**The tree below is a catalog, not a checklist.** It lists every page this framework has
+a place for. No project has all of them, and no project should create them up front.
+
+A page exists because it has content. An empty section is worse than a missing one: it
+tells the reader something should be there and wastes their time confirming it is not.
+
+### The minimum a project starts with
+
+```
+[{PREFIX}] {Project Name}
+├── [{PREFIX}] Project Profile              <- prefix, frentes, tech labels, overrides
+└── [{PREFIX}-ARCH] Architecture & Cloud
+    ├── [{PREFIX}-ARCH] Architecture Overview
+    └── [{PREFIX}-ARCH] Technical Decisions (ADRs)
+```
+
+Four pages. Most projects begin with architecture because that is what exists before any
+code: the decisions, the stack, the shape of the thing.
+
+### How it grows
+
+| When this becomes true | Add |
+|------------------------|-----|
+| There is frontend code | `[{PREFIX}-FRONT] Frontend` and the pages you actually need under it |
+| There are services or APIs | `[{PREFIX}-BACK] Backend & Services` |
+| Someone other than the authors needs to run it | `Runbooks` under the relevant frente |
+| There is a QA function | `[{PREFIX}-QA] QA & Testing` |
+| Compliance or access control matters | `[{PREFIX}-SEC] Security & Compliance` |
+| The team outgrows shared memory | `Knowledge Base` under the relevant frente |
+
+A project with no QA team simply has no QA section — not an empty one. A project that
+never reaches STG documents DEV and PROD and stops there. None of this needs an entry in
+`Overrides`: leaving something out is taking a subset of the standard, which is what the
+standard expects.
+
+What **does** need an entry is doing something differently: a renamed lifecycle state, a
+naming pattern of your own. See "Accommodate within the standard, do not fork it" above.
+
+### Sections within a frente are equally optional
+
+Under `Frontend` the catalog offers Architecture and Stack, Environment Configuration,
+Functional Documentation, Technical Guides, Runbooks and Knowledge Base. A three-month-old
+project might legitimately have only the first. Take what you have content for.
+
+---
+
 ## Full Page Tree
 
 ```
