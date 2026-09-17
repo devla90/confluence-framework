@@ -32,6 +32,10 @@ If either root printed `NOT_FOUND`, stop and ask the user for the missing path i
 
 That file is the single source of truth for this flow -- source resolution, per-type source analysis, template filling, the `{Output path}/{source}/` layout, the secrets rule and the invention rule. It is deliberately tool-neutral so every assistant runs the same logic. Do not restate or improvise around it.
 
+If the user asks you to connect it, `$FRAMEWORK_ROOT/docs/confluence-mcp.md` has a guided
+setup. Follow it as written, including the step where you print the command rather than
+asking for the token.
+
 ## Rules that are never bent
 
 The procedure states these; they are repeated because they matter more than convenience.

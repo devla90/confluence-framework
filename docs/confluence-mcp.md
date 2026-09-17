@@ -61,6 +61,60 @@ each time.
 Any other case: the assistant does not contact Confluence, and says so in its delivery
 summary rather than leaving you to assume the title was verified.
 
+## Guided setup
+
+You can ask your assistant to do this rather than working through the section below:
+
+> connect the Confluence MCP
+
+What follows is the procedure it should run. It is written out because one step in it is a
+refusal, and a refusal that is not written down gets optimised away by the next person
+trying to be helpful.
+
+**1. Ask which authentication.** OAuth or API token, with the trade-off from the table
+below. If the user has no preference, recommend OAuth: nothing is stored, nothing can
+leak, and it is always available whereas token authentication depends on their Atlassian
+admin having enabled it.
+
+**2a. OAuth — run it.** There is nothing to ask for; the endpoint is fixed and no
+credential is involved. For Claude Code:
+
+```bash
+claude mcp add --transport http atlassian https://mcp.atlassian.com/v1/mcp/authv2
+```
+
+Then tell the user to run `/mcp` and authorise in the browser, granting **read and search
+scopes only**.
+
+**2b. API token — do not ask for the token.** Print the two commands and have the user run
+them. Never request the token, the email, or the encoded value in conversation, and if a
+user offers one anyway, say why you are not taking it.
+
+```sh
+printf '%s' 'you@example.com:YOUR_TOKEN' | base64
+```
+
+```bash
+claude mcp add --transport http atlassian https://mcp.atlassian.com/v1/mcp \
+  -H "Authorization: Basic <paste the output of the previous command>"
+```
+
+The reason is not squeamishness. A token pasted into a conversation is in the transcript,
+and a transcript is a file that gets kept, synced and occasionally shared. Revoking is then
+the only repair. Asking costs the user one extra command; not asking costs them a
+credential rotation when they notice — and most do not notice.
+
+**3. Say that a restart is needed.** `claude mcp add` writes to the client's
+configuration, but the running session does not pick up a server added mid-conversation.
+The tools appear after a restart. *(Expected behaviour, not verified here.)*
+
+**4. Verify after the restart.** Run the [smoke test](#smoke-test). If it fails with an
+authentication error on the token route, the likely cause is that the user's Atlassian
+admin has not enabled API token authentication — suggest OAuth rather than debugging the
+header.
+
+---
+
 ## Setup
 
 **1. Connect the server.** Atlassian publishes an official remote MCP server at

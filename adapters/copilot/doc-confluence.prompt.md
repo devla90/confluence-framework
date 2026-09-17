@@ -37,6 +37,9 @@ writing and read the real page tree. **It does not do so unless you ask in the r
 or the project config opts in — read and search scopes only. See
 `docs/confluence-mcp.md`. Without any of that, everything works as before.
 
+Asked to connect it? `docs/confluence-mcp.md` has a guided setup. Follow it as written —
+including the step where you print the command instead of asking for the token.
+
 ## Non-negotiable rules
 
 - **Never put a credential in the repository.** An MCP token goes in the assistant's own
