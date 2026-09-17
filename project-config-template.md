@@ -14,9 +14,17 @@
 | Organization | {your organization} |
 | Naming prefix | {PREFIX} |
 | Confluence space key | {SPACEKEY} |
+| Space shared with other projects | {yes / no} |
 | Confluence URL | {https://your-org.atlassian.net/wiki} |
 | Documentation language | {english / spanish / portuguese / etc.} |
 | Team size | {number range, e.g. 5-15} |
+
+> **Sharing a space?** The free Confluence plan gives you one space. If other projects
+> live in it too, set the row above to `yes` and make sure your `Naming prefix` is
+> different from theirs — it is what keeps page titles unique. Confluence requires titles
+> to be unique per space, and nesting under a project page does not change that.
+> See `docs/space-structure.md` -> More than one project in the same space.
+
 
 ## Paths
 
@@ -117,8 +125,24 @@ Define `tech:` labels specific to your project's stack.
 
 ## Overrides
 
-Document any deviations from the framework defaults. The AI reads this section to respect project-specific exceptions.
+Deviations from the framework defaults. The AI reads this section and respects them.
+
+**Take a subset of the standard; do not fork it.** Leaving out a part needs no entry
+here — a project with only QA and PROD simply has no DEV or STG pages, and that is fine.
+An entry is for when something genuinely has to work differently, and writing it down
+keeps the deviation visible and reversible instead of silently diverging.
 
 | Guide | Override | Reason |
 |-------|----------|--------|
 | {none by default} | | |
+
+Examples of what belongs here:
+
+| Guide | Override | Reason |
+|-------|----------|--------|
+| `governance.md` | Review on demand, no quarterly audit | Team of 3, weekly release cycle |
+| `documentation-guide.md` | No `phase:` labels | Greenfield project, there is no AS-IS |
+
+What does **not** belong here: a different naming pattern, renamed lifecycle states, or a
+private label taxonomy. Those make two projects in the same space read differently and
+turn the framework into a starter kit rather than a standard.
