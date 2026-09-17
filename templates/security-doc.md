@@ -1,6 +1,7 @@
 # [{PREFIX}-{FRONT}] {Document Type} — {Topic}
 
-> **Default labels**: `type:policy`, `status:draft`, `team:security`, `compliance:{regulation}`
+> **Default labels**: `type:security-doc`, `status:draft`, `team:security`, `compliance:{regulation}`
+> Add `type:policy` as well when the document states standing rules rather than a checklist or a report.
 >
 > **Ask the user for**: Type (policy/checklist/report), applicable regulation
 > **Look for in the source**: Auth and authorization code, dependency audit config, IAM policies, anything handling credentials

@@ -5,7 +5,7 @@ description: Generate Confluence documentation following the project's framework
 
 Generate a Confluence Cloud document following this project's documentation framework.
 
-- **Document type**: ${input:type:func-spec | architecture | adr | api-spec | env-config | runbook | security-doc | migration | test-plan | test-strategy | infra-request | role-request}
+- **Document type**: ${input:type:func-spec | architecture | adr | api-spec | env-config | runbook | guide | security-doc | migration | release-note | deployment-request | test-plan | test-strategy | infra-request | role-request}
 - **Subject**: ${input:subject:What the document is about}
 - **Source (optional)**: ${input:source:Local path or URL to read technical details from. Leave empty to use the Code Repositories table in project-config.md}
 

@@ -14,6 +14,11 @@ plain semver, because this project ships conventions rather than code.
   top-level structure, entry points, key decisions, dependencies and constraints. The
   page tree already offered "Architecture and Stack" under several frentes with no
   template to fill it.
+- `guide`, `release-note` and `deployment-request` document types. The label taxonomy
+  declared `type:guide`, `type:release-note` and `type:deployment-request` but no template
+  existed for any of them, and `guide` alone covers nineteen pages of the tree. Release
+  notes and deployment requests already had a naming pattern in the standards — the
+  framework said how to title them but not what to put in them.
 
 ### Changed
 
