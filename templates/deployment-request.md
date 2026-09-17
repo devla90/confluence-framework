@@ -1,4 +1,4 @@
-# [{PREFIX}-{FRONT}] DR {YYYY-MM-DD} — {Description}
+# [{PREFIX}-{SUFFIX}] DR {YYYY-MM-DD} — {Description}
 
 > **Default labels**: `type:deployment-request`, `status:draft`, `team:{team}`, `env:{environment}`
 >

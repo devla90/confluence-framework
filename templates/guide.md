@@ -1,4 +1,4 @@
-# [{PREFIX}-{FRONT}] {Guide Title}
+# [{PREFIX}-{SUFFIX}] {Guide Title}
 
 > **Default labels**: `type:guide`, `status:draft`, `team:{team}`
 >

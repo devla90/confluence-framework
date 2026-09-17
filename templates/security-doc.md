@@ -1,4 +1,4 @@
-# [{PREFIX}-{FRONT}] {Document Type} — {Topic}
+# [{PREFIX}-{SUFFIX}] {Document Type} — {Topic}
 
 > **Default labels**: `type:security-doc`, `status:draft`, `team:security`, `compliance:{regulation}`
 > Add `type:policy` as well when the document states standing rules rather than a checklist or a report.

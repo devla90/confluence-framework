@@ -1,4 +1,4 @@
-# [{PREFIX}-{FRONT}] Test Plan — {Feature/Sprint}
+# [{PREFIX}-{SUFFIX}] Test Plan — {Feature/Sprint}
 
 > **Default labels**: `type:test-plan`, `status:draft`, `team:qa`
 >
@@ -42,7 +42,7 @@ What will be tested and why. Scope of the test cycle.
 
 ## 3. Testing Strategy for this Plan
 
-> *Reference: The overall project strategy is on the [{PREFIX}-{FRONT}] General Testing Strategy page. This section describes adjustments specific to this plan.*
+> *Reference: The overall project strategy is on the [{PREFIX}-{SUFFIX}] General Testing Strategy page. This section describes adjustments specific to this plan.*
 
 | Test Type | Applies | Tool | Owner |
 |-----------|---------|------|-------|
