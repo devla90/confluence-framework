@@ -117,6 +117,34 @@ from the source or leave as a `{placeholder}`.
 The frente chosen here selects the row in the `Code Repositories` table, so ask for it
 before Step 5 when the type requires one.
 
+### Check the title is free — only when asked
+
+**Do not contact Confluence unless the user asked you to in this request.** Having the
+capability is not permission to use it: the space is usually shared with a team, and an
+assistant that reaches into it on every generation is doing something the user did not
+ask for.
+
+Run this check when, and only when, one of these is true:
+
+- The user asked in this request — "check the title first", "look it up in Confluence",
+  "verify it against the space", or anything that plainly means it.
+- `project-config.md` has `Check Confluence before generating` set to `yes`. That row is
+  a standing instruction from whoever owns the project, and is absent by default.
+
+Otherwise skip it and carry on. Skipping is the default, not a failure.
+
+When it does run, run it here rather than later: Step 5 is the expensive part, and there
+is no sense analyzing a repository for a page that cannot be created.
+
+- **Free** — continue.
+- **Taken** — stop and tell the user, with a link to the existing page. Ask whether they
+  meant to update it or want a different subject. Confluence rejects a duplicate title
+  within a space, so generating anyway only moves the failure to the paste.
+- **Cannot check** — no such capability, not authorised, or the call failed. Continue
+  generating, and say so in Step 8.
+
+Setup and the tool names behind this: [`confluence-mcp.md`](confluence-mcp.md).
+
 ## Step 5: Analyze the source
 
 Only if a source was resolved in Step 2.
@@ -195,6 +223,14 @@ row is missing, empty, or still a `{placeholder}`, use `$CONFIG_ROOT/output/`.
 
 **3. Final path** — `{base}/{source-folder}/{type}_{subject-slug}_{YYYY-MM-DD}.md`
 
+**Where it goes in Confluence.** The document is a file; someone still has to place it in
+the space. Quote the parent that `page-structure.md` predicts, and label it as a
+prediction — that file is a plan, the space is the fact, and the two drift.
+
+Confirm it against the real tree **only under the same conditions as the title check
+above**: the user asked, or the config says to. Do not reach into Confluence on your own
+initiative.
+
 Create the directories with `mkdir -p` before writing. **Never write straight into the
 base folder** — there is always a source subfolder. Use forward slashes in the path
 you write to, on every platform.
@@ -221,6 +257,79 @@ When finished, report:
 - **Resolved roots**: `CONFIG_ROOT`, `FRAMEWORK_ROOT`, the source analyzed (a local
   path, a URL, or a note that neither was used), and the source folder the document
   was filed under
+- **What was checked against Confluence, and what was not.** If a check ran and the title
+  is free, say so. If nothing was checked — the usual case, since these run only on
+  request — say that plainly: the title is unverified and the parent page is predicted
+  rather than confirmed. Silence reads as success, so never omit this
+
+## Rules that are never bent
+
+### Credentials never enter this repository
+
+An API token, an OAuth secret, a password: none of them belong in any file under the
+framework or the config repo. Not in `project-config.md`, not in an MCP client
+configuration, not in a comment, not "temporarily".
+
+The reason is that git does not forget. A token committed and then deleted is still in the
+history, still in every clone, still on the remote. Revoking it is the only repair, and
+that only works once somebody notices.
+
+If a user asks you to store one, or offers one in a message so you can "put it in the
+config", decline and say why: it goes in the assistant's own MCP configuration, outside
+the repository, or it uses OAuth and there is nothing to store at all.
+
+This one has no setting. There is no situation in which committing a credential is the
+right call.
+
+---
+
+## Confirming before you publish
+
+Generating a document writes a file: private and reversible. Creating or updating a
+Confluence page is neither — the space is usually shared, people who watch it get
+notified, and an overwritten page is awkward to restore.
+
+So the default is to ask. The project can change that.
+
+### The setting
+
+`project-config.md`, row `Confirm before publishing`:
+
+| Value | Behaviour |
+|-------|-----------|
+| `yes` *(default, and what applies when the row is missing)* | Confirm every create and every update |
+| `updates-only` | Create new pages without asking; always confirm before overwriting one that exists |
+| `no` | Never ask |
+
+`updates-only` is worth knowing about. Creating a page that turns out to be wrong leaves
+a page to delete; overwriting one replaces work somebody else may have done, and the
+previous content is only recoverable through page history if anyone thinks to look. Those
+are different risks and the setting lets you treat them differently.
+
+### When you do confirm
+
+State, before the call:
+
+- the full page title, as it will appear
+- the space and the parent page it will be created under
+- whether this **creates** a new page or **overwrites** an existing one, and if it
+  overwrites, what is there now
+
+Then wait for a clear yes. Not an assumption from earlier in the conversation, not an
+inference from the original request, not "the user obviously wants this published". Ask
+again for each page: approval to publish one is not approval to publish the next.
+
+### When you do not
+
+Even with confirmation switched off, **report every page you created or updated** in the
+delivery summary, with its title and whether it was new or an overwrite. The user chose to
+skip the question, not to skip knowing.
+
+And a setting is not a licence to guess. If you are unsure which page a request refers to,
+ask — `no` removes the routine confirmation, not your judgement.
+
+If write scopes were never granted, none of this can arise, which is why
+[`confluence-mcp.md`](confluence-mcp.md) recommends withholding them.
 
 ## Quality rules
 

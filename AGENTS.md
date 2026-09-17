@@ -50,6 +50,7 @@ Do NOT read every file. Pick only what the task needs.
 | Generate or edit a document | `docs/generation-procedure.md` |
 | Resolve the framework and config roots | `docs/resolve-roots.md` — only if your assistant has not preloaded them |
 | Which assistants support what | `docs/compatibility.md` |
+| Let the assistant read Confluence while generating | `docs/confluence-mcp.md` — optional |
 | Standards: naming, labels, lifecycle | `docs/documentation-guide.md` |
 | Unsure where content belongs | `docs/decision-guide.md` |
 | Create Confluence Space Templates | `docs/confluence-templates-guide.md` |

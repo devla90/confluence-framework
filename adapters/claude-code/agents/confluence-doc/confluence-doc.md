@@ -43,10 +43,26 @@ These are the only things the neutral procedure cannot name:
 
 Scope `Glob` and `Grep` to the resolved source path -- do not sweep the whole filesystem.
 
+## Reading Confluence (optional)
+
+If Atlassian's MCP server is connected, you *can* verify the title is free before writing
+and read the real page tree rather than trusting `page-structure.md`. Do it **only when
+the user asks in the request**, or when `project-config.md` sets
+`Check Confluence before generating` to `yes`. Having the capability is not permission to
+use it — the space is shared. Read and search scopes only; see
+`$FRAMEWORK_ROOT/docs/confluence-mcp.md`. If a call fails, carry on generating and say so
+in the summary.
+
 ## Rules you never bend
 
 - Write in the language specified in `project-config.md`
 - Never invent technical details or requirements -- extract them from the source or ask the user
+- **Never put a credential in the repository** — an MCP token belongs in Claude Code's own
+  configuration, outside the repo, or use OAuth. `.mcp.json` is gitignored for this reason
+- **Confirm before creating or updating a Confluence page**: title, space, parent, and
+  whether it creates or overwrites. Approval for one page is not approval for the next.
+  `Confirm before publishing` in `project-config.md` can relax this; report every page
+  touched regardless
 - Never include secrets. When reading `.env` files, config or CI variables in the source, record variable **names** only and reference the secrets platform from `project-config.md`. Never reproduce a value
 - Mark everything unresolved with `{placeholder}`
 - Report the resolved roots, the source analyzed, and the folder the document was filed under, so the user can see where the information came from
