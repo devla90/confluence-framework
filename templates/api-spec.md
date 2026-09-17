@@ -1,6 +1,6 @@
 # [{PREFIX}-{SUFFIX}] API Specification — {Service Name}
 
-> **Default labels**: `type:api-spec`, `status:draft`, `team:backend`
+> **Default labels**: `type:api-spec`, `status:draft`, `team:{team}`
 >
 > **Not a REST service?** This template covers any service contract — event consumers,
 > queue workers, gRPC services, GraphQL, scheduled jobs. Set **Interface style** below and
