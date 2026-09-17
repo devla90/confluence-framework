@@ -12,14 +12,18 @@ Why the adapters are this thin, and what that buys:
 
 ## Install
 
-| Assistant | Copy | To |
-|-----------|------|-----|
-| **Claude Code** | `../.claude/skills/doc-confluence`<br>`../.claude/agents/confluence-doc` | `~/.claude/skills/`<br>`~/.claude/agents/` |
-| **OpenAI Codex** | `codex/doc-confluence.md` | `~/.codex/prompts/` |
-| **opencode** | `opencode/doc-confluence.md` | `.opencode/command/` |
-| **GitHub Copilot** | `copilot/doc-confluence.prompt.md`<br>`copilot/copilot-instructions.md` | `.github/prompts/`<br>`.github/copilot-instructions.md` |
-| **Devin** | see `devin/README.md` | — |
-| **Anything else reading AGENTS.md** | `../examples/agents-md-example.md` | your repo root as `AGENTS.md` |
+Run these **from your config repo**. Sources are written for the sibling layout, where
+the framework sits at `../confluence-framework`; adjust that prefix for another layout.
+
+| Assistant | Copy from the framework | To | Scope |
+|-----------|------------------------|-----|-------|
+| **Claude Code** | `.claude/skills/doc-confluence`<br>`.claude/agents/confluence-doc` | `~/.claude/skills/`<br>`~/.claude/agents/` | all projects |
+| **OpenAI Codex** | `adapters/codex/doc-confluence.md` | `~/.codex/prompts/` | all projects |
+| **opencode** | `adapters/opencode/doc-confluence.md` | `.opencode/commands/` | this repo |
+| **GitHub Copilot** | `adapters/copilot/doc-confluence.prompt.md`<br>`adapters/copilot/copilot-instructions.md` | `.github/prompts/`<br>`.github/copilot-instructions.md` | this repo |
+| **Devin** | see `devin/README.md` | — | — |
+
+Copy-paste commands per assistant: [`../docs/compatibility.md`](../docs/compatibility.md).
 
 All of them are invoked as `/doc-confluence <type> <subject> [source]`, except Devin,
 which follows `AGENTS.md` from a natural-language request.

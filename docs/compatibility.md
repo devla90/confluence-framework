@@ -19,7 +19,7 @@ matters — **whether it can read a folder outside the current repo**.
 |-----------|---------------------------|-------------------|--------|------------------------------|----------------|
 | **Claude Code** | `CLAUDE.md` (with `@AGENTS.md` import) | `/doc-confluence` | yes | yes | yes |
 | **OpenAI Codex** | `AGENTS.md` | `~/.codex/prompts/doc-confluence.md` | yes | yes, subject to sandbox settings | if web access is enabled |
-| **opencode** | `AGENTS.md` | `.opencode/command/doc-confluence.md` | yes | yes | yes |
+| **opencode** | `AGENTS.md` | `.opencode/commands/doc-confluence.md` | yes | yes | yes |
 | **GitHub Copilot** | `AGENTS.md` or `.github/copilot-instructions.md` | `.github/prompts/doc-confluence.prompt.md` | yes | partial — needs the folder added to the workspace | yes |
 | **Devin** | `AGENTS.md` | Knowledge / Skills | yes | **no** | yes |
 | **Cursor, Windsurf, Zed, Aider, Gemini CLI, Jules, Amazon Q** | `AGENTS.md` | varies | yes | varies by tool | varies |
@@ -68,59 +68,73 @@ Setting all of this up from scratch: `customization-guide.md` -> Starting on a n
 
 ---
 
-## Setup per assistant
+## Optional: install a slash command
 
-All adapters live in `adapters/`. Each is thin — it points at
-`docs/generation-procedure.md` rather than restating the logic.
+**None of this is required.** Every assistant below reads `AGENTS.md`, which already
+points at the generation procedure — asking in plain language ("generate a func-spec for
+the login feature") works with nothing installed. What an adapter buys you is the
+`/doc-confluence` shortcut and its argument hints.
+
+All adapters are thin: each declares a command in its tool's own format and points at
+`docs/generation-procedure.md`, rather than restating the logic.
+
+> **Run these from your config repo**, and note that each command names the framework by
+> a relative path. The examples assume the sibling layout, where the framework sits at
+> `../confluence-framework`. Adjust that prefix if you chose a different layout — inside
+> a submodule it is `./confluence-framework`.
 
 ### Claude Code
 
 ```bash
-cp -r .claude/skills/doc-confluence ~/.claude/skills/
-cp -r .claude/agents/confluence-doc ~/.claude/agents/
+cp -r ../confluence-framework/.claude/skills/doc-confluence ~/.claude/skills/
+cp -r ../confluence-framework/.claude/agents/confluence-doc ~/.claude/agents/
 ```
 
-Then `/doc-confluence <type> <subject> [target-path-or-url]`.
-
-Claude Code reads `CLAUDE.md`, which imports `AGENTS.md` on its first line, so both
-conventions stay in sync.
+Installs into your home directory, so it works from any project. Claude Code reads
+`CLAUDE.md`, which imports `AGENTS.md` on its first line, so both conventions stay in
+sync. See [`../adapters/claude-code/README.md`](../adapters/claude-code/README.md).
 
 ### OpenAI Codex
 
 ```bash
 mkdir -p ~/.codex/prompts
-cp adapters/codex/doc-confluence.md ~/.codex/prompts/
+cp ../confluence-framework/adapters/codex/doc-confluence.md ~/.codex/prompts/
 ```
 
-`AGENTS.md` is picked up automatically from the repo root. Then `/doc-confluence` in
-the Codex session.
+Also installs into your home directory. `AGENTS.md` is picked up automatically from the
+repo you start in.
 
 ### opencode
 
 ```bash
-mkdir -p .opencode/command
-cp adapters/opencode/doc-confluence.md .opencode/command/
+mkdir -p .opencode/commands
+cp ../confluence-framework/adapters/opencode/doc-confluence.md .opencode/commands/
 ```
 
-`AGENTS.md` is picked up automatically. Then `/doc-confluence` in opencode.
+Installs into the current repo. For every project instead, use
+`~/.config/opencode/commands/`. (opencode also accepts the older singular `command/`,
+but `commands/` is the current name.)
 
 ### GitHub Copilot
 
 ```bash
 mkdir -p .github/prompts
-cp adapters/copilot/doc-confluence.prompt.md .github/prompts/
-cp adapters/copilot/copilot-instructions.md .github/copilot-instructions.md
+cp ../confluence-framework/adapters/copilot/doc-confluence.prompt.md .github/prompts/
+cp ../confluence-framework/adapters/copilot/copilot-instructions.md .github/copilot-instructions.md
 ```
 
-Then `/doc-confluence` in Copilot Chat, in agent mode.
+Installs into the current repo — which must be the one you open as your VS Code
+workspace, or Copilot will not see the prompt. Then `/doc-confluence` in Copilot Chat,
+**in agent mode**: the flow needs to run a command, read files and write one.
 
-Copilot reads `AGENTS.md` too; `.github/copilot-instructions.md` is provided for
-setups that predate that support.
+Copilot reads `AGENTS.md` too; `.github/copilot-instructions.md` is there for setups that
+predate that support.
 
 ### Devin
 
-See `adapters/devin/README.md`. Put `AGENTS.md` in the repo root and add the
-framework's standards to Devin's Knowledge. Mode B does not apply — see above.
+See [`../adapters/devin/README.md`](../adapters/devin/README.md). Put `AGENTS.md` in the
+repo root and add the framework's standards to Devin's Knowledge. Mode B does not apply —
+see above.
 
 ### Anything else
 
