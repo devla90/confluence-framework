@@ -240,6 +240,8 @@ instead, where they are read once.
 |---------|-------------------|
 | **Identity** | Project name, organization, naming prefix, space key, URL, documentation language. The prefix is what appears in every page title as `[{PREFIX}-{SUFFIX}]`, so it must differ from any other project sharing the space |
 | **Paths** | `Framework path` — where the framework is, per the layout you chose. `Output path` — the base folder for generated documents |
+| **Check Confluence before generating** | `no` by default. The optional Confluence lookups run only when you ask for them in a request. Set it to `yes` to make them standing behaviour for this project — see `confluence-mcp.md` |
+| **Confirm before publishing** | `yes` by default, and `yes` if the row is missing: the assistant asks before creating or updating any Confluence page. `updates-only` creates without asking but always confirms an overwrite. `no` never asks. Only relevant if write scopes were granted at all |
 | **Frentes** | Your team structure. The seven defaults are a common starting point for web projects: delete the ones you do not have and rename the rest. The suffix is the second half of every page title |
 | **Code Repositories** | One row per repo you want documented. An empty path means that frente has no code, and the AI generates placeholders instead of reading any. **Prefer relative paths** (`../my-api`): this file is committed and shared, so an absolute path breaks for every teammate and on your next machine. A path passed as the third argument to `/doc-confluence` overrides the table for one run |
 | **Technology Labels** | One row per technology your team will want to filter pages by in Confluence |

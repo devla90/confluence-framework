@@ -44,6 +44,12 @@ Use one of these instead:
 
 See `docs/compatibility.md` for the full matrix.
 
+## Reading Confluence
+
+Devin has no local MCP configuration, so the optional Confluence lookups described in
+`docs/confluence-mcp.md` do not apply. Everything else in the procedure works unchanged;
+titles simply go unverified until you paste the page.
+
 ## What still applies
 
 Everything in `docs/generation-procedure.md` except Step 2's external-path branch:

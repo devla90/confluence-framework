@@ -131,6 +131,7 @@ confluence-framework/
 |   +-- how-it-works.md                    <- The design explained end to end, for people
 |   +-- generation-procedure.md            <- THE generation flow (tool-neutral, single source of truth)
 |   +-- compatibility.md                   <- What each AI assistant can and cannot do
+|   +-- confluence-mcp.md                 <- Optional: read Confluence while generating
 |   +-- ai-strategy.md                     <- AI integration strategy in 4 phases
 |   +-- implementation-roadmap.md          <- Week-by-week plan with checklists
 |   (most guides also have a .es.md Spanish translation)

@@ -32,6 +32,16 @@ If either root printed `NOT_FOUND`, stop and ask the user for the missing path i
 
 That file is the single source of truth for this flow -- source resolution, per-type source analysis, template filling, the `{Output path}/{source}/` layout, the secrets rule and the invention rule. It is deliberately tool-neutral so every assistant runs the same logic. Do not restate or improvise around it.
 
+## Rules that are never bent
+
+The procedure states these; they are repeated because they matter more than convenience.
+
+- **No credential enters this repository.** An MCP token goes in Claude Code's own
+  configuration, not in `project-config.md` and not in a committed `.mcp.json`.
+- **Confirm before creating or updating a Confluence page** — title, space, parent, and
+  whether it creates or overwrites. `Confirm before publishing` in `project-config.md`
+  can relax this to `updates-only` or `no`; either way, report every page touched.
+
 ## Claude Code specifics
 
 These are the only things the neutral procedure cannot name:
@@ -47,5 +57,10 @@ These are the only things the neutral procedure cannot name:
 | "grant the assistant access to that folder" | Tell the user to run `/add-dir <path>`, or add it to `permissions.additionalDirectories` in `settings.json` |
 
 Scope `Glob` and `Grep` to the resolved source path -- do not sweep the whole filesystem.
+
+If Atlassian's MCP server is connected, the procedure can verify the title is free before
+writing and read the real page tree — but **only when the user asks in the request**, or
+`project-config.md` opts in. Read and search scopes only; see
+`$FRAMEWORK_ROOT/docs/confluence-mcp.md`. Otherwise do not contact Confluence at all.
 
 Both working modes are supported here: Mode A (running inside the code repo) and Mode B (running from the config repo, pointing at an external path or URL). See `$FRAMEWORK_ROOT/docs/compatibility.md`.

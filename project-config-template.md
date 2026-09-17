@@ -14,6 +14,12 @@
 | Naming prefix | {PREFIX} |
 | Confluence space key | {SPACEKEY} |
 | Space shared with other projects | {yes / no} |
+| Check Confluence before generating | {no} |
+| Confirm before publishing | {yes} |
+
+> **No credentials in this file.** It is committed and shared. An MCP token goes in the
+> assistant's own configuration, outside the repository — or use OAuth and there is
+> nothing to store. See `docs/confluence-mcp.md`.
 | Confluence URL | {https://your-org.atlassian.net/wiki} |
 | Documentation language | {english / spanish / portuguese} |
 | Team size | {e.g. 5-15} |

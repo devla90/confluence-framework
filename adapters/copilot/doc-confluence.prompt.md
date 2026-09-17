@@ -30,8 +30,21 @@ Do not restate or reinvent that logic here — read the file.
 - Agent mode is required (this prompt declares `mode: agent`): the flow needs to run
   commands, read files and write a new one.
 
+## Reading Confluence (optional)
+
+If Atlassian's MCP server is connected, the procedure can check a title is free before
+writing and read the real page tree. **It does not do so unless you ask in the request**,
+or the project config opts in — read and search scopes only. See
+`docs/confluence-mcp.md`. Without any of that, everything works as before.
+
 ## Non-negotiable rules
 
+- **Never put a credential in the repository.** An MCP token goes in the assistant's own
+  configuration, outside the repo, or use OAuth. Git keeps deleted secrets in history.
+- **Confirm before creating or updating a Confluence page** — title, space, parent, and
+  whether it creates or overwrites. Approval for one page is not approval for the next.
+  `Confirm before publishing` in `project-config.md` can relax this to `updates-only` or
+  `no`; with either, still report every page touched.
 - Never copy secret **values** out of `.env`, config or CI files — record variable
   names only and reference the project's secrets manager.
 - Anything you cannot extract from the source or get from the user stays a
