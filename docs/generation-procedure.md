@@ -104,8 +104,8 @@ Two working modes both end here:
 ## Step 3: Validate the document type
 
 It must be one of: `func-spec`, `architecture`, `adr`, `api-spec`, `env-config`,
-`runbook`, `security-doc`, `migration`, `test-plan`, `test-strategy`, `infra-request`,
-`role-request`. If invalid, show the list and ask the user to choose. Full descriptions
+`runbook`, `guide`, `security-doc`, `migration`, `release-note`, `deployment-request`,
+`test-plan`, `test-strategy`, `infra-request`, `role-request`. If invalid, show the list and ask the user to choose. Full descriptions
 and default labels are in Section 8 of the standards, already loaded in Step 0.
 
 ## Step 4: Gather information

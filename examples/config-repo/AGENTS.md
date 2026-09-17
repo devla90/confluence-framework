@@ -32,8 +32,8 @@ frentes, `Paths`, `Code Repositories`, technology labels, documentation language
 
 ## Available document types
 
-`func-spec` · `architecture` · `adr` · `api-spec` · `env-config` · `runbook` · `security-doc` ·
-`migration` · `test-plan` · `test-strategy` · `infra-request` · `role-request`
+`func-spec` · `architecture` · `adr` · `api-spec` · `env-config` · `runbook` · `guide` · `security-doc` ·
+`migration` · `release-note` · `deployment-request` · `test-plan` · `test-strategy` · `infra-request` · `role-request`
 
 ## Output layout
 

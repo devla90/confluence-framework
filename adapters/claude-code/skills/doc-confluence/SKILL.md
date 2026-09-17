@@ -2,7 +2,7 @@
 name: doc-confluence
 description: Generates professional Confluence documentation following the framework standards. Reads project-config.md for project-specific values and can analyze an external local code repository, or a URL, to extract technical information. Supports all document types (func-spec, adr, api-spec, env-config, runbook, security-doc, migration, test-plan, test-strategy, infra-request, role-request).
 when_to_use: When the user needs to create Confluence documentation, generate a new page from a template, or document a feature, API, environment, decision, runbook, security policy, or migration plan -- either for the current repo or for a project at another local path.
-argument-hint: <type> <subject> [target-path] -- types: func-spec | architecture | adr | api-spec | env-config | runbook | security-doc | migration | test-plan | test-strategy | infra-request | role-request
+argument-hint: <type> <subject> [target-path] -- types: func-spec | architecture | adr | api-spec | env-config | runbook | guide | security-doc | migration | release-note | deployment-request | test-plan | test-strategy | infra-request | role-request
 arguments: [tipo, tema, target]
 allowed-tools: Read, Bash, Write, Edit, Glob, Grep, WebFetch
 model: sonnet
