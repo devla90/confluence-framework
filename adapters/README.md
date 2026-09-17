@@ -3,6 +3,11 @@
 One thin entry point per AI assistant. Every adapter does the same thing: declare the
 command in that tool's own format, then point at `docs/generation-procedure.md`.
 
+> **These are optional.** Every supported assistant reads `AGENTS.md`, which already
+> points at the generation procedure, so asking in plain language works with nothing
+> installed. An adapter adds the `/doc-confluence` shortcut and its argument hints — a
+> convenience, not a capability.
+
 **No adapter restates the generation logic.** That lives in one file so it cannot
 drift. If you are adding support for a new assistant, copy the shape of an existing
 adapter — do not copy the procedure into it.
