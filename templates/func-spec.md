@@ -1,6 +1,9 @@
 # [{PREFIX}-{FRONT}] Functional Specification — {Feature Name}
 
 > **Default labels**: `type:func-spec`, `status:draft`, `team:{team}`, `phase:{as-is|to-be}`
+>
+> **Ask the user for**: Feature name, frente (frontend/backend/etc), phase (AS-IS/TO-BE), related epic in the issue tracker
+> **Look for in the source**: Components and modules for the feature, routes, data models, business rules
 
 ---
 

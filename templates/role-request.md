@@ -1,6 +1,9 @@
 # [{PREFIX}-{FRONT}] Deployment Role Request — {Role Name}
 
 > **Default labels**: `type:role-request`, `status:draft`, `team:architecture`, `env:{environment}`
+>
+> **Ask the user for**: Role name, type (IAM Role/Policy/RBAC), environment, which service or pipeline needs it, requested permissions, least-privilege justification, duration, target team
+> **Look for in the source**: IaC, IAM policies, deployment manifests, the permissions actually exercised by the code
 
 ---
 

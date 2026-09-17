@@ -1,6 +1,9 @@
 # [{PREFIX}-{FRONT}] MIG — {Topic} — AS-IS to TO-BE
 
 > **Default labels**: `type:migration`, `status:draft`, `team:{team}`, `phase:transition`
+>
+> **Ask the user for**: What is being migrated, AS-IS state, target TO-BE state
+> **Look for in the source**: Migration files, current schema, legacy modules being replaced
 
 ---
 

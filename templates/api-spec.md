@@ -5,6 +5,9 @@
 > **Not a REST service?** This template covers any service contract — event consumers,
 > queue workers, gRPC services, GraphQL, scheduled jobs. Set **Interface style** below and
 > fill sections 2, 5 and 6 in the terms of that style. Everything else applies unchanged.
+>
+> **Ask the user for**: Service name, interface style (REST/GraphQL/gRPC/events/queue/job), main operations, authentication
+> **Look for in the source**: The service's contract in whatever form it takes — OpenAPI/Swagger, GraphQL schema, `.proto`, message schemas — plus route or handler definitions, auth middleware, and for event or queue consumers the topics subscribed and published and the retry and dead-letter configuration
 
 ---
 
