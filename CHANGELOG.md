@@ -8,6 +8,19 @@ plain semver, because this project ships conventions rather than code.
 
 ## [Unreleased]
 
+### Added
+
+- `architecture` document type — an Architecture Overview covering a component's stack,
+  top-level structure, entry points, key decisions, dependencies and constraints. The
+  page tree already offered "Architecture and Stack" under several frentes with no
+  template to fill it.
+
+### Changed
+
+- Step 5 of the generation procedure now carries an exploration budget. Listing every
+  file in a real repository can cost more than the rest of the procedure combined, and
+  says less than the directory names do.
+
 Changes planned for the first public release (1.0.0).
 
 ### Added

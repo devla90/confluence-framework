@@ -72,6 +72,7 @@ names only and reference the secrets manager defined in project-config.md.
 | Type | Command | Template |
 |------|---------|----------|
 | Functional Specification | `func-spec` | `templates/func-spec.md` |
+| Architecture Overview | `architecture` | `templates/architecture.md` |
 | ADR | `adr` | `templates/adr.md` |
 | API Specification | `api-spec` | `templates/api-spec.md` |
 | Environment Configuration | `env-config` | `templates/env-config.md` |
