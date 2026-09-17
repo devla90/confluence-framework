@@ -1,0 +1,13 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/
+*.swp
+
+# Generated documents never belong in the framework repo — it is
+# project-agnostic by design. The one under examples/ is a deliberate
+# sample of what output looks like, so it stays.
+/output/
