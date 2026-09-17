@@ -23,6 +23,79 @@ Page titles use prefixes that identify the domain: `[{PREFIX}-FRONT]`, `[{PREFIX
 
 ---
 
+## More than one project in the same space
+
+The free Confluence plan gives you **one space**. If several projects have to live in it,
+the structure below still works — you gain a project level above the sections, and every
+title carries the project prefix.
+
+```
+Home
+│
+├── Documentation Standards               <- shared, one copy for the whole space
+│   ├── Naming Conventions
+│   ├── Label Taxonomy
+│   ├── Template Catalog
+│   └── Document Lifecycle
+│
+├── [APP] Mi App                          <- project root
+│   ├── [APP] Project Profile             <- this project's parameters and exceptions
+│   ├── [APP-FRONT] Frontend
+│   │   └── [APP-FRONT] Knowledge Base
+│   └── [APP-BACK] Backend & Services
+│       └── [APP-BACK] Knowledge Base
+│
+└── [WEB] Portal Web
+    ├── [WEB] Project Profile
+    └── [WEB-FRONT] Frontend
+```
+
+### What is shared and what is not
+
+The split is not "which pages" but **rule versus parameter**.
+
+| | Lives once, for the whole space | Lives per project |
+|---|---|---|
+| Naming | the pattern `[PREFIX-SUFFIX] Type — Subject` | the value of `PREFIX` |
+| Labels | `type:` `status:` `phase:` `env:` — fixed by the framework | `team:` and `tech:` values |
+| Templates | the 11 templates | which of them the project actually uses |
+| Lifecycle | DRAFT → IN-REVIEW → APPROVED → ARCHIVED | review cadence, owners |
+| Governance | the roles that exist | who holds them, how often they meet |
+
+Four of the six label families are identical for every project, and so are the naming
+pattern, the lifecycle and the template catalog. Copying them per project buys a little
+self-containment and guarantees they drift apart — six copies of a taxonomy will not stay
+in step over a year, and nobody notices when they stop.
+
+### Accommodate within the standard, do not fork it
+
+A project takes a **subset** of the standard. It does not invent a variant.
+
+- A project with only QA and PROD documents those two and simply has no DEV or STG pages.
+  That is a subset — nothing to declare beyond the `env:` labels it happens to use.
+- A project that renamed the lifecycle states, or that uses its own naming pattern, has
+  forked the standard. Now two projects in one space read differently and the framework
+  stops being a standard at all.
+
+Anything that genuinely has to differ goes in the **Overrides** table of that project's
+`project-config.md`, which the AI reads and respects — for example a three-person team
+replacing the quarterly audit with an on-demand review. Recording it there keeps the
+deviation visible and reversible, instead of silently diverging.
+
+### Project Profile
+
+One page per project, holding what `project-config.md` holds: prefix, space key, frentes
+and their owners, `tech:` labels, secrets platform, and the Overrides table. It is the
+entry point for anyone joining that project, and it links out to the shared standards
+rather than repeating them.
+
+### If you later get more spaces
+
+On a paid plan, one space per project is the better answer and this whole section becomes
+unnecessary. Nothing is wasted: the `[PREFIX-SUFFIX]` titles are already unique, so pages
+move between spaces without renaming — the same property described in "Migration to
+Multi-Space" below.
+
 ## Sections of the {SPACE_KEY} Space
 
 | Section | Naming prefix | Description | Suggested Section Owner |
