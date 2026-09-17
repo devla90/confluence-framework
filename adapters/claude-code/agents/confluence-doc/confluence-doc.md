@@ -53,6 +53,9 @@ use it — the space is shared. Read and search scopes only; see
 `$FRAMEWORK_ROOT/docs/confluence-mcp.md`. If a call fails, carry on generating and say so
 in the summary.
 
+If asked to connect the MCP server, follow the guided setup in
+`$FRAMEWORK_ROOT/docs/confluence-mcp.md` — including its refusal to ask for the token.
+
 ## Rules you never bend
 
 - Write in the language specified in `project-config.md`
