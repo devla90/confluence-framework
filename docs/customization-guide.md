@@ -484,11 +484,50 @@ The framework guides use `PROJ-FRONT`, `PROJ-BACK`, etc. as generic examples. Yo
 
 ## Adding Custom Document Types
 
-To add a template not included in the framework:
+Before adding one, check whether an existing template already stretches. Several are more
+general than their name suggests — `api-spec` covers any service contract, including
+event consumers, queue workers, gRPC and scheduled jobs, not just REST. A new type is
+worth it only when the sections themselves would be different, not when the same sections
+get filled with different content.
 
-1. Create the template in your config repo (not in the framework)
-2. Reference it in your `CLAUDE.md`
-3. If the template is useful for other projects, contribute it upstream to the framework
+If you do need one:
+
+**1. Create the template in your config repo**, not in the framework — the framework stays
+project-agnostic.
+
+```bash
+mkdir -p templates
+cp ../confluence-framework/templates/api-spec.md templates/my-type.md
+```
+
+Follow the shape of an existing template: title line with `[{PREFIX}-{SUFFIX}]`, default
+labels, a Page Properties table, numbered sections, and a change history table at the end.
+Use `{placeholder}` for anything the user must supply, and never ship example values that
+look real.
+
+**2. Declare it in your config repo's `AGENTS.md`**, so every assistant finds it:
+
+```markdown
+## Project-specific document types
+
+| Type | Template | Default labels |
+|------|----------|----------------|
+| `my-type` | `./templates/my-type.md` | `type:my-type`, `status:draft`, `team:backend` |
+
+These extend the framework's eleven types. Look here first, then in the framework's
+`templates/`.
+```
+
+The generation procedure reads the type list from the framework, so this note is what
+tells an assistant your type exists and where to find it.
+
+**3. Add the label to your `project-config.md`** if the type introduces a new `type:`
+value, so the taxonomy stays complete.
+
+**4. Consider contributing it upstream.** If the type is not specific to your domain,
+open a PR against the framework — see `CONTRIBUTING.md`. A type that lives in one config
+repo helps one project; in the framework it helps everyone, and it stops the next team
+from inventing a slightly different version of the same thing.
 
 ## Overrides
 
