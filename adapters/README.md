@@ -12,6 +12,10 @@ command in that tool's own format, then point at `docs/generation-procedure.md`.
 drift. If you are adding support for a new assistant, copy the shape of an existing
 adapter — do not copy the procedure into it.
 
+One exception to the layout: Claude Code's files live in `../.claude/`, because Claude
+Code reads that directory automatically. [`claude-code/README.md`](claude-code/README.md)
+explains why and holds everything Claude-specific.
+
 Why the adapters are this thin, and what that buys:
 [`../docs/how-it-works.md`](../docs/how-it-works.md).
 
@@ -22,7 +26,7 @@ the framework sits at `../confluence-framework`; adjust that prefix for another 
 
 | Assistant | Copy from the framework | To | Scope |
 |-----------|------------------------|-----|-------|
-| **Claude Code** | `.claude/skills/doc-confluence`<br>`.claude/agents/confluence-doc` | `~/.claude/skills/`<br>`~/.claude/agents/` | all projects |
+| **Claude Code** — see [`claude-code/`](claude-code/) | `.claude/skills/doc-confluence`<br>`.claude/agents/confluence-doc` | `~/.claude/skills/`<br>`~/.claude/agents/` | all projects |
 | **OpenAI Codex** | `adapters/codex/doc-confluence.md` | `~/.codex/prompts/` | all projects |
 | **opencode** | `adapters/opencode/doc-confluence.md` | `.opencode/commands/` | this repo |
 | **GitHub Copilot** | `adapters/copilot/doc-confluence.prompt.md`<br>`adapters/copilot/copilot-instructions.md` | `.github/prompts/`<br>`.github/copilot-instructions.md` | this repo |
