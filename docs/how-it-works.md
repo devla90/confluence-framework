@@ -54,9 +54,11 @@ each level, so you are oriented wherever you land:
 
 | You start in | It loads | Where it sends you |
 |--------------|----------|--------------------|
-| The workspace root | `AGENTS.md` | Names both sibling repos, points at the procedure |
+| Your config repo (the usual place) | `<config-repo>/AGENTS.md` | `../confluence-framework/docs/generation-procedure.md` |
 | `confluence-framework/` | `confluence-framework/AGENTS.md` | The procedure, plus what to read per task |
-| Your config repo | `<config-repo>/AGENTS.md` | `../confluence-framework/docs/generation-procedure.md` |
+
+Both files are versioned, so they arrive with a clone — there is nothing to create by
+hand.
 
 Claude Code is the exception: it reads `CLAUDE.md`, whose first line is `@AGENTS.md`.
 Same source, different entry point.

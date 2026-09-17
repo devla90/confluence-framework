@@ -59,10 +59,10 @@ markers for what could not be extracted.
 | GitHub Copilot (VS Code) | **File > Add Folder to Workspace**, then save as a multi-root workspace |
 | Devin | Not applicable — no local disk access |
 
-A reliable trick for every local assistant: start the session from the **parent
-directory** that contains both `confluence-framework/` and your config repo. The root
-resolution in Step 0 of the procedure searches `.`, `..` and siblings, so it finds
-both from there — and the `AGENTS.md` at that level orients the assistant automatically.
+A reliable rule for every local assistant: start the session from **your config repo**.
+The root resolution in Step 0 searches `.`, `..` and siblings, so it finds the framework
+from there whichever layout you chose — and the config repo's own `AGENTS.md`, which is
+versioned and arrives with the clone, orients the assistant automatically.
 
 Setting all of this up from scratch: `customization-guide.md` -> Starting on a new machine.
 
