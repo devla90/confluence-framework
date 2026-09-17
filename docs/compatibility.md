@@ -64,6 +64,10 @@ claude mcp add --transport http atlassian https://mcp.atlassian.com/v1/mcp \
   -H "Authorization: Basic <base64 of email:token>"
 ```
 
+On Windows the encoding step differs — PowerShell has no `base64`, and Git Bash's wraps
+its output, which breaks the header. See
+[`customization-guide.md`](customization-guide.md) -> Windows notes.
+
 Prefer OAuth unless something has to run without a person present. The trade-off is in
 [`confluence-mcp.md`](confluence-mcp.md); the short version is that OAuth leaves no
 long-lived secret anywhere on disk.
