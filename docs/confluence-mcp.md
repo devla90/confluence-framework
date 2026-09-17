@@ -71,10 +71,16 @@ summary rather than leaving you to assume the title was verified.
 
 | | OAuth 2.1 | API token |
 |---|-----------|-----------|
-| How it feels | A browser opens, you approve once | A token in the client config, no prompt |
+| **Endpoint** | `https://mcp.atlassian.com/v1/mcp/authv2` | `https://mcp.atlassian.com/v1/mcp` |
+| How it feels | A browser opens, you approve once | A header in the client config, no prompt |
 | Always available? | Yes | **Only if your Atlassian admin has enabled it** |
 | Suited to | A person generating documents interactively | Non-interactive use — CI, bots, automation |
 | Revoking | Withdraw the consent | Delete the token |
+
+**The endpoints differ**, and that is the detail that wastes an afternoon: point a token
+configuration at the OAuth URL and it will not connect, with nothing in the error to
+suggest why. Atlassian accepts `Basic base64(email:api_token)` for a personal token, or
+`Bearer <key>` for a service account key.
 
 On a company instance the admin may have API token authentication turned off, in which
 case OAuth is the only route and the client will tell you so. On an instance you own, you
@@ -82,7 +88,18 @@ decide.
 
 For the interactive case this framework is built around — you, asking for a document —
 OAuth is the better fit: nothing to store, nothing to leak, and it expires. A token is
-worth it when something has to run without a person present.
+worth it when something has to run without a person present: a pipeline regenerating
+documentation on release cannot wait for a browser consent screen.
+
+If you do go the token route, build the encoded value in your own terminal and paste it
+nowhere:
+
+```sh
+printf '%s' 'you@example.com:YOUR_TOKEN' | base64
+```
+
+What comes out is your email and token, trivially decoded. Treat it as the credential it
+is — which is what the next section is about.
 
 See [Keeping the credential out of the repository](#keeping-the-credential-out-of-the-repository)
 below before choosing the token route.
