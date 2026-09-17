@@ -91,7 +91,7 @@ them. Never request the token, the email, or the encoded value in conversation, 
 user offers one anyway, say why you are not taking it.
 
 ```sh
-printf '%s' 'you@example.com:YOUR_TOKEN' | base64
+printf '%s' 'you@example.com:YOUR_TOKEN' | base64 | tr -d '\n'
 ```
 
 ```bash
@@ -149,8 +149,13 @@ If you do go the token route, build the encoded value in your own terminal and p
 nowhere:
 
 ```sh
-printf '%s' 'you@example.com:YOUR_TOKEN' | base64
+printf '%s' 'you@example.com:YOUR_TOKEN' | base64 | tr -d '\n'
 ```
+
+The `tr -d '\n'` is not decoration. GNU's `base64` wraps its output at 76 characters, so
+on Git Bash and Linux the value arrives split across several lines; pasted into a header
+that way it simply does not work, and nothing in the failure says why. On macOS the pipe
+is a no-op. PowerShell has its own form — see `customization-guide.md` -> Windows notes.
 
 What comes out is your email and token, trivially decoded. Treat it as the credential it
 is — which is what the next section is about.

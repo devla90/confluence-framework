@@ -477,6 +477,37 @@ Copy-Item -Force ..\confluence-framework\adapters\opencode\doc-confluence.md .op
 `~/.claude/` and `%USERPROFILE%\.claude\` are the same directory; the same holds for
 `~/.codex/`.
 
+### 5. Connecting the Confluence MCP server
+
+`claude mcp add` behaves the same in Git Bash and WSL. Two things differ in PowerShell.
+
+**Line continuation** is a backtick, not a backslash:
+
+```powershell
+claude mcp add --transport http atlassian https://mcp.atlassian.com/v1/mcp `
+  -H "Authorization: Basic <base64 of email:token>"
+```
+
+**Encoding the credential.** The `base64` command does not exist in PowerShell, and the
+Git Bash one wraps its output at 76 characters, which silently breaks the header. Use
+whichever matches your shell:
+
+```powershell
+# PowerShell
+[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes("you@example.com:YOUR_TOKEN"))
+```
+
+```sh
+# Git Bash or WSL — the tr strips GNU's line wrapping
+printf '%s' 'you@example.com:YOUR_TOKEN' | base64 | tr -d '\n'
+```
+
+Either way the rule from `confluence-mcp.md` holds: run it yourself, and paste the result
+into the client configuration — never into a chat. It decodes straight back to your email
+and a live token.
+
+If you use OAuth instead, none of this applies; there is no credential to encode.
+
 ### Granting access to an external repo
 
 Identical on all platforms:
