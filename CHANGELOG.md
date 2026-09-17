@@ -8,9 +8,7 @@ plain semver, because this project ships conventions rather than code.
 
 ## [Unreleased]
 
-## [1.0.0] — 2026-09-16
-
-First public release.
+Changes planned for the first public release (1.0.0).
 
 ### Added
 
@@ -36,5 +34,4 @@ First public release.
 - **Windows support** — the root-resolution block carries explicit guards for Git Bash
   path formats (`pwd -W`) and CRLF checkouts (`tr -d '\r'`)
 
-[Unreleased]: https://github.com/devla90/confluence-framework/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/devla90/confluence-framework/releases/tag/v1.0.0
+[Unreleased]: https://github.com/devla90/confluence-framework/commits/develop
