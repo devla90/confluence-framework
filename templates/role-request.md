@@ -1,4 +1,4 @@
-# [{PREFIX}-{FRONT}] Deployment Role Request — {Role Name}
+# [{PREFIX}-{SUFFIX}] Deployment Role Request — {Role Name}
 
 > **Default labels**: `type:role-request`, `status:draft`, `team:architecture`, `env:{environment}`
 >

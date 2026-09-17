@@ -1,4 +1,4 @@
-# [{PREFIX}-{FRONT}] RN {YYYY-MM-DD} — v{X.Y.Z}
+# [{PREFIX}-{SUFFIX}] RN {YYYY-MM-DD} — v{X.Y.Z}
 
 > **Default labels**: `type:release-note`, `status:draft`, `team:{team}`, `env:prod`
 >

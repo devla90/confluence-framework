@@ -1,4 +1,4 @@
-# [{PREFIX}-{FRONT}] RB — {System} — {Scenario}
+# [{PREFIX}-{SUFFIX}] RB — {System} — {Scenario}
 
 > **Default labels**: `type:runbook`, `status:draft`, `team:{team}`, `priority:{critical|high|normal}`
 >

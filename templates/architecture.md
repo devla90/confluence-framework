@@ -1,4 +1,4 @@
-# [{PREFIX}-{FRONT}] Architecture Overview — {Component}
+# [{PREFIX}-{SUFFIX}] Architecture Overview — {Component}
 
 > **Default labels**: `type:architecture`, `status:draft`, `team:{team}`
 >

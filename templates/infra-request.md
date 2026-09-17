@@ -1,4 +1,4 @@
-# [{PREFIX}-{FRONT}] Infrastructure Request — {Resource Description}
+# [{PREFIX}-{SUFFIX}] Infrastructure Request — {Resource Description}
 
 > **Default labels**: `type:infra-request`, `status:draft`, `team:architecture`, `env:{environment}`
 >
