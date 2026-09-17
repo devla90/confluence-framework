@@ -44,6 +44,9 @@ including the step where you print the command instead of asking for the token.
 
 - **Never put a credential in the repository.** An MCP token goes in the assistant's own
   configuration, outside the repo, or use OAuth. Git keeps deleted secrets in history.
+- **Do not update a Confluence page whose `MCP-DRAFT-PENDING-COMPLETION` block is gone** —
+  somebody completed it, and an update would destroy the macros and labels they added.
+  Offer editing in Confluence, or a new page with `(v2)` appended to the subject.
 - **Confirm before creating or updating a Confluence page** — title, space, parent, and
   whether it creates or overwrites. Approval for one page is not approval for the next.
   `Confirm before publishing` in `project-config.md` can relax this to `updates-only` or

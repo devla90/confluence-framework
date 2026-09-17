@@ -256,6 +256,21 @@ space = "{SPACE_KEY}" AND label NOT IN ("team:frontend")
 label = "ai:auto-generated" AND label NOT IN ("ai:reviewed")
 ```
 
+### Pages published through MCP and not yet completed
+
+```sql
+space = "{SPACE_KEY}" AND text ~ "MCP-DRAFT-PENDING-COMPLETION"
+```
+
+The only query here that searches text rather than labels, and it exists because of a gap:
+a page published through an MCP server arrives with **no labels at all**, so the query
+above it cannot see it. The token in the page body stands in for `ai:auto-generated` until
+that changes.
+
+Deleting the block that carries the token is the act of completing the page — at which
+point the labels are in place and the label-based queries take over. See
+[`confluence-mcp.md`](confluence-mcp.md).
+
 ### AI Pipeline Searches
 
 ```sql

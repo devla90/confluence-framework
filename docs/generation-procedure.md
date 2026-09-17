@@ -337,6 +337,84 @@ ask — `no` removes the routine confirmation, not your judgement.
 If write scopes were never granted, none of this can arise, which is why
 [`confluence-mcp.md`](confluence-mcp.md) recommends withholding them.
 
+---
+
+## What a published page cannot carry
+
+Publishing drops things this framework treats as mandatory. The body arrives; the metadata
+does not.
+
+| Lost | Consequence |
+|------|-------------|
+| Page Properties macro | Becomes a plain table. The Page Properties Report on index pages stops seeing it |
+| draw.io, Jira macros | Dropped entirely |
+| **Every label** | The page is absent from all twelve CQL queries in the standards — readable, but unfindable |
+
+None of that is visible on the published page, which looks almost right. So a published
+page **says what is missing from it**, in three places.
+
+### 1. A block at the top
+
+First thing on the page, before any content. It carries:
+
+- The tracking token, verbatim: `MCP-DRAFT-PENDING-COMPLETION`
+- **The labels to apply**, one per line, copyable — taken from the template's
+  `Default labels` line and the frente, not invented
+- **The macros to insert** and where
+- If this page supersedes another, which one — and that **the earlier page remains the
+  authoritative one until somebody merges them**
+- A last item: *delete this block and add `ai:reviewed` when done*
+
+Deleting the block is what changes the page's state. Do not automate that: what a reader
+sees should be the real state, not a guess at it.
+
+### 2. A mark where each macro belongs
+
+Wherever the template says to insert a draw.io macro, and immediately above every Page
+Properties table, leave a one-line mark saying which macro goes there. The block at the
+top says *what* is missing; these say *where*, which is what the person fixing it needs.
+
+### 3. The token, so the page can be found
+
+Labels are what the standards search on, and they are exactly what cannot be set. The
+token stands in: it makes incomplete pages findable by text search until label support
+arrives. The query lives in
+[`documentation-guide.md`](documentation-guide.md) section 6.
+
+The token is a **fixed literal**. Do not translate it, reword it or decorate it — the
+query matches on it.
+
+### This is the framework's existing state, borrowed
+
+`ai-strategy.md` already defines `ai:auto-generated` for AI-drafted content and
+`ai:reviewed` for content a human has validated, and `governance.md` already queries the
+gap between them. The token is a stand-in for `ai:auto-generated` for as long as labels
+cannot be set through this route — not a new concept, and it retires when they can.
+
+## Updating a page that already exists
+
+Read it before writing. What you find decides what you may do.
+
+**The token is still there.** Nobody has completed the page, so nothing manual is at risk.
+Update it, and reproduce the block — the page is still incomplete.
+
+**The token is gone.** Somebody completed this page: applied the labels, inserted the
+macros, deleted the block. An update would replace the body with markdown and destroy all
+of it, leaving only page history as a recovery route — if anyone thinks to look.
+
+**Refuse.** Not a confirmation prompt, a refusal. Say the page has been completed, name
+what would be lost, and offer the two ways forward:
+
+- edit it in Confluence directly, where macros survive
+- publish as a new page, with the version appended to the subject:
+  `[{PREFIX}-{SUFFIX}] {Type} — {Subject} (v2)`, rising to `(v3)` and so on
+
+Create the new page only on explicit confirmation, and its block must name the page it
+supersedes along with the warning that the earlier one stays authoritative until merged.
+
+A routine confirmation gets accepted without reading. A refusal does not, and what is at
+stake here is somebody else's work.
+
 ## Quality rules
 
 Section 9 of the standards, loaded in Step 0, has the full list. The ones that matter
