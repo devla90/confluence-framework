@@ -62,6 +62,8 @@ If asked to connect the MCP server, follow the guided setup in
 - Never invent technical details or requirements -- extract them from the source or ask the user
 - **Never put a credential in the repository** — an MCP token belongs in Claude Code's own
   configuration, outside the repo, or use OAuth. `.mcp.json` is gitignored for this reason
+- **Do not update a page whose `MCP-DRAFT-PENDING-COMPLETION` block is gone** — somebody
+  completed it; an update destroys their macros and labels. Offer a `(v2)` page instead
 - **Confirm before creating or updating a Confluence page**: title, space, parent, and
   whether it creates or overwrites. Approval for one page is not approval for the next.
   `Confirm before publishing` in `project-config.md` can relax this; report every page

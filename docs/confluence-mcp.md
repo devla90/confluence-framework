@@ -7,9 +7,9 @@ otherwise guesswork: whether a title is already taken, where a page belongs in t
 tree, whether the page you are about to write already exists. This file explains how to
 set that up, what it buys, and what it deliberately does not do.
 
-> **Read-only by design.** Publishing pages is not part of this. See
-> [Why writing is not included](#why-writing-is-not-included) at the end — the reason is
-> specific to this framework and worth understanding before you go looking for it.
+> **Reading is what this is for.** Publishing is possible but lossy — macros and labels do
+> not survive — so a published page carries a block saying what is missing. See
+> [Publishing, and what it cannot carry](#publishing-and-what-it-cannot-carry).
 >
 > **Off unless you ask.** Connecting the server does not make the lookups happen. They run
 > only when you request them, or when the project opts in — see
@@ -239,7 +239,8 @@ summary** with its title and whether it was new or an overwrite. Turning off the
 turns off the question, not the record.
 
 The full rule, including what to state when confirming, is in
-[`generation-procedure.md`](generation-procedure.md).
+[`generation-procedure.md`](generation-procedure.md). What a published page loses, and how
+it says so, is in [Publishing, and what it cannot carry](#publishing-and-what-it-cannot-carry).
 
 ## When it is not available
 
@@ -252,25 +253,72 @@ title has not been verified as free, and the parent page is the one `page-struct
 predicts rather than one that was confirmed. A reader who knows the check was skipped can
 decide whether to care. A reader told nothing will assume it passed.
 
-## Why writing is not included
+## Publishing, and what it cannot carry
 
-Atlassian's `createConfluencePage` accepts markdown or ADF, not Confluence storage format.
-Macros — `ac:structured-macro` — are dropped in the conversion.
+Writing is possible, and it is lossy. Which is why the framework marks what it lost rather
+than pretending otherwise.
 
-That is fatal for this framework specifically, because it does not use macros decoratively:
+`createConfluencePage` takes markdown or ADF, not Confluence storage format, so macros are
+dropped. And the server exposes no label management at all — there is an open feature
+request for it. So a published page arrives with:
 
-- **Page Properties** is required on every page by
-  [`documentation-guide.md`](documentation-guide.md) section 4, and all sixteen templates
-  carry it. It is what the **Page Properties Report** macro aggregates into the live
-  dashboards on index pages, and what several of the CQL queries in section 6 rely on.
-- **draw.io** is mandated for diagrams — the standard forbids static images.
-- **Jira Issues** links epics without duplicating them, which is what `decision-guide.md`
-  requires.
+| | |
+|---|---|
+| The body | intact |
+| Page Properties macro | a plain table — the Page Properties Report stops seeing it |
+| draw.io, Jira macros | gone |
+| **Labels** | **none** |
 
-Publish through MCP and the body arrives intact while the Page Properties table becomes a
-plain table. It looks almost identical. The report macro no longer sees it, the index
-dashboards quietly return nothing, and nobody notices for months — a silent failure, which
-is worse than an obvious one.
+Labels are what every query in the standards searches on. Without them the page is
+readable and **unfindable** — and nothing about it looks wrong. That silence is the real
+danger: not that the page is incomplete, but that nobody can tell.
 
-Until storage format is supported, publishing is a manual paste, or a direct REST API call
-that bypasses the MCP's authorisation layer. Neither belongs in this procedure yet.
+### So the page says what is missing
+
+Every page published this way carries a block at the top with the token
+`MCP-DRAFT-PENDING-COMPLETION`, the exact labels somebody must apply, the macros to
+insert, and — if it supersedes an earlier page — which one and that the earlier one stays
+authoritative until they are merged. A one-line mark sits wherever each macro belongs.
+
+Find them all with:
+
+```sql
+space = "{SPACE_KEY}" AND text ~ "MCP-DRAFT-PENDING-COMPLETION"
+```
+
+The token is a fixed literal. Do not reword it; the query matches on it.
+
+### The state cycle, which the framework already had
+
+`ai-strategy.md` defines `ai:auto-generated` for AI-drafted content and `ai:reviewed` for
+content a human has validated. The token is a stand-in for the first, used only because
+labels cannot be set through this route. It retires when they can.
+
+| Page state | What it means | What may be done |
+|------------|---------------|------------------|
+| Token present | Published, nobody has completed it | Updating it is safe |
+| Token gone | Somebody applied the labels and macros and deleted the block | **Do not update it** |
+
+Completing a page is manual, and deliberately so: deleting the block **is** the act that
+changes the state. Nothing infers it, so what a reader sees is the real state.
+
+### Updating: read before you write
+
+If the token is still there, update freely and reproduce the block.
+
+If it is gone, **refuse**. An update replaces the body with markdown and would destroy the
+macros and labels somebody added, leaving page history as the only recovery — if anyone
+thinks to look. Offer instead: edit it in Confluence, where macros survive, or publish a
+new page with the version appended to the subject — `… — {Subject} (v2)`.
+
+A refusal rather than a confirmation is deliberate. Routine confirmations get accepted
+without reading, and what is at stake here is somebody else's work.
+
+The full rule is in [`generation-procedure.md`](generation-procedure.md).
+
+### The alternative, if this is not enough
+
+The REST API accepts storage format and has a label endpoint, so it can produce a complete
+page with no manual step. The price is that you handle the credential yourself, without
+the MCP's authorisation layer. It is a different design from the one documented here, not
+an extension of it.

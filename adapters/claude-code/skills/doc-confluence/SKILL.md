@@ -42,6 +42,8 @@ The procedure states these; they are repeated because they matter more than conv
 
 - **No credential enters this repository.** An MCP token goes in Claude Code's own
   configuration, not in `project-config.md` and not in a committed `.mcp.json`.
+- **Do not update a page whose `MCP-DRAFT-PENDING-COMPLETION` block is gone** — somebody
+  completed it; an update destroys their macros and labels. Offer a `(v2)` page instead.
 - **Confirm before creating or updating a Confluence page** — title, space, parent, and
   whether it creates or overwrites. `Confirm before publishing` in `project-config.md`
   can relax this to `updates-only` or `no`; either way, report every page touched.
