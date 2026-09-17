@@ -27,6 +27,13 @@ which follows `AGENTS.md` from a natural-language request.
 Exact commands per assistant, including Windows/PowerShell equivalents, are in
 `../docs/compatibility.md`.
 
+## Where the framework lives
+
+These install commands assume the framework and your config repo are **siblings** — the
+default layout. If you put the framework inside your config repo as a submodule, adjust
+the source paths accordingly. Both layouts are described in
+[`../docs/customization-guide.md`](../docs/customization-guide.md) -> Choosing a layout.
+
 ## Before you rely on Mode B
 
 Mode B — running from the config repo and pointing at an **external local path** —
