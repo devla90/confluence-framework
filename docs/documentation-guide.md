@@ -6,21 +6,55 @@ This guide defines how documentation is written, named, labeled, and maintained 
 
 ## 1. Naming Conventions
 
-### Page Titles
+### The rule
 
-Titles must be **globally unique** (not just within the space) to facilitate search and linking.
+**Every page title starts with `[{PREFIX}-{SUFFIX}]`.** No exceptions — not documents,
+not the section pages that hold them, not the project root.
+
+This is not decoration. Confluence requires page titles to be unique **within a space**,
+because the title is part of the URL. Without a qualifier you hit two collisions:
+
+- **Within one project** — "Knowledge Base" or "Lessons Learned" appear under several
+  frentes. The second one fails to create.
+- **Across projects sharing a space** — on the free plan you get one space, so two
+  projects both wanting "Frontend" collide.
+
+The prefix solves both at once: `{PREFIX}` separates projects, `{SUFFIX}` separates
+frentes within a project.
+
+```
+[APP-FRONT] Knowledge Base     ← Mi App, frontend
+[APP-BACK]  Knowledge Base     ← Mi App, backend — no longer collides
+[WEB-FRONT] Knowledge Base     ← Portal Web — nor with either of the above
+```
+
+### Document titles
 
 | Document type | Pattern | Example |
 |---------------|---------|---------|
 | General documentation | `[PROJ-XXX] Type — Subject` | `[PROJ-FRONT] Functional Specification — Contact Form` |
-| ADR | `ADR-NNNN — Decision Title` | `ADR-0012 — Selection of Framework X over Framework Y` |
-| Runbook | `RB — System — Scenario` | `RB — Frontend — CDN Cache Invalidation` |
-| Release Notes | `RN YYYY-MM-DD — vX.Y.Z` | `RN 2026-06-15 — v2.1.0` |
-| Deployment Request | `DR YYYY-MM-DD — Description` | `DR 2026-06-10 — Deploy Service Forms` |
-| Environment Config | `ENV-{ENVIRONMENT} — Technology/Component` | `ENV-PROD — Web Application` |
-| Migration Document | `MIG — Subject — AS-IS to TO-BE` | `MIG — Contact Module — AS-IS to TO-BE` |
+| ADR | `[PROJ-XXX] ADR-NNNN — Decision Title` | `[PROJ-ARCH] ADR-0012 — Selection of Framework X over Framework Y` |
+| Runbook | `[PROJ-XXX] RB — System — Scenario` | `[PROJ-FRONT] RB — CDN Cache Invalidation` |
+| Release Notes | `[PROJ-XXX] RN YYYY-MM-DD — vX.Y.Z` | `[PROJ-ARCH] RN 2026-06-15 — v2.1.0` |
+| Deployment Request | `[PROJ-XXX] DR YYYY-MM-DD — Description` | `[PROJ-ARCH] DR 2026-06-10 — Deploy Service Forms` |
+| Environment Config | `[PROJ-XXX] ENV-{ENVIRONMENT} — Technology/Component` | `[PROJ-ARCH] ENV-PROD — Web Application` |
+| Migration Document | `[PROJ-XXX] MIG — Subject — AS-IS to TO-BE` | `[PROJ-BACK] MIG — Contact Module — AS-IS to TO-BE` |
 | Infrastructure Request | `[PROJ-ARCH] Infra Request — Description` | `[PROJ-ARCH] Infra Request — S3 Bucket Production Assets` |
 | Deployment Role Request | `[PROJ-ARCH] Role Request — Role Name` | `[PROJ-ARCH] Role Request — Lambda Deploy Role` |
+
+### Structural page titles
+
+The pages that hold documents follow the same rule.
+
+| Level | Pattern | Example |
+|-------|---------|---------|
+| Project root | `[PROJ] Project Name` | `[APP] Mi App` |
+| Section root | `[PROJ-XXX] Section` | `[APP-FRONT] Frontend` |
+| Sub-section | `[PROJ-XXX] Sub-section` | `[APP-FRONT] Knowledge Base` |
+
+Folders follow it too. Confluence enforces the same uniqueness on folder names as on
+pages, so nesting a page inside a folder does **not** give it a private namespace —
+the hierarchy organises the view, not the titles.
 
 ### Attachments
 
@@ -264,7 +298,7 @@ Single source of truth for document types, templates, and default labels. Used b
 |----------|--------------|----------|---------------|
 | `func-spec` | Functional Specification | `templates/func-spec.md` | `type:func-spec`, `status:draft`, `team:{team}`, `phase:{phase}` |
 | `adr` | Architecture Decision Record | `templates/adr.md` | `type:adr`, `status:draft`, `team:{team}` |
-| `api-spec` | API Specification | `templates/api-spec.md` | `type:api-spec`, `status:draft`, `team:backend` |
+| `api-spec` | Service contract — REST, GraphQL, gRPC, events, queues or scheduled jobs | `templates/api-spec.md` | `type:api-spec`, `status:draft`, `team:backend` |
 | `env-config` | Environment Configuration | `templates/env-config.md` | `type:env-config`, `status:draft`, `team:{team}`, `env:{environment}` |
 | `runbook` | Operational Runbook | `templates/runbook.md` | `type:runbook`, `status:draft`, `team:{team}` |
 | `security-doc` | Security/Compliance Document | `templates/security-doc.md` | `type:policy`, `status:draft`, `team:security`, `compliance:{regulation}` |

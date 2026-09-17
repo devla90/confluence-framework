@@ -220,7 +220,7 @@ source path**. Read what the document type needs, not the whole repo:
 
 | Type | What to look for in the source |
 |------|-------------------------------|
-| `api-spec` | OpenAPI/Swagger files, route definitions, auth middleware, request/response models |
+| `api-spec` | The service's contract, whatever form it takes: OpenAPI/Swagger, GraphQL schema, `.proto`, or message schemas. Plus route or handler definitions, auth middleware, and — for event or queue consumers — the topics subscribed and published, retry and dead-letter configuration |
 | `env-config` | `.env.example`, config files, IaC (Terraform/CDK/docker-compose), deployment manifests |
 | `func-spec` | Components/modules for the feature, routes, data models, business rules |
 | `adr` | Dependency manifests, architecture visible in the directory structure, existing ADRs |
@@ -249,7 +249,11 @@ user stays a `{placeholder}`. Do not fill gaps with plausible-looking content.
 2. Read the naming conventions from `$FRAMEWORK_ROOT/docs/documentation-guide.md`
 3. Use the prefix, space and language from `$CONFIG_ROOT/project-config.md`
 4. Apply:
-   - **Title**: `[{PREFIX}-{SUFFIX}] {Type} -- {Subject}` (prefix and suffix from project-config.md)
+   - **Title**: `[{PREFIX}-{SUFFIX}] {Type} -- {Subject}` (prefix and suffix from
+     project-config.md). This applies to **every** title without exception, including
+     patterns that look self-qualifying: `[APP-ARCH] ADR-0012 — ...`,
+     `[APP-FRONT] RB — ...`, `[APP-ARCH] ENV-PROD — ...`. Confluence requires titles to
+     be unique per space, and several projects may share one
    - **Labels**: list all labels to be applied in Confluence
    - **Page Properties**: complete table with mandatory fields
    - **Content**: fill sections from the user's input and the source analysis
