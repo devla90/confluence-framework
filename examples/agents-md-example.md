@@ -8,7 +8,7 @@
 > - `{DESCRIPTION}`: Short description of what this repo does (e.g. "Public Website -- React SPA")
 > - `{FRONT}`: Frente name in lowercase (e.g. `frontend`, `backend`, `security`)
 > - `{PREFIX}`: Full naming prefix including suffix (e.g. `PROJ-FRONT`, `PROJ-BACK`)
-> - `{FRAMEWORK_PATH}`: Relative path to `confluence-framework/` from this repo (e.g. `../../confluence-framework`)
+> - `{FRAMEWORK_PATH}`: Path to `confluence-framework/` from this repo. `../../confluence-framework` for the sibling layout, `./confluence-framework` if it is a submodule here
 > - `{CONFIG_PATH}`: Relative path to the config repo's `project-config.md` (e.g. `../../confluence-config-myproject/project-config.md`)
 > - `{SPACE_KEY}`: Confluence space key from project-config.md (e.g. `PROJSPACE`)
 >

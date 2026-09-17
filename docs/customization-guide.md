@@ -13,47 +13,100 @@ How to adapt this framework for a new project.
 
 ---
 
+## Choosing a layout
+
+The framework and your project's values live in separate repositories. Three
+arrangements work, and the root resolution in Step 0 of the procedure finds the
+framework in all three without any configuration — it searches `.`, `..`,
+`./confluence-framework` and `../confluence-framework`.
+
+### A — Siblings (default)
+
+Two plain clones, side by side. No flags, nothing to remember.
+
+```
+my-workspace/
+├── confluence-framework/       <- git clone, public
+└── config-my-project/          <- from the template, yours
+    ├── project-config.md       <- Framework path: ../confluence-framework
+    ├── AGENTS.md
+    └── output/
+```
+
+Choose this unless you have a reason not to. It is the least surprising, and both
+`AGENTS.md` files arrive with their clones.
+
+### B — The code repo is the config repo
+
+For a project that lives in a single repository, you do not need a separate config repo
+at all. Put `project-config.md` at the root of the code repo:
+
+```
+my-app/
+├── project-config.md           <- Framework path: ./confluence-framework
+├── confluence-framework/       <- clone or submodule
+├── output/
+└── src/
+```
+
+Simpler for one-repo projects. Less suitable once several repos share one Confluence
+space, since each would carry its own copy of the project's values.
+
+### C — Framework as a submodule
+
+Pins the framework to an exact commit inside your config repo's own history. See
+[Advanced: pinning with a submodule](#advanced-pinning-with-a-submodule) below —
+including the cost, which is real.
+
+> **Not supported:** putting `project-config.md` *inside* `confluence-framework/`. The
+> framework is deliberately project-agnostic — that property is what lets several teams
+> share one copy and what makes it publishable. Your values belong in your repo.
+
+---
+
 ## Starting on a new machine
 
 If the project is already set up and you just need it running somewhere new — a new
 laptop, a new teammate — this is the whole sequence. Nothing is installed beyond your
-assistant's adapter; the framework is plain markdown.
+assistant's adapter; the framework is plain Markdown.
 
-**1. Clone both repos as siblings.** The sibling layout is what makes path resolution
-work:
+**1. Clone both repos as siblings:**
 
 ```bash
 mkdir my-workspace && cd my-workspace
-git clone <framework-repo-url> confluence-framework
-git clone <your-config-repo-url> confluence-config-{your-project}
+git clone https://github.com/devla90/confluence-framework
+git clone <your-config-repo-url> config-my-project
 ```
 
-**2. Check the `Framework path` row** in your config repo's `project-config.md` points
-at the sibling — normally `../confluence-framework`. Root resolution reads this row
-first.
+To pin the framework to a release instead of tracking the latest:
+`git clone --branch v1.0.0 https://github.com/devla90/confluence-framework`.
+
+**2. Check the `Framework path` row** in your config repo's `project-config.md`. For the
+sibling layout it is `../confluence-framework`. Root resolution reads this row first.
 
 **3. Install the adapter for your assistant.** One command, once per machine — see
-`../adapters/README.md` for the full matrix. For example:
+[`../adapters/README.md`](../adapters/README.md) for the full matrix. For example:
 
 ```bash
 # OpenAI Codex
 mkdir -p ~/.codex/prompts && cp confluence-framework/adapters/codex/doc-confluence.md ~/.codex/prompts/
 ```
 
-**4. Start the session from the workspace directory** — the one containing both repos.
-An assistant sandboxed to its startup directory can then reach both. There is an
-`AGENTS.md` at that level orienting whichever assistant you use.
+**4. Start the session from your config repo.** Its `AGENTS.md` is versioned, so it
+arrives with the clone and orients whichever assistant you use. Step 0 finds the
+framework from there.
 
-**5. Smoke test.** Run the shell block from Step 0 of `generation-procedure.md`. It must
-print two **absolute** roots and no `NOT_FOUND`:
+**5. Smoke test.** Run the shell block from Step 0 of
+[`generation-procedure.md`](generation-procedure.md). It must print two **absolute**
+roots and no `NOT_FOUND`:
 
 ```
-CONFIG_ROOT=/Users/you/my-workspace/confluence-config-your-project
+CONFIG_ROOT=/Users/you/my-workspace/config-my-project
 FRAMEWORK_ROOT=/Users/you/my-workspace/confluence-framework
 ```
 
-If either says `NOT_FOUND`, the sibling layout or the `Framework path` row is wrong —
-fix that before generating anything.
+If either says `NOT_FOUND`, the layout or the `Framework path` row is wrong — fix that
+before generating anything.
 
 **6. Check the `Code Repositories` paths.** Relative paths (`../my-api`) resolve from the
 config repo and carry over to a new machine unchanged. Any absolute path in that table
@@ -62,6 +115,65 @@ argument for a one-off run.
 
 On Windows, read the [Windows notes](#windows-notes) first: use Git Bash or WSL, and
 forward slashes in config paths.
+
+---
+
+## Advanced: pinning with a submodule
+
+Skip this unless you specifically want the framework version recorded inside your config
+repo's history. The sibling layout plus a tagged clone
+(`git clone --branch v1.0.0 ...`) gives you most of the same benefit with none of the
+friction below.
+
+### What a submodule actually is
+
+Git does **not** store a copy of the framework's files in your repo. It stores two
+things: an entry in `.gitmodules` with the URL and path, and a pointer in the tree to
+one exact **commit SHA**. That is why a normal `git clone` leaves you with an *empty*
+`confluence-framework/` directory — the pointer came through, the files did not.
+
+### Setting it up
+
+```bash
+cd config-my-project
+git submodule add https://github.com/devla90/confluence-framework confluence-framework
+git commit -m "Pin framework"
+```
+
+Then set `Framework path` to `./confluence-framework`.
+
+### Cloning it afterwards
+
+```bash
+git clone --recurse-submodules <your-config-repo>
+```
+
+**The flag is needed only on the first clone — and it cannot be automated.** Setting
+`git config --global submodule.recurse true` covers your day-to-day commands, but clone
+is the documented exception:
+
+> `submodule.recurse` applies to *checkout, fetch, grep, pull, push, read-tree, reset,
+> restore* — *"clone and ls-files are not supported."*
+> — `git config --help`
+
+If you forget, nothing is lost. From inside the repo:
+
+```bash
+git submodule update --init --recursive
+```
+
+### Updating the framework on purpose
+
+```bash
+git submodule update --remote
+git commit -am "Update framework"
+```
+
+The update is a commit in your repo, so you can see when it happened and revert it.
+
+> **The framework itself has no submodules.** Anyone who just wants the standards clones
+> it normally and it works immediately. Submodules only ever appear in *your* config
+> repo, and only if you choose this layout.
 
 ---
 
@@ -113,7 +225,7 @@ Edit `project-config.md` and replace all `{placeholder}` values:
 6. **Secrets platform**: Where your team stores secrets (AWS Secrets Manager, Azure Key Vault, etc.)
 7. **Tools**: Your team's toolchain
 
-See `examples/project-config-example.md` in the framework repo for a filled example.
+See `examples/config-repo/` in the framework repo for a complete filled example — config, page structure and entry files together.
 
 ## Step 4: Create Your Config Repo AGENTS.md
 
@@ -127,7 +239,7 @@ opencode, Cursor and others. Create one in your config repo covering:
 - **Output layout** -- `output/{source-repo-name}/{type}_{subject}_{YYYY-MM-DD}.md`, or `output/generic/` for links. Never write straight into `output/`
 - **Key rules** -- naming pattern, mandatory labels, secrets policy, placeholder policy
 
-`confluence-config-acme-web/AGENTS.md` is a filled example you can copy and adapt.
+`examples/config-repo/AGENTS.md` is a filled example you can copy and adapt.
 
 **For Claude Code**, add a `CLAUDE.md` next to it whose first line is `@AGENTS.md`,
 then put only Claude-specific notes below. That keeps one source of truth and works
@@ -219,7 +331,7 @@ or permanently in `settings.json`:
 { "permissions": { "additionalDirectories": ["/Users/you/work/my-api"] } }
 ```
 
-A trick that works for every local assistant: start the session from the **parent directory** containing both `confluence-framework/` and your config repo. Step 0 searches `.`, `..` and siblings, so it finds both from there.
+Start the session from **your config repo**. Step 0 searches `.`, `..` and siblings, so it finds the framework from there whichever layout you chose, and the config repo's own `AGENTS.md` orients the assistant automatically.
 
 > **Mode B is not available on every assistant.** It needs to read outside the repo it started in. Local CLI assistants can; Copilot needs the folder added to the workspace; Devin runs in a cloud VM and cannot at all. Check `compatibility.md` before relying on it.
 
