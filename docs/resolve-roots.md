@@ -12,12 +12,16 @@ the current directory:
 - **`FRAMEWORK_ROOT`** — the framework directory holding `templates/` and `docs/`
 
 Run this. It is POSIX `sh` and works unchanged on macOS, Linux, WSL and Git Bash on
-Windows. Replace `func-spec` with the document type being generated.
+Windows — and in zsh, the default shell on macOS, thanks to the `setopt NULL_GLOB`
+line. Without it zsh aborts the whole block with `no matches found` when no
+`confluence-config-*` sibling exists. Replace `func-spec` with the document type being
+generated.
 
 ```sh
 T=func-spec
 
 unset CDPATH
+setopt NULL_GLOB 2>/dev/null || true
 A() { (cd "$1" 2>/dev/null && { pwd -W 2>/dev/null || pwd; }); }
 
 CFG=""; SKIPPED=""
