@@ -13,7 +13,7 @@
 
 ## Capabilities you need
 
-The procedure assumes an assistant that can do these five things. Every assistant
+The procedure assumes an assistant that can do these six things. Every assistant
 names them differently; use whatever yours calls them.
 
 | Capability | Used for |
@@ -192,7 +192,7 @@ user stays a `{placeholder}`. Do not fill gaps with plausible-looking content.
    template plus sections 1, 8 and 9 of the standards. Do not open that file again
    unless you need a section outside those three
 2. Use the prefix, space and language from the project config, also already loaded
-4. Apply:
+3. Apply:
    - **Title**: `[{PREFIX}-{SUFFIX}] {Type} -- {Subject}` (prefix and suffix from
      project-config.md). This applies to **every** title without exception, including
      patterns that look self-qualifying: `[APP-ARCH] ADR-0012 — ...`,
@@ -335,7 +335,8 @@ And a setting is not a licence to guess. If you are unsure which page a request 
 ask — `no` removes the routine confirmation, not your judgement.
 
 If write scopes were never granted, none of this can arise, which is why
-[`confluence-mcp.md`](confluence-mcp.md) recommends withholding them.
+[`confluence-mcp.md`](confluence-mcp.md) recommends withholding them unless the project
+publishes from the assistant.
 
 ---
 

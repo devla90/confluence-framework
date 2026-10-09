@@ -1,6 +1,6 @@
 ---
 name: confluence-doc
-description: Specialized agent for generating and maintaining Confluence documentation following the framework standards. Reads project-config.md for project-specific values and can analyze an external local code repository, or a URL, to extract technical information. Use when creating functional specs, ADRs, API docs, env configs, runbooks, security docs, or migration docs.
+description: Specialized agent for generating and maintaining Confluence documentation following the framework standards. Reads project-config.md for project-specific values and can analyze an external local code repository, or a URL, to extract technical information. Use when creating functional specs, architecture overviews, ADRs, API docs, env configs, runbooks, guides, reference pages, security docs, migration docs, release notes, deployment requests, test plans and strategies, or infra and role requests.
 tools: Read, Bash, Write, Edit, Glob, Grep, WebFetch
 model: sonnet
 maxTurns: 20
@@ -49,7 +49,8 @@ If Atlassian's MCP server is connected, you *can* verify the title is free befor
 and read the real page tree rather than trusting `page-structure.md`. Do it **only when
 the user asks in the request**, or when `project-config.md` sets
 `Check Confluence before generating` to `yes`. Having the capability is not permission to
-use it — the space is shared. Read and search scopes only; see
+use it — the space is shared. Reading needs read and search scopes; publishing also
+needs write and follows the procedure's confirmation rules; see
 `$FRAMEWORK_ROOT/docs/confluence-mcp.md`. If a call fails, carry on generating and say so
 in the summary.
 

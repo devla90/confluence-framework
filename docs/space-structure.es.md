@@ -372,7 +372,7 @@ Al configurar el espacio, aplica lo siguiente:
 
 1. **Home page**: Créala con enlaces a las 8 secciones principales (usa la macro Table of Children)
 2. **Secciones raíz**: Crea las 8 páginas de nivel superior como "páginas padre" para cada dominio
-3. **Plantillas**: Configura las 11 plantillas como Space Templates del espacio `{SPACE_KEY}`
+3. **Plantillas**: Configura las 16 plantillas como Space Templates del espacio `{SPACE_KEY}`
 4. **Labels iniciales**: Agrega `team:{team}` a la página raíz de cada sección
 5. **Page Restrictions**: Aplica restricción de lectura en la página raíz de "Security & Compliance" — Confluence hereda la restricción a todas las sub-páginas
 6. **Sidebar**: Organiza accesos directos a las 8 secciones principales

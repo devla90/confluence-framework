@@ -1,6 +1,6 @@
 # Confluence Documentation Framework
 
-Universal documentation framework for Confluence Cloud. Guides, 11 page templates,
+Universal documentation framework for Confluence Cloud. Guides, 16 page templates,
 governance and naming standards for teams building software across multiple domain
 fronts.
 

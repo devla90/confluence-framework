@@ -45,6 +45,20 @@ plain semver, because this project ships conventions rather than code.
 - Step 5 of the generation procedure now carries an exploration budget. Listing every
   file in a real repository can cost more than the rest of the procedure combined, and
   says less than the directory names do.
+- MCP scope guidance now covers publishing. `confluence-mcp.md`, `compatibility.md` and
+  every adapter said "read and search scopes only", which left no documented way to grant
+  the write scope publishing needs. Read and search stay the default; write
+  (`write:page:confluence` on a scoped token) is added only when the project publishes.
+
+### Fixed
+
+- `project-config-template.md` (and the config template): the "No credentials" note sat
+  inside the Identity table, cutting `Confluence URL`, `Documentation language` and
+  `Team size` out of it. The note now follows the table.
+- Template counts said 11 where there are 16 types — `README.md`, `AGENTS.md`,
+  `space-structure`, `page-structure`, and the Claude Code skill's description and its
+  "Valid types" fallback.
+- `generation-procedure.md`: "five things" for six capabilities, and Step 6 numbered 1, 2, 4.
 
 Changes planned for the first public release (1.0.0).
 

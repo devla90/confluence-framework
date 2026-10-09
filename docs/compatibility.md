@@ -74,8 +74,10 @@ Prefer OAuth unless something has to run without a person present. The trade-off
 [`confluence-mcp.md`](confluence-mcp.md); the short version is that OAuth leaves no
 long-lived secret anywhere on disk.
 
-**Grant read and search scopes only.** Withholding write does not merely reduce risk, it
-removes the possibility of an assistant publishing to a shared space by accident.
+**Grant read and search scopes; add write only if the project publishes from the
+assistant.** Withholding write does not merely reduce risk, it removes the possibility of
+an assistant publishing to a shared space by accident. When write is granted, publishing
+follows the confirmation rules in [`generation-procedure.md`](generation-procedure.md).
 
 Atlassian also published an SSE endpoint, `https://mcp.atlassian.com/v1/sse`, used with
 `--transport sse`. It was retired after 30 June 2026 — do not mix the two, an SSE URL with

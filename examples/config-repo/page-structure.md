@@ -300,7 +300,7 @@ Home (ACMEWEB — Welcome page with links to all sections)
 
 1. **Home page**: Create with links to all 8 main sections (use Table of Children macro)
 2. **Root sections**: Create the 8 first-level pages as parent pages for each frente
-3. **Templates**: Configure all 11 templates as Space Templates in ACMEWEB
+3. **Templates**: Configure the templates you use (16 available) as Space Templates in ACMEWEB
 4. **Initial labels**: Add `team:{team}` to each section's root page
 5. **Page Restrictions**: Apply read restriction on the "Security & Compliance" root page — Confluence inherits the restriction to all child pages
 6. **Sidebar**: Organize shortcuts to the 8 main sections
