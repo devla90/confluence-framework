@@ -86,9 +86,21 @@ claude mcp add --transport http atlassian https://mcp.atlassian.com/v1/mcp/authv
 Then tell the user to run `/mcp` and authorise in the browser, granting **read and search
 scopes only**.
 
-**2b. API token — do not ask for the token.** Print the two commands and have the user run
-them. Never request the token, the email, or the encoded value in conversation, and if a
-user offers one anyway, say why you are not taking it.
+**2b. API token — the token must be scoped.** Before anything else, tell the user which
+token to create. Atlassian offers two buttons and only one of them works here:
+
+- **"Create API token"** produces a *classic*, unscoped token. It authenticates, the MCP
+  session starts, and **no Confluence tools appear at all**. Nothing reports an error.
+- **"Create API token with scopes"** is the one to use. Select `read:page:confluence` and
+  `search:confluence`.
+
+A scoped token targets **one product**: a Confluence token grants no Jira tools, and the
+reverse. Note the expiry date it is given — a token stops working on that date with no
+warning.
+
+**Do not ask for the token.** Print the two commands and have the user run them. Never
+request the token, the email, or the encoded value in conversation, and if a user offers
+one anyway, say why you are not taking it.
 
 ```sh
 printf '%s' 'you@example.com:YOUR_TOKEN' | base64 | tr -d '\n'
@@ -108,10 +120,14 @@ credential rotation when they notice — and most do not notice.
 configuration, but the running session does not pick up a server added mid-conversation.
 The tools appear after a restart. *(Expected behaviour, not verified here.)*
 
-**4. Verify after the restart.** Run the [smoke test](#smoke-test). If it fails with an
-authentication error on the token route, the likely cause is that the user's Atlassian
-admin has not enabled API token authentication — suggest OAuth rather than debugging the
-header.
+**4. Verify after the restart.** Run the [smoke test](#smoke-test). Two failures look
+nothing alike:
+
+- **An authentication error** on the token route — most likely the user's Atlassian admin
+  has not enabled API token authentication. Suggest OAuth rather than debugging the header.
+- **It connects, but no Confluence tools exist.** Not an authentication failure; the
+  session is fine. Almost certainly a classic token without scopes. Have the user create
+  one with `read:page:confluence` and `search:confluence`, and restart again.
 
 ---
 
@@ -129,12 +145,17 @@ header.
 | How it feels | A browser opens, you approve once | A header in the client config, no prompt |
 | Always available? | Yes | **Only if your Atlassian admin has enabled it** |
 | Suited to | A person generating documents interactively | Non-interactive use — CI, bots, automation |
+| **Scopes** | Granted when you authorise | **Chosen when you create the token** — a classic token grants nothing |
+| **Expiry** | Renews itself | The token expires on a fixed date; note it down |
 | Revoking | Withdraw the consent | Delete the token |
 
 **The endpoints differ**, and that is the detail that wastes an afternoon: point a token
 configuration at the OAuth URL and it will not connect, with nothing in the error to
-suggest why. Atlassian accepts `Basic base64(email:api_token)` for a personal token, or
-`Bearer <key>` for a service account key.
+suggest why.
+
+**Use `Basic base64(email:api_token)`** for a personal token. Atlassian's documentation is
+explicit that `Bearer` is *not* the format for one — that is for a service account key, and
+using it with a personal token fails.
 
 On a company instance the admin may have API token authentication turned off, in which
 case OAuth is the only route and the client will tell you so. On an instance you own, you
