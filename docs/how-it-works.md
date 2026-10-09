@@ -74,9 +74,10 @@ live — and they are entirely about syntax:
 | GitHub Copilot | `.github/prompts/doc-confluence.prompt.md` | `${input:type:...}`, needs `mode: agent` |
 | opencode | `.opencode/commands/doc-confluence.md` | `$ARGUMENTS`, with `agent: build` |
 | Claude Code | `adapters/claude-code/skills/doc-confluence/SKILL.md` | `$tipo $tema $target` |
+| Devin Local / CLI | `adapters/devin/skills/doc-confluence/SKILL.md` | `$ARGUMENTS` |
 
-All four are invoked the same way: `/doc-confluence`. Install commands per assistant are
-in [`compatibility.md`](compatibility.md) and [`../adapters/README.md`](../adapters/README.md).
+All five are invoked the same way: `/doc-confluence`. One script installs any of them —
+`scripts/install-adapter.sh`; see [`../adapters/README.md`](../adapters/README.md#install).
 
 **None of them is required.** The first mechanism is enough on its own: an assistant that
 has read `AGENTS.md` will follow the procedure from a plain-language request, and the
@@ -84,8 +85,8 @@ procedure asks for the type and subject anyway. The adapters exist so you can ty
 `/doc-confluence api-spec Payments` instead of a sentence — they change the ergonomics,
 not what is possible.
 
-Devin has no slash commands. It follows `AGENTS.md` from a plain request — see
-[`../adapters/devin/README.md`](../adapters/devin/README.md).
+Devin cloud has no local install. It follows `AGENTS.md` from a plain request, or a skill
+committed to the repo — see [`../adapters/devin/README.md`](../adapters/devin/README.md).
 
 ## 3. What happens when someone generates a document
 
@@ -126,11 +127,11 @@ That third one decides whether **Mode B** works — running from the config repo
 pointing at an external local path, instead of putting an instruction file inside the
 code repo.
 
-- **Local CLI assistants** (Claude Code, Codex, opencode) run on your machine with real
-  filesystem access. Mode B works once the folder is granted.
-- **Editor-embedded assistants** (Copilot, Cursor, Windsurf) are scoped to the open
+- **Local assistants** (Claude Code, Codex, opencode, Devin Local and CLI) run on your
+  machine with real filesystem access. Mode B works once the folder is granted.
+- **Editor-embedded assistants** (Copilot, Cursor) are scoped to the open
   workspace. Add the target repo as a second workspace folder and it works.
-- **Cloud agents** (Devin) run in a VM built from a Git repo. They have no path to your
+- **Cloud agents** (Devin cloud) run in a VM built from a Git repo. They have no path to your
   local disk. **Mode B is impossible** — and no adapter can fix that, because it is an
   architectural property, not a formatting one.
 

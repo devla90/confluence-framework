@@ -87,11 +87,10 @@ sibling layout it is `../confluence-framework`. Root resolution reads this row f
 **3. Optionally, install a `/doc-confluence` shortcut.** Skip this and everything still
 works — your assistant reads `AGENTS.md` and follows the procedure from a plain-language
 request. The shortcut only saves typing. One command per machine, from your config repo;
-see [`../adapters/README.md`](../adapters/README.md) for all of them. For example:
+options in [`../adapters/README.md`](../adapters/README.md#install). For example:
 
 ```bash
-# OpenAI Codex
-mkdir -p ~/.codex/prompts && cp ../confluence-framework/adapters/codex/doc-confluence.md ~/.codex/prompts/
+../confluence-framework/scripts/install-adapter.sh codex
 ```
 
 **4. Start the session from your config repo.** Its `AGENTS.md` is versioned, so it
@@ -319,22 +318,13 @@ Also fill the `Paths` section so the framework and the output destination are ex
 **2. Optionally, install a `/doc-confluence` shortcut.** Mode B works without it — your assistant reads `AGENTS.md` and follows the procedure from a plain-language request. Each shortcut is a thin command pointing at `docs/generation-procedure.md`; none duplicates the logic. Pick yours, running from your config repo:
 
 ```bash
-# Claude Code -- ships in .claude/, scoped to the framework repo, so install globally
-cp -r ../confluence-framework/adapters/claude-code/skills/doc-confluence ~/.claude/skills/
-cp -r ../confluence-framework/adapters/claude-code/agents/confluence-doc ~/.claude/agents/
-
-# OpenAI Codex
-mkdir -p ~/.codex/prompts && cp ../confluence-framework/adapters/codex/doc-confluence.md ~/.codex/prompts/
-
-# opencode
-mkdir -p .opencode/commands && cp ../confluence-framework/adapters/opencode/doc-confluence.md .opencode/commands/
-
-# GitHub Copilot
-mkdir -p .github/prompts && cp ../confluence-framework/adapters/copilot/doc-confluence.prompt.md .github/prompts/
-cp ../confluence-framework/adapters/copilot/copilot-instructions.md .github/copilot-instructions.md
-
-# Devin -- see ../confluence-framework/adapters/devin/README.md
+../confluence-framework/scripts/install-adapter.sh claude-code   # or codex, devin, opencode, copilot, all
 ```
+
+The script finds the framework from its own location, refuses to overwrite an adapter
+that differs from the framework's unless you pass `--force`, and shows what it would do
+with `--dry-run`. Devin cloud is the exception — it has no local install; see
+`../confluence-framework/adapters/devin/README.md`.
 
 All of them are then invoked as `/doc-confluence <type> <subject> [source]`. The root resolution in Step 0 of the procedure is what lets them work from any directory once installed.
 
@@ -354,7 +344,7 @@ or permanently in `settings.json`:
 
 Start the session from **your config repo**. Step 0 searches `.`, `..` and siblings, so it finds the framework from there whichever layout you chose, and the config repo's own `AGENTS.md` orients the assistant automatically.
 
-> **Mode B is not available on every assistant.** It needs to read outside the repo it started in. Local CLI assistants can; Copilot needs the folder added to the workspace; Devin runs in a cloud VM and cannot at all. Check `compatibility.md` before relying on it.
+> **Mode B is not available on every assistant.** It needs to read outside the repo it started in. Local assistants can, Devin Local included; Copilot needs the folder added to the workspace; Devin cloud runs in a VM and cannot at all. Check `compatibility.md` before relying on it.
 
 **4. Generate.** From your config repo:
 

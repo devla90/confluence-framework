@@ -21,35 +21,58 @@ Why the adapters are this thin, and what that buys:
 
 ## Install
 
-Run these **from your config repo**. Sources are written for the sibling layout, where
-the framework sits at `../confluence-framework`; adjust that prefix for another layout.
+One script installs any of them. Run it **from your config repo** — the per-repo
+adapters land there:
 
-| Assistant | Copy from the framework | To | Scope |
-|-----------|------------------------|-----|-------|
-| **Claude Code** | `adapters/claude-code/skills/doc-confluence`<br>`adapters/claude-code/agents/confluence-doc` | `~/.claude/skills/`<br>`~/.claude/agents/` | all projects |
-| **OpenAI Codex** | `adapters/codex/doc-confluence.md` | `~/.codex/prompts/` | all projects |
-| **opencode** | `adapters/opencode/doc-confluence.md` | `.opencode/commands/` | this repo |
-| **GitHub Copilot** | `adapters/copilot/doc-confluence.prompt.md`<br>`adapters/copilot/copilot-instructions.md` | `.github/prompts/`<br>`.github/copilot-instructions.md` | this repo |
-| **Devin** | see `devin/README.md` | — | — |
+```bash
+../confluence-framework/scripts/install-adapter.sh claude-code     # or codex, devin, opencode, copilot
+../confluence-framework/scripts/install-adapter.sh codex devin     # several at once
+../confluence-framework/scripts/install-adapter.sh all --dry-run   # see what it would do
+```
 
-Copy-paste commands per assistant: [`../docs/compatibility.md`](../docs/compatibility.md).
+It finds the framework from its own location, so the same command works whichever
+layout you chose — adjust only the path you call it by. It is POSIX `sh`, like Step 0 of
+the procedure: macOS, Linux, and Windows under Git Bash or WSL.
 
-All of them are invoked as `/doc-confluence <type> <subject> [source]`, except Devin,
-which follows `AGENTS.md` from a natural-language request.
+| Option | Effect |
+|--------|--------|
+| `--target DIR` | Where the per-repo adapters (opencode, Copilot) go. Default: the current directory |
+| `--force` | Replace an installed adapter that differs from the framework's. Without it, a difference is reported and left alone |
+| `--link` | Symlink instead of copying, so framework changes apply without reinstalling. For people working on the framework itself. Not available on Windows, where Git Bash silently copies |
+| `--dry-run` | Print what would happen, change nothing |
 
-Exact commands per assistant, including Windows/PowerShell equivalents, are in
-`../docs/compatibility.md`.
+Rerunning it is safe: an adapter already up to date is reported as such. After pulling a
+new framework version, rerun it with `--force` to refresh copied adapters.
+
+What goes where:
+
+| Assistant | From the framework | To | Scope |
+|-----------|--------------------|-----|-------|
+| **Claude Code** | `claude-code/skills/doc-confluence`<br>`claude-code/agents/confluence-doc` | `~/.claude/skills/`<br>`~/.claude/agents/` | all projects |
+| **OpenAI Codex** | `codex/doc-confluence.md` | `~/.codex/prompts/` | all projects |
+| **Devin Local / CLI** | `devin/skills/doc-confluence` | `~/.config/devin/skills/`<br>Windows: `%APPDATA%\devin\skills\` | all projects |
+| **opencode** | `opencode/doc-confluence.md` | `.opencode/commands/` | this repo |
+| **GitHub Copilot** | `copilot/doc-confluence.prompt.md`<br>`copilot/copilot-instructions.md` | `.github/prompts/`<br>`.github/copilot-instructions.md` | this repo |
+| **Devin cloud** | see `devin/README.md` | — | — |
+
+The script holds this table as code; if a destination changes, change it there and here.
+
+All of them are invoked as `/doc-confluence <type> <subject> [source]`. Devin cloud
+follows `AGENTS.md` from a natural-language request, or `@skills:doc-confluence` once the
+skill is committed to the repo.
 
 ## Where the framework lives
 
-These install commands assume the framework and your config repo are **siblings** — the
-default layout. If you put the framework inside your config repo as a submodule, adjust
-the source paths accordingly. Both layouts are described in
+The examples above call the script by `../confluence-framework/`, the **sibling** layout.
+If you put the framework inside your config repo as a submodule, call it as
+`./confluence-framework/scripts/install-adapter.sh` — nothing else changes. Both layouts
+are described in
 [`../docs/customization-guide.md`](../docs/customization-guide.md) -> Choosing a layout.
 
 ## Before you rely on Mode B
 
 Mode B — running from the config repo and pointing at an **external local path** —
 needs an assistant that can read outside the repo it started in. Local CLI assistants
-can; Copilot needs the folder added to the workspace; Devin cannot at all. The matrix
+can, Devin Local included; Copilot needs the folder added to the workspace; Devin cloud
+cannot at all. The matrix
 in `../docs/compatibility.md` is explicit about this.
