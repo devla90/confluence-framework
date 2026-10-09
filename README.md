@@ -173,8 +173,11 @@ confluence-framework/
 +-- AGENTS.md                              <- Cross-tool entry point, read by every assistant
 +-- CLAUDE.md                              <- One-line shim: Claude Code cannot read AGENTS.md yet
 +-- adapters/                              <- Optional /doc-confluence shortcut per assistant
-    +-- claude-code/                       <- skill, agent, Mode A template
-    +-- codex/  copilot/  opencode/  devin/
+|   +-- claude-code/                       <- skill, agent, Mode A template
+|   +-- devin/                             <- skill for Devin Local / CLI; cloud setup
+|   +-- codex/  copilot/  opencode/
++-- scripts/
+    +-- install-adapter.sh                 <- Installs any adapter where its assistant looks
 ```
 
 Nothing assistant-specific sits at the root beyond the nine-line `CLAUDE.md` shim.

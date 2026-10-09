@@ -60,7 +60,8 @@ someone to publish it unchanged.
 3. Add a row to the matrix in `docs/compatibility.md`, including honestly whether that
    assistant can read a folder outside the repo it started in (this decides whether
    Mode B works) and how it grants that access
-4. Add the install command to `adapters/README.md`
+4. Add its destination to `scripts/install-adapter.sh` and to the table in
+   `adapters/README.md` — the script is what people run, the table is what they read
 
 Copy the shape of `adapters/codex/doc-confluence.md` — it is the smallest one.
 

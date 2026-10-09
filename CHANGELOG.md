@@ -25,8 +25,23 @@ plain semver, because this project ships conventions rather than code.
   notes and deployment requests already had a naming pattern in the standards — the
   framework said how to title them but not what to put in them.
 
+- `scripts/install-adapter.sh` — one command installs the `/doc-confluence` adapter for
+  any assistant (`claude-code`, `codex`, `devin`, `opencode`, `copilot`, `all`). The
+  destinations were spread as copy-paste commands across three documents, each assuming
+  the sibling layout; the script finds the framework from its own path instead. It
+  refuses to overwrite an adapter that differs without `--force`, offers `--dry-run`,
+  and `--link` for people working on the framework. POSIX `sh`, like Step 0, so it runs
+  on Windows under Git Bash — where `--link` is refused, because Git Bash silently copies.
+- Devin Local and Devin CLI adapter (`adapters/devin/skills/doc-confluence/SKILL.md`).
+  Devin now runs on your machine (Devin Desktop, formerly Windsurf), reads `SKILL.md`
+  skills and speaks MCP, so it gets the same `/doc-confluence` command as the others.
+
 ### Changed
 
+- Devin is documented as two assistants. **Devin Local / CLI** supports Mode B and the
+  Confluence lookups; **Devin cloud** keeps the old limits — no local disk, no MCP. The
+  documents previously said Devin could not do Mode B at all, which is now only true of
+  the cloud.
 - Step 5 of the generation procedure now carries an exploration budget. Listing every
   file in a real repository can cost more than the rest of the procedure combined, and
   says less than the directory names do.

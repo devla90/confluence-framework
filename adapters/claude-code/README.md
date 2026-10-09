@@ -17,13 +17,15 @@ Like every adapter, this only adds the `/doc-confluence` shortcut. Claude Code r
 `CLAUDE.md`, which imports `AGENTS.md`, so it follows the procedure from a
 plain-language request with nothing installed.
 
-Run from your config repo. The paths mirror their destinations, so a plain `cp -r` is
-enough:
+Run from your config repo:
 
 ```bash
-cp -r ../confluence-framework/adapters/claude-code/skills/doc-confluence ~/.claude/skills/
-cp -r ../confluence-framework/adapters/claude-code/agents/confluence-doc ~/.claude/agents/
+../confluence-framework/scripts/install-adapter.sh claude-code
 ```
+
+It copies `skills/doc-confluence` and `agents/confluence-doc` into `~/.claude/`. Working
+on the framework itself? Add `--link` to symlink them instead, so your edits apply
+without reinstalling. Other options: [`../README.md`](../README.md#install).
 
 Installs into your home directory, so it works from any project.
 

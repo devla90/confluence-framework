@@ -21,8 +21,9 @@ matters — **whether it can read a folder outside the current repo**.
 | **OpenAI Codex** | `AGENTS.md` | `~/.codex/prompts/doc-confluence.md` | yes | yes, subject to sandbox settings | if web access is enabled |
 | **opencode** | `AGENTS.md` | `.opencode/commands/doc-confluence.md` | yes | yes | yes |
 | **GitHub Copilot** | `AGENTS.md` or `.github/copilot-instructions.md` | `.github/prompts/doc-confluence.prompt.md` | yes | partial — needs the folder added to the workspace | yes |
-| **Devin** | `AGENTS.md` | Knowledge / Skills | yes | **no** | yes |
-| **Cursor, Windsurf, Zed, Aider, Gemini CLI, Jules, Amazon Q** | `AGENTS.md` | varies | yes | varies by tool | varies |
+| **Devin Local / CLI** (Devin Desktop) | `AGENTS.md` | `~/.config/devin/skills/doc-confluence` | yes | yes, within granted paths | yes |
+| **Devin cloud** | `AGENTS.md` | Knowledge / repo skill | yes | **no** | yes |
+| **Cursor, Zed, Aider, Gemini CLI, Jules, Amazon Q** | `AGENTS.md` | varies | yes | varies by tool | varies |
 
 **Mode A** = you work inside the code repo being documented.
 **Mode B** = you work from the config repo and point at an external path or URL.
@@ -44,7 +45,8 @@ assistants speak it. Configuration is per assistant:
 | **OpenAI Codex** | An `[mcp_servers.atlassian]` entry in `~/.codex/config.toml` |
 | **GitHub Copilot** | `.vscode/mcp.json` in the workspace, or the MCP section of VS Code settings |
 | **opencode** | An `mcp` entry in `opencode.json` |
-| **Devin** | Not applicable — no local MCP configuration |
+| **Devin Local / CLI** | An entry in `~/.config/devin/config.json`, or the gitignored `.devin/config.local.json` |
+| **Devin cloud** | Not applicable — no local MCP configuration |
 
 **The two authentication methods use different endpoints.** Choosing one and keeping the
 other's URL is the mistake that produces a connection failure with no obvious cause:
@@ -92,12 +94,12 @@ list your Confluence spaces, and see whether it answers with real ones.
 Mode B needs the assistant to read files outside the repository it was started in.
 That is an architectural property, not a formatting one — no adapter can add it.
 
-- **Local CLI assistants** (Claude Code, Codex, opencode) run on your machine with
-  filesystem access. Mode B works once you grant access to the folder.
-- **Editor-embedded assistants** (Copilot in VS Code, Cursor, Windsurf) are scoped to
+- **Local assistants** (Claude Code, Codex, opencode, Devin Local and CLI) run on your
+  machine with filesystem access. Mode B works once you grant access to the folder.
+- **Editor-embedded assistants** (Copilot in VS Code, Cursor) are scoped to
   the open workspace. Add the target repo as a second workspace folder and it works;
   otherwise it does not.
-- **Cloud agents** (Devin) run in a VM built from a Git repository. They have no path
+- **Cloud agents** (Devin cloud) run in a VM built from a Git repository. They have no path
   to your local disk at all. **Mode B is not possible.** Use Mode A instead — put an
   `AGENTS.md` in the code repo — or point at a URL, which cloud agents can fetch.
 
@@ -115,7 +117,8 @@ markers for what could not be extracted.
 | OpenAI Codex | Governed by the sandbox/approval mode; start Codex from a directory that contains both repos, or widen the writable/readable roots in `~/.codex/config.toml` |
 | opencode | Runs with your user's filesystem permissions; start it from a directory containing both repos |
 | GitHub Copilot (VS Code) | **File > Add Folder to Workspace**, then save as a multi-root workspace |
-| Devin | Not applicable — no local disk access |
+| Devin Local / CLI | Reads the workspace by default; grant the path in Devin's permissions, or start it from a directory containing both repos |
+| Devin cloud | Not applicable — no local disk access |
 
 A reliable rule for every local assistant: start the session from **your config repo**.
 The root resolution in Step 0 searches `.`, `..` and siblings, so it finds the framework
@@ -136,63 +139,27 @@ the login feature") works with nothing installed. What an adapter buys you is th
 All adapters are thin: each declares a command in its tool's own format and points at
 `docs/generation-procedure.md`, rather than restating the logic.
 
-> **Run these from your config repo**, and note that each command names the framework by
-> a relative path. The examples assume the sibling layout, where the framework sits at
-> `../confluence-framework`. Adjust that prefix if you chose a different layout — inside
-> a submodule it is `./confluence-framework`.
-
-### Claude Code
+Install any of them with the framework's script, **from your config repo**:
 
 ```bash
-cp -r ../confluence-framework/adapters/claude-code/skills/doc-confluence ~/.claude/skills/
-cp -r ../confluence-framework/adapters/claude-code/agents/confluence-doc ~/.claude/agents/
+../confluence-framework/scripts/install-adapter.sh claude-code   # or codex, devin, opencode, copilot, all
 ```
 
-Installs into your home directory, so it works from any project. Claude Code reads
-`CLAUDE.md`, which imports `AGENTS.md` on its first line, so both conventions stay in
-sync. See [`../adapters/claude-code/README.md`](../adapters/claude-code/README.md).
+It locates the framework from its own path, so only the path you call it by depends on
+the layout — `./confluence-framework/…` inside a submodule. It never overwrites an
+adapter that differs from the framework's without `--force`, and `--dry-run` shows what
+it would do. Options and the full destination table:
+[`../adapters/README.md`](../adapters/README.md#install).
 
-### OpenAI Codex
+What each assistant needs beyond the install:
 
-```bash
-mkdir -p ~/.codex/prompts
-cp ../confluence-framework/adapters/codex/doc-confluence.md ~/.codex/prompts/
-```
-
-Also installs into your home directory. `AGENTS.md` is picked up automatically from the
-repo you start in.
-
-### opencode
-
-```bash
-mkdir -p .opencode/commands
-cp ../confluence-framework/adapters/opencode/doc-confluence.md .opencode/commands/
-```
-
-Installs into the current repo. For every project instead, use
-`~/.config/opencode/commands/`. (opencode also accepts the older singular `command/`,
-but `commands/` is the current name.)
-
-### GitHub Copilot
-
-```bash
-mkdir -p .github/prompts
-cp ../confluence-framework/adapters/copilot/doc-confluence.prompt.md .github/prompts/
-cp ../confluence-framework/adapters/copilot/copilot-instructions.md .github/copilot-instructions.md
-```
-
-Installs into the current repo — which must be the one you open as your VS Code
-workspace, or Copilot will not see the prompt. Then `/doc-confluence` in Copilot Chat,
-**in agent mode**: the flow needs to run a command, read files and write one.
-
-Copilot reads `AGENTS.md` too; `.github/copilot-instructions.md` is there for setups that
-predate that support.
-
-### Devin
-
-See [`../adapters/devin/README.md`](../adapters/devin/README.md). Put `AGENTS.md` in the
-repo root and add the framework's standards to Devin's Knowledge. Mode B does not apply —
-see above.
+| Assistant | Installs to | Notes |
+|-----------|-------------|-------|
+| **Claude Code** | `~/.claude/skills/`, `~/.claude/agents/` | Claude Code reads `CLAUDE.md`, which imports `AGENTS.md` on its first line, so both conventions stay in sync. See [`../adapters/claude-code/README.md`](../adapters/claude-code/README.md) |
+| **OpenAI Codex** | `~/.codex/prompts/` | `AGENTS.md` is picked up automatically from the repo you start in |
+| **Devin Local / CLI** | `~/.config/devin/skills/` (`%APPDATA%\devin\skills\` on Windows) | One skill active at a time. Devin cloud is set up differently — see [`../adapters/devin/README.md`](../adapters/devin/README.md) |
+| **opencode** | `.opencode/commands/` in the current repo | For every project instead, copy it to `~/.config/opencode/commands/`. opencode also accepts the older singular `command/`, but `commands/` is the current name |
+| **GitHub Copilot** | `.github/prompts/` and `.github/copilot-instructions.md` in the current repo | That repo must be the one you open as your VS Code workspace. Run `/doc-confluence` in Copilot Chat **in agent mode**: the flow needs to run a command, read files and write one. `copilot-instructions.md` is for setups that predate Copilot's `AGENTS.md` support |
 
 ### Anything else
 
