@@ -49,7 +49,8 @@ If Atlassian's MCP server is connected (`~/.config/devin/config.json`, or
 `.devin/config.local.json` — never the committed `.devin/config.json` if it holds a
 token), the procedure can check a title is free before writing and read the real page
 tree. **It does not do so unless you ask in the request**, or the project config opts
-in — read and search scopes only. See `docs/confluence-mcp.md`. Without any of that,
+in — read and search scopes, plus
+write only if the project publishes. See `docs/confluence-mcp.md`. Without any of that,
 everything works as before.
 
 Asked to connect it? `docs/confluence-mcp.md` has a guided setup. Follow it as written —

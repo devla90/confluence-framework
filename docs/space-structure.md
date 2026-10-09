@@ -58,7 +58,7 @@ The split is not "which pages" but **rule versus parameter**.
 |---|---|---|
 | Naming | the pattern `[PREFIX-SUFFIX] Type — Subject` | the value of `PREFIX` |
 | Labels | `type:` `status:` `phase:` `env:` — fixed by the framework | `team:` and `tech:` values |
-| Templates | the 11 templates | which of them the project actually uses |
+| Templates | the 16 templates | which of them the project actually uses |
 | Lifecycle | DRAFT → IN-REVIEW → APPROVED → ARCHIVED | review cadence, owners |
 | Governance | the roles that exist | who holds them, how often they meet |
 
@@ -489,7 +489,7 @@ When configuring the space, apply the following:
 
 1. **Home page**: Create with links to the 8 main sections (use the Table of Children macro)
 2. **Root sections**: Create the 8 top-level pages as "parent pages" for each domain
-3. **Templates**: Configure the 11 templates as Space Templates of the `{SPACE_KEY}` space
+3. **Templates**: Configure the 16 templates as Space Templates of the `{SPACE_KEY}` space
 4. **Initial labels**: Add `team:{team}` to the root page of each section
 5. **Page Restrictions**: Apply read restriction on the "Security & Compliance" root page — Confluence inherits the restriction to all sub-pages
 6. **Sidebar**: Organize shortcuts to the 8 main sections

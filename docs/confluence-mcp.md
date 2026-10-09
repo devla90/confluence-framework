@@ -84,7 +84,8 @@ claude mcp add --transport http atlassian https://mcp.atlassian.com/v1/mcp/authv
 ```
 
 Then tell the user to run `/mcp` and authorise in the browser, granting **read and search
-scopes only**.
+scopes** — plus write only if the project will publish from the assistant (see step 3 of
+[Setup](#setup)).
 
 **2b. API token — the token must be scoped.** Before anything else, tell the user which
 token to create. Atlassian offers two buttons and only one of them works here:
@@ -92,7 +93,8 @@ token to create. Atlassian offers two buttons and only one of them works here:
 - **"Create API token"** produces a *classic*, unscoped token. It authenticates, the MCP
   session starts, and **no Confluence tools appear at all**. Nothing reports an error.
 - **"Create API token with scopes"** is the one to use. Select `read:page:confluence` and
-  `search:confluence`.
+  `search:confluence`. Add `write:page:confluence` only if the project will publish from
+  the assistant.
 
 A scoped token targets **one product**: a Confluence token grants no Jira tools, and the
 reverse. Note the expiry date it is given — a token stops working on that date with no
@@ -184,10 +186,16 @@ is — which is what the next section is about.
 See [Keeping the credential out of the repository](#keeping-the-credential-out-of-the-repository)
 below before choosing the token route.
 
-**3. Grant read and search scopes only.** The server groups its tools into read, write and
-search. Leaving write unauthorised is not merely cautious: it makes it *impossible* for an
-assistant to publish or modify a page by accident, which matters when the space is shared
-with a team.
+**3. Grant read and search; add write only if you will publish.** The server groups its
+tools into read, write and search. Lookups need only read and search. Leaving write
+unauthorised is not merely cautious: it makes it *impossible* for an assistant to publish
+or modify a page by accident, which matters when the space is shared with a team.
+
+If the project does publish from the assistant, grant write as well — `write:page:confluence`
+on a scoped token, or the write scope on the OAuth consent screen. Every create and update
+then goes through [Publishing asks first](#publishing-asks-first-unless-you-say-otherwise),
+and every published page carries the block described in
+[Publishing, and what it cannot carry](#publishing-and-what-it-cannot-carry).
 
 **4. Nothing else.** The `Confluence space key` already in your `project-config.md` is
 what the queries need. There is no new configuration to fill in.
@@ -244,8 +252,8 @@ The surest answer is to use OAuth, where there is no long-lived secret to mispla
 
 ## Publishing asks first, unless you say otherwise
 
-Writing is not part of this phase, so in normal use the question does not arise. It is
-here because scopes can be granted later, by you or by someone else on the team.
+This applies only once write scopes have been granted. Without them the question does not
+arise — which is why they are withheld unless the project actually publishes.
 
 The default is to confirm before every create and every update: title, space, parent, and
 whether the call creates a page or overwrites one. `project-config.md` can change that:

@@ -10,7 +10,7 @@ A universal, reusable framework for organizing, standardizing, and maintaining p
 
 - **Naming conventions**: Consistent page titles with domain prefixes (`[{PREFIX}-FRONT]`, `[{PREFIX}-BACK]`, etc.) that enable fast search and future multi-space migration
 - **Label taxonomy**: Structured `team:`, `type:`, `status:`, `phase:`, `env:` labels for automated dashboards and CQL-powered reporting
-- **11 page templates**: Functional Specification, ADR, API Specification, Environment Configuration, Runbook, Security Document, Migration Document, Test Plan, Test Strategy, Infrastructure Request, Deployment Role Request
+- **16 page templates**: Functional Specification, Architecture Overview, ADR, API Specification, Environment Configuration, Runbook, Guide, Reference, Security Document, Migration Document, Release Note, Deployment Request, Test Plan, Test Strategy, Infrastructure Request, Deployment Role Request
 - **Document lifecycle**: DRAFT -> IN-REVIEW -> APPROVED -> ARCHIVED -> OBSOLETE with Content States, Page Properties, and scheduled reviews
 - **Governance model**: Lightweight roles (Documentation Champion, Section Owners), quarterly reviews, and enforcement rules scaled for small-to-medium teams
 - **AI integration strategy**: 4-phase roadmap from manual documentation to intelligent search, auto-generated drafts, and compliance checking
@@ -30,7 +30,7 @@ git clone https://github.com/devla90/confluence-framework
 ```
 
 Read `docs/documentation-guide.md` for the naming and label conventions, browse
-`templates/` for the 11 page templates, and copy the ones you want into Confluence by
+`templates/` for the 16 page templates, and copy the ones you want into Confluence by
 hand following `docs/confluence-templates-guide.md`. That is a complete, valid way to
 use this project — no AI assistant required.
 
