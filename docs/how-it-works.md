@@ -98,7 +98,7 @@ rule that governs it; the rules themselves live only in the procedure.
 | [0](generation-procedure.md#step-0-resolve-the-roots) | A POSIX `sh` block locates the config repo and the framework by searching `.`, `..` and siblings, reading the `Framework path` row to confirm | Two **absolute** roots printed, plus the config, the standards header and the `api-spec` template preloaded -- one call |
 | [1](generation-procedure.md#step-1-read-the-project-configuration) | Reads the project's values | Prefix `ACME`, space `ACMEWEB`, language, frentes |
 | [2](generation-procedure.md#step-2-resolve-the-source) | Decides where technical detail comes from: your third argument, else the `Code Repositories` row for the frente, else it asks | The source it settled on. Relative paths resolve from the config repo, never the current directory |
-| [3](generation-procedure.md#step-3-validate-the-document-type) | Checks `api-spec` is one of the eleven types | The valid list, if you got it wrong |
+| [3](generation-procedure.md#step-3-validate-the-document-type) | Checks `api-spec` is one of the sixteen types | The valid list, if you got it wrong |
 | [4](generation-procedure.md#step-4-gather-information) | Asks only for what it cannot read from code | For `api-spec`: service name, endpoints, authentication |
 | [5](generation-procedure.md#step-5-analyze-the-source) | Reads the source, guided by a per-type table -- for `api-spec`, OpenAPI files, route definitions, auth middleware | Real values extracted from your code, not guesses |
 | [6](generation-procedure.md#step-6-generate-the-document) | Fills the template | Title `[ACME-BACK] API Specification -- Payments Service`, mandatory labels, Page Properties table |
