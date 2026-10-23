@@ -255,7 +255,7 @@ opencode, Cursor and others. Create one in your config repo covering:
 - **Directory structure requirement** -- this config repo must be a sibling of `confluence-framework/`
 - **How to generate documentation** -- one line: read `../confluence-framework/docs/generation-procedure.md` and follow it. That file is the single source of truth for root resolution, source resolution, per-type analysis, template filling and output location
 - **Where things live** -- `./project-config.md`, `./page-structure.md`, `../confluence-framework/docs/documentation-guide.md`, `../confluence-framework/templates/{type}.md`, `../confluence-framework/docs/compatibility.md`
-- **Available document types** -- the eleven type keys
+- **Available document types** -- the sixteen type keys
 - **Output layout** -- `output/{source-repo-name}/{type}_{subject}_{YYYY-MM-DD}.md`, or `output/generic/` for links. Never write straight into `output/`
 - **Key rules** -- naming pattern, mandatory labels, secrets policy, placeholder policy
 
@@ -554,7 +554,7 @@ look real.
 |------|----------|----------------|
 | `my-type` | `./templates/my-type.md` | `type:my-type`, `status:draft`, `team:backend` |
 
-These extend the framework's eleven types. Look here first, then in the framework's
+These extend the framework's sixteen types. Look here first, then in the framework's
 `templates/`.
 ```
 
